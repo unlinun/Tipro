@@ -1,15 +1,26 @@
 import express from "express";
 import bodyParser from "body-parser";
 import morgan from "morgan";
+import multer from "multer";
 import mongoose from "mongoose";
+import { fileURLToPath } from "url";
+import path from "path";
 import dotenv from "dotenv";
 dotenv.config();
+
+import authRoute from "./routes/auth.js";
 
 // security
 import helmet from "helmet";
 import cors from "cors";
 import xss from "xss-clean";
 
+// 因為在 package.json 是使用 type : "module"，所以需要配置 __fileName, __dirName
+// *import.meta是一个给 JavaScript 模块暴露特定上下文的元数据属性的对象。它包含了这个模块的信息，比如说这个模块的 URL。*
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// ===== 建立 express app =====
 const app = express();
 
 app.use(express.json());
@@ -20,11 +31,10 @@ app.use(bodyParser.urlencoded({ limit: "30mb", extended: true })); // 解析 url
 // security
 app.use(cors());
 app.use(helmet());
+app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 app.use(xss());
 
-app.get("/", (req, res) => {
-  res.send("hello");
-});
+app.use("/auth", authRoute);
 
 const PORT = process.env.PORT || 3001;
 
