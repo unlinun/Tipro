@@ -8,12 +8,15 @@ import path from "path";
 import dotenv from "dotenv";
 dotenv.config();
 
+// router
 import authRoute from "./routes/auth.js";
+import projectsRoute from "./routes/projects.js";
 
 // security
 import helmet from "helmet";
 import cors from "cors";
 import xss from "xss-clean";
+import { authorizationToken } from "./middleware/auth.js";
 
 // 因為在 package.json 是使用 type : "module"，所以需要配置 __fileName, __dirName
 // *import.meta是一个给 JavaScript 模块暴露特定上下文的元数据属性的对象。它包含了这个模块的信息，比如说这个模块的 URL。*
@@ -34,7 +37,9 @@ app.use(helmet());
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 app.use(xss());
 
+// routes
 app.use("/auth", authRoute);
+app.use("/projects", authorizationToken, projectsRoute);
 
 const PORT = process.env.PORT || 3001;
 
