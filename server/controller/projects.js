@@ -43,7 +43,11 @@ export const getSingleProject = async (req, res) => {
 
 // 創建一個項目
 export const createProject = async (req, res) => {
-  const project = await Projects.create({ ...req.body });
+  const user = req.user;
+  const project = await Projects.create({
+    ...req.body,
+    createdBy: user.userID,
+  });
   res.status(StatusCodes.CREATED).json(project);
 };
 

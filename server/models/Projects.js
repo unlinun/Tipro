@@ -20,6 +20,10 @@ const PhaseSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
+  isCurrentPhase: {
+    type: Boolean,
+    required: true,
+  },
   tasks: {
     type: Array,
     default: [],
