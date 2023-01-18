@@ -1,0 +1,46 @@
+@use "../utils/" as *;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 0;
+}
+
+h1 {
+  font-size: rem(32);
+  font-weight: 700;
+}
+h2 {
+  font-size: rem(28);
+  font-weight: 700;
+}
+h3 {
+  font-size: rem(24);
+  font-weight: 500;
+}
+h4 {
+  font-size: rem(20);
+  font-weight: 500;
+}
+h5 {
+  font-size: rem(16);
+  font-weight: 500;
+}
+h6 {
+  font-size: rem(14);
+  font-weight: 500;
+}
+
+p {
+  margin-top: 0;
+  font-size: rem(12);
+}
+
+a,
+a:link,
+a:active,
+a:visited {
+  text-decoration: none;
+}

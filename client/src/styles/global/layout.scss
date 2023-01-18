@@ -1,0 +1,17 @@
+@use "../utils/" as *;
+
+#root {
+  width: calc(100vw - rem(80));
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hidden {
+  display: none;
+}
+
+.logo {
+  width: rem(80);
+}
