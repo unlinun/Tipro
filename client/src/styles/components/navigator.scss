@@ -1,0 +1,98 @@
+@use "../utils/" as *;
+
+.navigator {
+  padding: rem(8) rem(16);
+  width: 100%;
+  height: rem(50);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--light-white);
+  border-radius: rem(20);
+  &__search {
+    width: rem(100);
+    padding: rem(8);
+    height: rem(30);
+    display: flex;
+    align-items: center;
+    gap: rem(8);
+    background-color: var(--primary-gray);
+    border-radius: rem(20);
+    transition: all 0.3s;
+    &:focus,
+    &:focus-within {
+      width: rem(200);
+    }
+    svg {
+      max-width: rem(12);
+      max-height: rem(12);
+      path {
+        stroke-width: 1.5;
+        stroke: var(--dark-gray);
+      }
+    }
+    input {
+      width: 100%;
+      background-color: transparent;
+      border: none;
+      outline: none;
+      color: var(--dark-gray);
+    }
+  }
+  &__add {
+    padding: rem(12);
+    height: rem(30);
+    display: flex;
+    align-items: center;
+    gap: rem(12);
+    background-color: var(--primary-gray);
+    border-radius: rem(20);
+    font-weight: 500;
+    cursor: pointer;
+    &:hover {
+      opacity: 0.8;
+    }
+    svg {
+      max-width: rem(20);
+      max-height: rem(20);
+      background-color: var(--primary-green);
+      border-radius: 50%;
+      path {
+        stroke: var(--light-white);
+        stroke-width: 1.5;
+      }
+    }
+  }
+  &__info {
+    height: rem(30);
+    display: flex;
+    align-items: center;
+  }
+}
+
+.info {
+  gap: rem(16);
+  &__time {
+    display: flex;
+    gap: rem(8);
+  }
+  &__user {
+    width: rem(24);
+    height: rem(24);
+    object-fit: cover;
+    background-color: aqua;
+    border-radius: 50%;
+  }
+  &__mode {
+    .toggle {
+      background-color: var(--primary-gray);
+      width: rem(40);
+      height: rem(20);
+      border-radius: rem(10);
+      display: flex;
+      justify-content: space-around;
+    }
+    input {
+    }
+  }
+}

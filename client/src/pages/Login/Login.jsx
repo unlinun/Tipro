@@ -25,6 +25,7 @@ const Login = () => {
 
   const loginUser = async (data, e) => {
     console.log(data);
+    // navigate("/");
   };
 
   return (

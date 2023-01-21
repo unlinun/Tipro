@@ -8,6 +8,23 @@
   align-items: center;
 }
 
+.container {
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  grid-template-rows: 1fr;
+  background-color: var(--primary-lightgray);
+}
+.content {
+  padding: rem(40);
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 7fr;
+  background-color: var(--primary-gray);
+  border-radius: rem(50) 0 0 rem(50);
+}
+
 .hidden {
   display: none;
 }
