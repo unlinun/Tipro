@@ -37,8 +37,8 @@ export const CategoryIcon = () => {
   return (
     <svg
       width="20"
-      height="29"
-      viewBox="0 0 20 29"
+      height="20"
+      viewBox="0 0 20 20"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
@@ -362,6 +362,124 @@ export const AddIcon = () => {
         d="M6 12H18M12 18V6"
         stroke="#151815"
         strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+};
+
+export const DeleteIcon = () => {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <g clipPath="url(#clip0_20_3105)">
+        <path
+          d="M5.87329 1.33337L3.45996 3.75337M10.1266 1.33337L12.54 3.75337"
+          stroke="#151815"
+          strokeMiterlimit="10"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M1.3335 5.23336C1.3335 4.00002 1.9935 3.90002 2.8135 3.90002H13.1868C14.0068 3.90002 14.6668 4.00002 14.6668 5.23336C14.6668 6.66669 14.0068 6.56669 13.1868 6.56669H2.8135C1.9935 6.56669 1.3335 6.66669 1.3335 5.23336Z"
+          stroke="#151815"
+        />
+        <path
+          d="M6.50683 9.33329V11.7M9.5735 9.33329V11.7M2.3335 6.66663L3.2735 12.4266C3.48683 13.72 4.00016 14.6666 5.90683 14.6666H9.92683C12.0002 14.6666 12.3068 13.76 12.5468 12.5066L13.6668 6.66663"
+          stroke="#151815"
+          strokeLinecap="round"
+        />
+      </g>
+      <defs>
+        <clipPath id="clip0_20_3105">
+          <rect width="16" height="16" fill="white" />
+        </clipPath>
+      </defs>
+    </svg>
+  );
+};
+
+export const EditIcon = () => {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <g clipPath="url(#clip0_20_3101)">
+        <path
+          d="M7.3335 1.33337H6.00016C2.66683 1.33337 1.3335 2.66671 1.3335 6.00004V10C1.3335 13.3334 2.66683 14.6667 6.00016 14.6667H10.0002C13.3335 14.6667 14.6668 13.3334 14.6668 10V8.66671"
+          stroke="#151815"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M10.6933 2.01338L5.43992 7.26671C5.23992 7.46671 5.03992 7.86005 4.99992 8.14671L4.71325 10.1534C4.60659 10.88 5.11992 11.3867 5.84659 11.2867L7.85325 11C8.13325 10.96 8.52659 10.76 8.73325 10.56L13.9866 5.30671C14.8933 4.40005 15.3199 3.34671 13.9866 2.01338C12.6533 0.680046 11.5999 1.10671 10.6933 2.01338V2.01338Z"
+          stroke="#151815"
+          strokeMiterlimit="10"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M9.93994 2.76672C10.161 3.5517 10.5799 4.26677 11.1566 4.84342C11.7332 5.42007 12.4483 5.839 13.2333 6.06006"
+          stroke="#151815"
+          strokeMiterlimit="10"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </g>
+      <defs>
+        <clipPath id="clip0_20_3101">
+          <rect width="16" height="16" fill="white" />
+        </clipPath>
+      </defs>
+    </svg>
+  );
+};
+
+export const RightArrowIcon = () => {
+  return (
+    <svg
+      width="6"
+      height="10"
+      viewBox="0 0 6 10"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M1 8.92L4.26 5.66C4.645 5.275 4.645 4.645 4.26 4.26L1 1"
+        stroke="#151815"
+        strokeWidth="1.5"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+};
+
+export const LeftArrowIcon = () => {
+  return (
+    <svg
+      width="6"
+      height="10"
+      viewBox="0 0 6 10"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M4.54883 1.00004L1.28883 4.26004C0.903828 4.64504 0.903828 5.27504 1.28883 5.66004L4.54883 8.92004"
+        stroke="#151815"
+        strokeWidth="1.5"
+        strokeMiterlimit="10"
         strokeLinecap="round"
         strokeLinejoin="round"
       />

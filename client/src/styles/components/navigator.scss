@@ -2,6 +2,7 @@
 
 .navigator {
   padding: rem(8) rem(16);
+  margin-bottom: rem(20);
   width: 100%;
   height: rem(50);
   display: flex;
@@ -10,18 +11,21 @@
   background-color: var(--light-white);
   border-radius: rem(20);
   &__search {
-    width: rem(100);
-    padding: rem(8);
-    height: rem(30);
-    display: flex;
-    align-items: center;
-    gap: rem(8);
-    background-color: var(--primary-gray);
-    border-radius: rem(20);
-    transition: all 0.3s;
-    &:focus,
-    &:focus-within {
-      width: rem(200);
+    width: rem(200);
+    .wrapper {
+      width: rem(100);
+      padding: rem(8);
+      height: rem(30);
+      display: flex;
+      align-items: center;
+      gap: rem(8);
+      background-color: var(--primary-gray);
+      border-radius: rem(20);
+      transition: all 0.3s;
+      &:focus,
+      &:focus-within {
+        width: rem(200);
+      }
     }
     svg {
       max-width: rem(12);
@@ -67,23 +71,34 @@
     height: rem(30);
     display: flex;
     align-items: center;
+    justify-content: space-between;
   }
 }
 
 .info {
-  gap: rem(16);
+  gap: rem(24);
   &__time {
     display: flex;
     gap: rem(8);
   }
   &__user {
-    width: rem(24);
-    height: rem(24);
+    width: rem(30);
+    height: rem(30);
     object-fit: cover;
-    background-color: aqua;
+    background-color: rgb(147, 150, 150);
     border-radius: 50%;
   }
   &__mode {
+    display: flex;
+    align-items: center;
+    gap: rem(8);
+    svg {
+      width: rem(20);
+      path {
+        stroke-width: 2;
+        stroke: var(--dark-gray);
+      }
+    }
     .toggle {
       background-color: var(--primary-gray);
       width: rem(40);
@@ -91,8 +106,37 @@
       border-radius: rem(10);
       display: flex;
       justify-content: space-around;
+      gap: rem(8);
+      position: relative;
+      input[type="radio"] {
+        height: 100%;
+        width: 100%;
+        opacity: 0;
+        cursor: pointer;
+      }
+
+      &__switcher {
+        width: rem(16);
+        height: rem(16);
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        background-color: var(--primary-green);
+        border-radius: 50%;
+
+        transition: all 0.3s cubic-bezier(0.445, 0.05, 0.55, 0.95);
+        &:hover {
+          opacity: 0.8;
+        }
+      }
     }
-    input {
+    #light:checked ~ .toggle__switcher {
+      left: 70%;
+    }
+    #dark:checked ~ .toggle__switcher {
+      left: 30%;
+      background-color: var(--dark-lightgray);
     }
   }
 }

@@ -1,0 +1,225 @@
+@use "../utils/" as *;
+
+.projects {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  &__menu {
+    display: flex;
+    flex-direction: row;
+    gap: 0;
+    align-self: flex-start;
+  }
+  &__table {
+    width: 100%;
+    padding: rem(8);
+    margin-bottom: rem(20);
+    background-color: var(--light-white);
+    border-radius: 0 rem(20) rem(20) rem(20);
+  }
+  &__pagination {
+    width: rem(200);
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    color: var(--dark-lightgray);
+    font-size: rem(14);
+    .pagination {
+      width: rem(24);
+      height: rem(24);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+    }
+    svg {
+      cursor: pointer;
+      &:hover {
+        opacity: 0.5;
+      }
+    }
+  }
+}
+
+// MENU
+.menu {
+  &__item {
+    padding: rem(12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--light-lightgray);
+    border-radius: rem(20) rem(20) 0 0;
+    font-size: rem(12);
+    font-weight: 500;
+    color: var(--dark-lightgray);
+    text-transform: uppercase;
+    cursor: pointer;
+    &:hover {
+      background-color: var(--primary-lightgray);
+    }
+    &.active {
+      background-color: var(--light-white);
+      color: var(--dark-gray);
+    }
+  }
+}
+
+// TABLE
+
+.table {
+  &__body {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: rem(20);
+  }
+  &__row {
+    padding: rem(6);
+    display: grid;
+    grid-template-columns: 2fr 0.25fr 1fr 1fr 0.5fr 1fr 1fr 1fr 1fr;
+    align-items: center;
+    justify-items: left;
+    column-gap: rem(12);
+    &--head {
+      margin-bottom: rem(12);
+    }
+  }
+  &__title {
+    font-size: rem(12);
+    text-transform: uppercase;
+  }
+  &__cell {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-transform: capitalize;
+    &--center {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+  &__select {
+    width: rem(120);
+  }
+  &__image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: rem(32);
+    height: rem(32);
+    object-fit: cover;
+    background-color: var(--event-darkgreen);
+    border-radius: 50%;
+    &--staff {
+      font-size: rem(12);
+      &:nth-child(-1) {
+        margin-left: 0;
+      }
+      margin-left: rem(-8);
+    }
+  }
+  &__staff {
+    display: flex;
+    flex-direction: row-reverse;
+    margin-left: rem(8);
+  }
+  &__function {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: rem(12);
+    cursor: pointer;
+  }
+  &__add {
+    padding: 0 rem(8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: rem(8);
+    p {
+      font-size: rem(14);
+    }
+    svg {
+      width: rem(16);
+      height: rem(16);
+      background-color: var(--primary-green);
+      border-radius: 50%;
+      path {
+        stroke: var(--light-white);
+      }
+    }
+  }
+}
+
+// STATUS
+.status {
+  width: rem(8);
+  height: rem(8);
+  border-radius: 50%;
+  &--low {
+    background-color: var(--event-green);
+  }
+  &--medium {
+    background-color: var(--event-yellow);
+  }
+  &--high {
+    background-color: var(--event-red);
+  }
+}
+
+// select
+.select {
+  border: none;
+  padding: rem(2) rem(8);
+  font-size: rem(14);
+  display: grid;
+  align-items: center;
+  grid-template-areas: "select";
+  border-radius: rem(20);
+  line-height: 1.1;
+  cursor: pointer;
+  &--phase {
+    background-color: var(--event-darkgreen);
+  }
+  &--status {
+    background-color: var(--event-lightblue);
+  }
+  &__input {
+    color: var(--light-white);
+    font-weight: 500;
+  }
+
+  &::after {
+    content: "";
+    width: rem(8);
+    height: rem(4);
+    background-color: var(--light-white);
+    clip-path: polygon(100% 0%, 0 0%, 50% 100%);
+    grid-area: select;
+    justify-self: end;
+  }
+}
+
+select {
+  width: 100%;
+  // A reset of styles, including removing the default dropdown arrow
+  appearance: none;
+  // Additional resets for further consistency
+  background-color: transparent;
+  border: none;
+  padding: 0 rem(16) 0 0;
+  margin: 0;
+  text-transform: capitalize;
+  line-height: inherit;
+  outline: none;
+  grid-area: select;
+  align-items: center;
+
+  cursor: pointer;
+  &::-ms-expand {
+    display: none;
+  }
+}

@@ -129,7 +129,7 @@ const Register = () => {
             value="Create my account"
           />
           <p>
-            Have an account? <Link to="/login">Login here</Link>
+            Have an account? <Link to="/home/login">Login here</Link>
           </p>
         </div>
       </form>
