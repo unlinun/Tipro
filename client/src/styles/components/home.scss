@@ -38,16 +38,18 @@
   &__intro {
     display: flex;
     flex-direction: column;
-    .content {
-      margin-bottom: rem(32);
-      display: flex;
-      flex-direction: column;
-      gap: rem(8);
-      h1 {
-        margin-bottom: rem(8);
-      }
-      h3 {
-        color: var(--dark-gray);
+    .intro {
+      &__content {
+        margin-bottom: rem(32);
+        display: flex;
+        flex-direction: column;
+        gap: rem(8);
+        h1 {
+          margin-bottom: rem(8);
+        }
+        h3 {
+          color: var(--dark-gray);
+        }
       }
       &__btn {
         width: rem(140);

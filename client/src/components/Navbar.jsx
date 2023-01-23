@@ -8,15 +8,15 @@ const Navbar = () => {
 
   return (
     <nav className="nav">
-      <Link to="/">
+      <Link to="/home">
         <img className="logo nav__logo" src={logo} alt="TiPro-logo" />
       </Link>
-      {currentURL === "/" ? (
+      {currentURL === "/home" ? (
         <div className="nav__menu">
-          <Link to="/login" className="link">
+          <Link to="login" className="link">
             login
           </Link>
-          <Link to="/register" className="link">
+          <Link to="register" className="link">
             sign up
           </Link>
         </div>

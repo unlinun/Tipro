@@ -5,14 +5,14 @@ import logo from "../../assets/logo.png";
 const Home = () => {
   return (
     <main className="main">
-      <div className="main__intro">
-        <div className="content">
+      <div className="main__intro intro">
+        <div className="intro__content">
           <h1>Time & Project control</h1>
           <h3>Keep track your Time</h3>
           <h3>Keep track your project</h3>
         </div>
-        <Link to="/register">
-          <button className="content__btn">Try TiPro Now</button>
+        <Link to="register">
+          <button className="intro__btn">Try TiPro Now</button>
         </Link>
       </div>
       <div className="main__image">

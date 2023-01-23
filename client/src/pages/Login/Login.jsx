@@ -2,11 +2,9 @@ import React from "react";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+import { Link } from "react-router-dom";
 
 const Login = () => {
-  const navigate = useNavigate();
   // form schema
   const schema = yup.object().shape({
     email: yup
@@ -25,6 +23,7 @@ const Login = () => {
 
   const loginUser = async (data, e) => {
     console.log(data);
+    // navigate("/");
   };
 
   return (
@@ -62,7 +61,7 @@ const Login = () => {
             Continue Login
           </button>
           <p>
-            Try TiPro for free? <Link to="/register">Sign up here!</Link>
+            Try TiPro for free? <Link to="/home/register">Sign up here!</Link>
           </p>
         </div>
       </form>
