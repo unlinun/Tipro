@@ -8,6 +8,7 @@ const ShareSidebarNav = () => {
     <div className="container">
       <Sidebar />
       <div className="content">
+        <div className="content__toggle"></div>
         <Navigator />
         <Outlet />
       </div>
