@@ -15,7 +15,7 @@ import {
 
 const Sidebar = () => {
   return (
-    <aside className="sidebar sidebar--narrow">
+    <aside className="sidebar">
       <div className="sidebar__user user">
         <img src="{logo}" alt="user" className="user__img" />
         <div className="user__info">
