@@ -3,10 +3,12 @@
 .sidebar {
   display: flex;
   flex-direction: column;
-  gap: rem(20);
-  justify-content: space-between;
+  gap: rem(80);
+  justify-content: center;
   position: relative;
-
+  width: 100%;
+  min-height: rem(600);
+  overflow: hidden;
   &__user {
     display: flex;
   }
@@ -17,24 +19,62 @@
     display: flex;
   }
 }
-//USER
 
-.user {
-  padding: rem(20);
-  align-items: center;
-  //   justify-content: space-around;
-  gap: rem(32);
-  &__img {
-    width: rem(40);
-    height: rem(40);
-    border-radius: 50%;
-    object-fit: cover;
-    background-color: rgb(103, 103, 103);
+.container {
+  //USER
+
+  .user {
+    padding: rem(20);
+    align-items: center;
+    gap: rem(32);
+
+    &__img {
+      width: rem(40);
+      min-height: rem(40);
+      border-radius: 50%;
+      object-fit: cover;
+      background-color: rgb(103, 103, 103);
+    }
+    &__info {
+      display: flex;
+      flex-direction: column;
+      gap: rem(4);
+      p {
+        white-space: nowrap;
+      }
+    }
   }
-  &__info {
-    display: flex;
-    flex-direction: column;
-    gap: rem(4);
+
+  //FOOTER
+
+  .footer {
+    padding: rem(20);
+    align-items: center;
+    gap: rem(40);
+    img {
+      width: rem(60);
+    }
+    a {
+      font-size: rem(12);
+      font-weight: 500;
+      color: var(--dark-black);
+    }
+  }
+
+  &--close {
+    .content__toggle::after {
+      content: ">";
+    }
+    grid-template-columns: 1fr 24fr;
+    .user {
+      padding: rem(20) rem(14);
+      &__img {
+        min-width: rem(40);
+      }
+    }
+    .footer {
+      padding: rem(20) rem(14);
+    }
   }
 }
 
@@ -47,14 +87,16 @@
     padding: rem(12) rem(20);
     display: flex;
     align-items: center;
+    justify-content: flex-start;
     gap: rem(24);
     text-decoration: none;
     text-transform: uppercase;
     color: var(--dark-black);
     transition: all 0.2s;
+    overflow: hidden;
     svg {
-      width: rem(24);
-      height: rem(24);
+      min-width: rem(24);
+      min-height: rem(24);
       object-fit: cover;
     }
     &.active:hover {
@@ -62,6 +104,11 @@
     }
     &:hover {
       background-color: var(--primary-gray);
+    }
+    h6 {
+      // text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
     }
   }
   .active {
@@ -80,21 +127,5 @@
     border-radius: rem(5);
     background-color: var(--primary-green);
     cursor: pointer;
-  }
-}
-
-//FOOTER
-
-.footer {
-  padding: rem(20);
-  align-items: center;
-  gap: rem(40);
-  img {
-    width: rem(60);
-  }
-  a {
-    font-size: rem(12);
-    font-weight: 500;
-    color: var(--dark-black);
   }
 }

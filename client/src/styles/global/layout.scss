@@ -15,14 +15,45 @@
   grid-template-columns: 1fr 5fr;
   grid-template-rows: 1fr;
   background-color: var(--primary-lightgray);
+  transition: all 0.4s ease-in-out;
 }
 .content {
+  min-height: rem(800);
   padding: rem(24);
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: auto 7fr;
   background-color: var(--primary-gray);
   border-radius: rem(50) 0 0 rem(50);
+  position: relative;
+  &__toggle {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: rem(20);
+    height: rem(20);
+    top: rem(60);
+    left: 0;
+    transform: translate(-50%, 0);
+    background-color: var(--primary-green);
+    border-radius: rem(10);
+    cursor: pointer;
+    transition: all 0.2s;
+    &:hover {
+      opacity: 0.5;
+    }
+    &::after {
+      content: "<";
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: rem(10);
+      height: rem(10);
+      color: var(--primary-lightgray);
+      font-weight: 600;
+    }
+  }
 }
 
 .hidden {
