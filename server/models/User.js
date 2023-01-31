@@ -31,6 +31,10 @@ const UserSchema = new mongoose.Schema({
     type: String,
     default: "",
   },
+  position: {
+    type: String,
+    default: "Staff",
+  },
   createdProjects: {
     type: Array,
     default: [],

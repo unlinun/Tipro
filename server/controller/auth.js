@@ -6,7 +6,9 @@ export const register = async (req, res) => {
   // 1.在 UserSchema 中先對密碼進行預處理（詳見 ../models/User.js）
   try {
     const user = await User.create({ ...req.body });
-    res.status(StatusCodes.CREATED).json({ user: { username: user.username } });
+    res
+      .status(StatusCodes.CREATED)
+      .json({ user: { username: user.username, position: user.position } });
   } catch (error) {
     res
       .status(StatusCodes.BAD_REQUEST)
@@ -44,7 +46,10 @@ export const login = async (req, res) => {
     const token = user.createToken();
     res
       .status(StatusCodes.OK)
-      .json({ user: { username: user.username }, token });
+      .json({
+        user: { username: user.username, position: user.position },
+        token,
+      });
   } catch (error) {
     console.log(error.message);
   }
