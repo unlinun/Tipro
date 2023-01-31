@@ -44,10 +44,12 @@
     }
   }
   &__add {
+    min-width: rem(120);
     padding: rem(12);
     height: rem(30);
     display: flex;
     align-items: center;
+    justify-content: space-around;
     gap: rem(12);
     background-color: var(--primary-gray);
     border-radius: rem(20);

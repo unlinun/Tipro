@@ -2,15 +2,20 @@
 
 .sidebar {
   display: flex;
-  flex-direction: column;
-  gap: rem(80);
-  justify-content: center;
-  position: relative;
-  width: 100%;
-  min-height: rem(600);
-  overflow: hidden;
-  &__user {
+  align-items: center;
+  &__wrapper {
+    height: calc(100% - rem(12));
     display: flex;
+    flex-direction: column;
+    gap: rem(80);
+    justify-content: center;
+    position: relative;
+    width: 100%;
+    min-height: rem(600);
+    overflow: hidden;
+  }
+  &__user {
+    display: grid;
   }
   &__menu {
     display: flex;
@@ -25,12 +30,13 @@
 
   .user {
     padding: rem(20);
+    grid-template-columns: rem(40) 1fr;
     align-items: center;
     gap: rem(32);
 
     &__img {
       width: rem(40);
-      min-height: rem(40);
+      height: rem(40);
       border-radius: 50%;
       object-fit: cover;
       background-color: rgb(103, 103, 103);
@@ -39,7 +45,11 @@
       display: flex;
       flex-direction: column;
       gap: rem(4);
+      h5 {
+        text-transform: capitalize;
+      }
       p {
+        text-transform: lowercase;
         white-space: nowrap;
       }
     }
@@ -62,18 +72,10 @@
   }
 
   &--close {
-    .content__toggle::after {
-      content: ">";
-    }
-    grid-template-columns: 1fr 24fr;
     .user {
-      padding: rem(20) rem(14);
       &__img {
-        min-width: rem(40);
+        width: rem(40);
       }
-    }
-    .footer {
-      padding: rem(20) rem(14);
     }
   }
 }
@@ -84,7 +86,7 @@
   gap: rem(20);
   width: 100%;
   a {
-    padding: rem(12) rem(20);
+    padding: rem(12) rem(26);
     display: flex;
     align-items: center;
     justify-content: flex-start;

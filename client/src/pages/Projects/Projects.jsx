@@ -1,48 +1,41 @@
 import React from "react";
-import { LeftArrowIcon, RightArrowIcon } from "../../assets/icons";
+import { useEffect } from "react";
+import { useState } from "react";
+import { useSelector } from "react-redux";
+import { NavLink } from "react-router-dom";
+import { getAllProjects } from "../../api/projects";
 import ProjectTable from "./ProjectTable";
+
 const Projects = () => {
+  const token = useSelector((state) => state.auth.token);
+  const [projects, setProjects] = useState([]);
+
+  useEffect(() => {
+    const getData = async () => {
+      const data = await getAllProjects(token);
+      setProjects(data);
+      console.log(data);
+    };
+    getData();
+  }, []);
   return (
     <div className="projects">
       <div className="projects__menu menu">
-        <div className="menu__item active">in progress</div>
-        <div className="menu__item">in progress</div>
-        <div className="menu__item">in progress</div>
-        <div className="menu__item">in progress</div>
+        {/* filter nav*/}
+        <NavLink to="/projects/initiating" className="menu__item">
+          initiating
+        </NavLink>
+        <NavLink to="/projects/progress" className="menu__item">
+          in progress
+        </NavLink>
+        <NavLink to="/projects/canceled" className="menu__item">
+          canceled
+        </NavLink>
+        <NavLink to="/projects/finished" className="menu__item">
+          finished
+        </NavLink>
       </div>
-      <table className="projects__table table">
-        <thead className="table__head">
-          <tr className="table__row table__row--head">
-            <th className="table__title">project name</th>
-            <th className="table__title"></th>
-            <th className="table__title">owner</th>
-            <th className="table__title">phase</th>
-            <th className="table__title">PM</th>
-            <th className="table__title">staff</th>
-            <th className="table__title">start date</th>
-            <th className="table__title">status</th>
-            <th className="table__title"></th>
-            <th className="table__title"></th>
-          </tr>
-        </thead>
-        <tbody className="table__body">
-          <ProjectTable />
-          <ProjectTable />
-          <ProjectTable />
-          <ProjectTable />
-          <ProjectTable />
-          <ProjectTable />
-          <ProjectTable />
-          <ProjectTable />
-          <ProjectTable />
-          <ProjectTable />
-        </tbody>
-      </table>
-      <div className="projects__pagination">
-        <LeftArrowIcon />
-        <span className="pagination">1/10</span>
-        <RightArrowIcon />
-      </div>
+      <ProjectTable />
     </div>
   );
 };

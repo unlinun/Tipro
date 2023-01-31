@@ -71,17 +71,17 @@
   &__body {
     display: grid;
     grid-template-columns: 1fr;
-    gap: rem(20);
+    gap: rem(24);
   }
   &__row {
     padding: rem(6);
     display: grid;
-    grid-template-columns: 2fr 0.25fr 1fr 1fr 0.5fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 2fr rem(50) 1fr 1fr rem(50) rem(100) 0.5fr 1fr 1fr;
     align-items: center;
     justify-items: left;
-    column-gap: rem(12);
+    column-gap: rem(32);
     &--head {
-      margin-bottom: rem(12);
+      margin-bottom: rem(16);
     }
   }
   &__title {
@@ -89,7 +89,7 @@
     text-transform: uppercase;
   }
   &__cell {
-    max-width: 100%;
+    width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -102,7 +102,7 @@
     }
   }
   &__select {
-    width: rem(120);
+    min-width: rem(120);
   }
   &__image {
     display: flex;
@@ -124,12 +124,13 @@
   &__staff {
     display: flex;
     flex-direction: row-reverse;
+    justify-content: flex-end;
     margin-left: rem(8);
   }
   &__function {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     gap: rem(12);
     cursor: pointer;
   }
@@ -204,7 +205,6 @@
 }
 
 select {
-  width: 100%;
   // A reset of styles, including removing the default dropdown arrow
   appearance: none;
   // Additional resets for further consistency

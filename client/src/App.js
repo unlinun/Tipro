@@ -23,9 +23,11 @@ const App = () => {
           <Route path="/home/register" element={<Register />} />
         </Route>
         <Route path="/" element={<ShareSidebarNav />}>
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route index element={<Dashboard />} />
           <Route path="/timer" element={<Timer />} />
-          <Route path="/projects" element={<Projects />} />
+          <Route path="/projects" element={<Projects />}>
+            <Route path="/projects/:id" />
+          </Route>
           <Route path="/tasks" element={<Tasks />} />
           <Route path="/clients" element={<Clients />} />
           <Route path="/reports" element={<Reports />} />

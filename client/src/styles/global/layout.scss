@@ -12,13 +12,19 @@
   width: 100vw;
   height: 100vh;
   display: grid;
-  grid-template-columns: 1fr 5fr;
+  grid-template-columns: 1fr 6fr;
   grid-template-rows: 1fr;
   background-color: var(--primary-lightgray);
-  transition: all 0.4s ease-in-out;
+  transition: all 0.5s ease-in-out;
+  &--close {
+    .content__toggle::after {
+      content: ">";
+    }
+    grid-template-columns: rem(80) 24fr;
+  }
 }
 .content {
-  min-height: rem(800);
+  max-height: 100%;
   padding: rem(24);
   display: grid;
   grid-template-columns: 1fr;
@@ -26,18 +32,20 @@
   background-color: var(--primary-gray);
   border-radius: rem(50) 0 0 rem(50);
   position: relative;
+  transition: all 0.4s ease-in-out;
+
   &__toggle {
     position: absolute;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: rem(20);
-    height: rem(20);
+    width: rem(24);
+    height: rem(24);
     top: rem(60);
     left: 0;
     transform: translate(-50%, 0);
     background-color: var(--primary-green);
-    border-radius: rem(10);
+    border-radius: rem(5);
     cursor: pointer;
     transition: all 0.2s;
     &:hover {

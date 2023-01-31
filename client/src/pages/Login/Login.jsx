@@ -1,11 +1,19 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { setLogin } from "../../state/authSlice";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { loginAuth } from "../../api/auth.js";
+import { useState } from "react";
+import { useEffect } from "react";
 
+// Login component
 const Login = () => {
-  // form schema
+  const [errorMsg, setErrorMsg] = useState("");
+  const navigator = useNavigate();
+  // 使用 yup 來創建 form schema
   const schema = yup.object().shape({
     email: yup
       .string()
@@ -21,15 +29,38 @@ const Login = () => {
     resolver: yupResolver(schema),
   });
 
-  const loginUser = async (data, e) => {
-    console.log(data);
-    // navigate("/");
+  const dispatch = useDispatch();
+
+  // 登入取得使用者資料
+  const login = async (data, e) => {
+    try {
+      const loginData = await loginAuth(data.email, data.password);
+      // 如果登入成功，即可取得 token，並將 token 儲存於 redux 當中以便後續使用
+      if (loginData) {
+        dispatch(
+          setLogin({
+            user: loginData.user,
+            token: loginData.token,
+          })
+        );
+        navigator("/");
+      }
+    } catch (error) {
+      setErrorMsg("Incorrect email & password, please try again!");
+    }
   };
+
+  // 顯示 error message, 並在 3 秒之後清空
+  useEffect(() => {
+    setTimeout(() => {
+      setErrorMsg("");
+    }, 3000);
+  }, [errorMsg]);
 
   return (
     <div className="login">
       <h2>Login</h2>
-      <form className="form" id="form" onSubmit={handleSubmit(loginUser)}>
+      <form className="form" id="form" onSubmit={handleSubmit(login)}>
         <div className="form__item">
           <label className="form__label">Email*</label>
           <input
@@ -56,6 +87,7 @@ const Login = () => {
             {errors?.password?.message}
           </p>
         </div>
+        <p className="form__alert form__alert--error">{errorMsg}</p>
         <div className="form__submit">
           <button className="form__submit__btn" type="submit" form="form">
             Continue Login
