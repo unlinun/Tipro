@@ -1,8 +1,20 @@
 import React from "react";
+import { useQuery } from "react-query";
+import { useSelector } from "react-redux";
+import { getAllProjects } from "../../api/projects";
 import { RightArrowIcon, LeftArrowIcon } from "../../assets/icons";
 import ProjectTableRow from "./ProjectTableRow";
 
-const ProjectTable = () => {
+const ProjectTable = ({ projectsFilter }) => {
+  const token = useSelector((state) => state.token);
+  const { isLoading, data } = useQuery("projects", () => getAllProjects(token));
+  const filterProjects = data?.projects.filter((project) => {
+    if (projectsFilter !== "all") {
+      return project.status === projectsFilter;
+    }
+    return project;
+  });
+
   return (
     <>
       <table className="projects__table table">
@@ -21,7 +33,32 @@ const ProjectTable = () => {
           </tr>
         </thead>
         <tbody className="table__body">
-          <ProjectTableRow />
+          {isLoading ? (
+            <tr style={{ textAlign: "center", justifySelf: "center" }}>
+              <td
+                style={{
+                  textAlign: "center",
+                  margin: "12px",
+                }}
+              >
+                Loading...
+              </td>
+            </tr>
+          ) : null}
+          {filterProjects?.length > 0 ? (
+            filterProjects.map((project) => {
+              return <ProjectTableRow key={project._id} project={project} />;
+            })
+          ) : (
+            <tr style={{ textAlign: "center", justifySelf: "center" }}>
+              <td
+                style={{
+                  textAlign: "center",
+                  margin: "12px",
+                }}
+              >{`No ${projectsFilter} projects`}</td>
+            </tr>
+          )}
         </tbody>
       </table>
       <div className="projects__pagination">

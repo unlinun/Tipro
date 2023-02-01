@@ -1,41 +1,60 @@
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
-import { useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
-import { getAllProjects } from "../../api/projects";
+
 import ProjectTable from "./ProjectTable";
 
 const Projects = () => {
-  const token = useSelector((state) => state.auth.token);
-  const [projects, setProjects] = useState([]);
+  const [projectsFilter, setProjectsFilter] = useState("all");
 
-  useEffect(() => {
-    const getData = async () => {
-      const data = await getAllProjects(token);
-      setProjects(data);
-      console.log(data);
-    };
-    getData();
-  }, []);
+  const handleProjectsFilter = (filter) => {
+    setProjectsFilter(filter);
+  };
+
   return (
     <div className="projects">
       <div className="projects__menu menu">
         {/* filter nav*/}
-        <NavLink to="/projects/initiating" className="menu__item">
+        <div
+          className={`menu__item ${projectsFilter === "all" ? "active" : ""}`}
+          onClick={() => handleProjectsFilter("all")}
+        >
+          all
+        </div>
+        <div
+          className={`menu__item ${
+            projectsFilter === "initiating" ? "active" : ""
+          }`}
+          onClick={() => handleProjectsFilter("initiating")}
+        >
           initiating
-        </NavLink>
-        <NavLink to="/projects/progress" className="menu__item">
+        </div>
+        <div
+          className={`menu__item ${
+            projectsFilter === "in progress" ? "active" : ""
+          }`}
+          onClick={() => handleProjectsFilter("in progress")}
+        >
           in progress
-        </NavLink>
-        <NavLink to="/projects/canceled" className="menu__item">
+        </div>
+        <div
+          className={`menu__item ${
+            projectsFilter === "canceled" ? "active" : ""
+          }`}
+          onClick={() => handleProjectsFilter("canceled")}
+        >
           canceled
-        </NavLink>
-        <NavLink to="/projects/finished" className="menu__item">
+        </div>
+        <div
+          className={`menu__item ${
+            projectsFilter === "finished" ? "active" : ""
+          }`}
+          onClick={() => handleProjectsFilter("finished")}
+        >
           finished
-        </NavLink>
+        </div>
       </div>
-      <ProjectTable />
+      <ProjectTable projectsFilter={projectsFilter} />
     </div>
   );
 };

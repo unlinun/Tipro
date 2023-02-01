@@ -76,7 +76,7 @@
   &__row {
     padding: rem(6);
     display: grid;
-    grid-template-columns: 2fr rem(50) 1fr 1fr rem(50) rem(100) 0.5fr 1fr 1fr;
+    grid-template-columns: 1fr rem(100) 0.5fr 1fr rem(50) rem(100) 0.5fr 1fr 1fr;
     align-items: center;
     justify-items: left;
     column-gap: rem(32);
@@ -99,6 +99,14 @@
       display: flex;
       align-items: center;
       justify-content: center;
+    }
+    input {
+      width: 100%;
+      padding: rem(4);
+      border: 1px solid var(--light-lightgray);
+      border-radius: rem(5);
+      font-size: rem(16);
+      color: var(--dark-black);
     }
   }
   &__select {
@@ -130,9 +138,25 @@
   &__function {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-around;
     gap: rem(12);
     cursor: pointer;
+  }
+  &__edit {
+    display: flex;
+    align-items: center;
+    gap: rem(12);
+    svg {
+      width: rem(16);
+    }
+  }
+  &__icon {
+    &--green {
+      path {
+        stroke: var(--event-green);
+        stroke-width: 2;
+      }
+    }
   }
   &__add {
     padding: 0 rem(8);
@@ -187,6 +211,9 @@
   }
   &--status {
     background-color: var(--event-lightblue);
+  }
+  &--priority {
+    background-color: var(--light-gray);
   }
   &__input {
     color: var(--light-white);

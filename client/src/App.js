@@ -12,8 +12,13 @@ import Tasks from "./pages/Tasks/Tasks";
 import Clients from "./pages/Clients/Clients";
 import Reports from "./pages/Reports/Reports";
 import Setting from "./pages/Setting/Setting";
+import NotFound from "./pages/Not found/NotFound";
+import ProtectedRoute from "./components/ProtectedRoute";
+import { useSelector } from "react-redux";
+import SingleProject from "./pages/Projects/SingleProject/SingleProject";
 
 const App = () => {
+  const token = useSelector((state) => state.token);
   return (
     <Router>
       <Routes>
@@ -22,17 +27,24 @@ const App = () => {
           <Route path="/home/login" element={<Login />} />
           <Route path="/home/register" element={<Register />} />
         </Route>
-        <Route path="/" element={<ShareSidebarNav />}>
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute token={token}>
+              <ShareSidebarNav />
+            </ProtectedRoute>
+          }
+        >
           <Route index element={<Dashboard />} />
           <Route path="/timer" element={<Timer />} />
-          <Route path="/projects" element={<Projects />}>
-            <Route path="/projects/:id" />
-          </Route>
+          <Route path="/projects" element={<Projects />} />
+          <Route path="/projects/:id" element={<SingleProject />} />
           <Route path="/tasks" element={<Tasks />} />
           <Route path="/clients" element={<Clients />} />
           <Route path="/reports" element={<Reports />} />
           <Route path="/setting" element={<Setting />} />
         </Route>
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
   );

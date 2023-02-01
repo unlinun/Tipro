@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import {
   CardTick,
@@ -11,9 +11,11 @@ import {
   UserSquareIcon,
   ChartCircleIcon,
 } from "../assets/icons";
+import { setLogout } from "../state/authSlice";
 
 const Sidebar = () => {
-  const user = useSelector((state) => state.auth.user);
+  const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
   return (
     <aside className="sidebar">
       <div className="sidebar__wrapper">
@@ -58,7 +60,9 @@ const Sidebar = () => {
           </NavLink>
         </div>
         <div className="sidebar__footer footer">
-          <Link to="/home/login">logout</Link>
+          <Link to="/home/login" onClick={() => dispatch(setLogout())}>
+            logout
+          </Link>
         </div>
       </div>
     </aside>
