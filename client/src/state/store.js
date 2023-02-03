@@ -1,4 +1,5 @@
 import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
+import { combineReducers } from "@reduxjs/toolkit";
 import {
   persistReducer,
   FLUSH,
@@ -12,6 +13,7 @@ import storage from "reduxjs-toolkit-persist/lib/storage";
 import autoMergeLevel1 from "reduxjs-toolkit-persist/lib/stateReconciler/autoMergeLevel1";
 
 import authReducer from "../state/authSlice.js";
+import projectReducer from "./projectSlice.js";
 
 // persistConfig
 const persistConfig = {
@@ -20,10 +22,13 @@ const persistConfig = {
   stateReconciler: autoMergeLevel1,
 };
 
-const _persistedReducer = persistReducer(persistConfig, authReducer);
+const reducers = combineReducers({
+  auth: persistReducer(persistConfig, authReducer),
+  project: projectReducer,
+});
 
 export const store = configureStore({
-  reducer: _persistedReducer,
+  reducer: reducers,
   middleware: getDefaultMiddleware({
     serializableCheck: {
       ignoreActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],

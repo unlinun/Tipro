@@ -16,6 +16,7 @@
   grid-template-rows: 1fr;
   background-color: var(--primary-lightgray);
   transition: all 0.5s ease-in-out;
+  position: relative;
   &--close {
     .content__toggle::after {
       content: ">";
@@ -48,6 +49,8 @@
     border-radius: rem(5);
     cursor: pointer;
     transition: all 0.2s;
+
+    z-index: 10;
     &:hover {
       opacity: 0.5;
     }

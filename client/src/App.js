@@ -18,7 +18,7 @@ import { useSelector } from "react-redux";
 import SingleProject from "./pages/Projects/SingleProject/SingleProject";
 
 const App = () => {
-  const token = useSelector((state) => state.token);
+  const token = useSelector((state) => state.auth.token);
   return (
     <Router>
       <Routes>

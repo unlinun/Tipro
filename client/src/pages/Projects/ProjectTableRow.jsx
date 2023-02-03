@@ -15,7 +15,7 @@ import { useSelector } from "react-redux";
 
 const ProjectTableRow = ({ project }) => {
   const startDate = dateFormat(project?.startDate, "isoDate");
-  const token = useSelector((state) => state.token);
+  const token = useSelector((state) => state.auth.token);
   const queryClient = useQueryClient();
   const [isEdit, setIsEdit] = useState(false);
 

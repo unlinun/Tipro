@@ -1,15 +1,33 @@
 import React from "react";
+import { useState } from "react";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { SearchIcon, AddIcon, SunIcon } from "../assets/icons";
+import dateFormat from "dateformat";
 import { setMode } from "../state/authSlice";
+import ProjectForm from "./ProjectForm";
 
 export const Navigator = () => {
   // 找到現在的 url pathname
   const location = useLocation();
   const currentURL = location.pathname;
   const dispatch = useDispatch();
+
+  // 取得現在的時間點
+  const [date, setDate] = useState(new Date());
+  const weekDay = dateFormat(date, "ddd");
+  const time = dateFormat(date, "shortTime");
+  const day = dateFormat(date, "dd");
+  const month = dateFormat(date, "mm");
+
+  // 使用 useEffect 並且使用 setInterval
+  useEffect(() => {
+    var timer = setInterval(() => setDate(new Date()), 10000);
+    return function cleanup() {
+      clearInterval(timer);
+    };
+  });
 
   // 設定整體顏色模式 (dark and light mode)
   const mode = useSelector((state) => state.auth.mode);
@@ -38,14 +56,18 @@ export const Navigator = () => {
           <AddIcon />
         </div>
       )}
-
+      <div className="navigator__form">
+        <ProjectForm />
+      </div>
       <div className="navigator__info info">
         <div className="info__time">
           <h6>
-            01<span>/</span>04
+            {month}
+            <span>/</span>
+            {day}
           </h6>
-          <h6>MON</h6>
-          <h6>15:00</h6>
+          <h6>{weekDay}</h6>
+          <h6>{time}</h6>
         </div>
         <img className="info__user" src="" alt="logo" />
         <div className="info__mode">

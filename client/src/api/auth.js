@@ -37,7 +37,6 @@ export const loginAuth = async (email, password) => {
     )
     .then((res) => {
       if (res.status === 200) {
-        console.log(res.data);
         return res.data;
       } else {
         throw new Error("login fail");

@@ -1,12 +1,13 @@
 import React from "react";
-import { useEffect } from "react";
 import { useState } from "react";
 
 import ProjectTable from "./ProjectTable";
 
 const Projects = () => {
+  // get filter item
   const [projectsFilter, setProjectsFilter] = useState("all");
 
+  // 點擊按鈕時改變 filter item
   const handleProjectsFilter = (filter) => {
     setProjectsFilter(filter);
   };

@@ -13,8 +13,8 @@ export const getAllProjects = async (token) => {
   return data;
 };
 
-export const getSingleProject = async (project, token) => {
-  const res = await axios.get(`${API_URL}/projects/${project._id}`, {
+export const getSingleProject = async (id, token) => {
+  const res = await axios.get(`${API_URL}/projects/${id}`, {
     headers: {
       Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",

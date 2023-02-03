@@ -14,7 +14,7 @@ import {
 import { setLogout } from "../state/authSlice";
 
 const Sidebar = () => {
-  const user = useSelector((state) => state.user);
+  const user = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
   return (
     <aside className="sidebar">

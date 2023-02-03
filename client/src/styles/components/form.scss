@@ -5,8 +5,9 @@
   display: flex;
   flex-direction: column;
   gap: rem(8);
+
   &__item {
-    height: rem(68.5);
+    min-height: rem(68.5);
     display: flex;
     flex-direction: column;
     gap: rem(4);
@@ -14,6 +15,10 @@
   &__label {
     font-size: rem(14);
     color: var(--dark-lightgray);
+  }
+  &__inputs {
+    display: flex;
+    gap: rem(8);
   }
   &__input {
     padding: rem(8);

@@ -1,0 +1,53 @@
+@use "../utils/" as *;
+.form {
+  &--project {
+    width: 60%;
+    height: 80%;
+    padding: rem(20);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: grid;
+    gap: rem(40);
+    grid-template-columns: 1fr 1fr;
+    background-color: var(--primary-gray);
+    border-radius: rem(10);
+    .form__section {
+      display: flex;
+      flex-direction: column;
+      gap: rem(20);
+    }
+    .form__inputs {
+      max-width: 100%;
+    }
+    .form__input {
+      border: none;
+      background-color: var(--light-white);
+    }
+    .form__add {
+      margin-top: rem(8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--dark-gray);
+      cursor: pointer;
+    }
+    textarea {
+      resize: none;
+      height: rem(100);
+    }
+    .select {
+      width: 100%;
+      padding: rem(8) rem(8);
+      background-color: var(--light-white);
+      border-radius: rem(5);
+      &::after {
+        background-color: black;
+      }
+      &__input {
+        color: var(--dark-black);
+      }
+    }
+  }
+}
