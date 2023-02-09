@@ -8,8 +8,9 @@ const Phase = ({ project }) => {
   const token = useSelector((state) => state.auth.token);
   const queryClient = useQueryClient();
   const [isAddTag, setIsAddTag] = useState(false);
+  const [isAddPhase, setIsAddPhase] = useState(false);
   const [tag, setTag] = useState("");
-  const [phase, setPhase] = useState(project?.phase.allPhase);
+  const [phase, setPhase] = useState("");
 
   const { mutate: updateProjectItem } = useMutation(
     (updateProjectItem) => {
@@ -23,6 +24,7 @@ const Phase = ({ project }) => {
   );
 
   const handleAddTag = (e) => {
+    if (e.code === "Escape") setIsAddTag(false);
     if (e.code !== "Enter") return;
     if (tag.trim() !== "") {
       setIsAddTag(!isAddTag);
@@ -32,6 +34,27 @@ const Phase = ({ project }) => {
       });
     }
   };
+
+  const handleAddPhase = (e) => {
+    if (e.code === "Escape") setIsAddPhase(false);
+    if (e.code !== "Enter") return;
+    if (phase.trim() !== "") {
+      setIsAddPhase(!isAddPhase);
+      updateProjectItem({
+        _id: project._id,
+        phase: {
+          currentPhase: project.phase.currentPhase,
+          allPhase: [
+            ...project.phase.allPhase,
+            {
+              title: phase,
+            },
+          ],
+        },
+      });
+    }
+  };
+
   return (
     <div className="project__box project__phase phase">
       <div className="content__text">
@@ -41,7 +64,7 @@ const Phase = ({ project }) => {
             name="phase"
             className="select__input"
             onChange={(e) => {
-              updateProject({
+              updateProjectItem({
                 _id: project._id,
                 phase: {
                   currentPhase: e.target.value,
@@ -67,15 +90,44 @@ const Phase = ({ project }) => {
         <div className="content__box">
           {project?.phase?.allPhase.map((phase, i) => {
             return (
-              <span className="box" key={phase._id}>
-                {i + 1 < 10 ? `0${i + 1}` : i + 1}-{phase.title}
-              </span>
+              <div className="box" key={i}>
+                <span
+                  className="delete delete--phase"
+                  onClick={() => {
+                    updateProjectItem({
+                      _id: project._id,
+                      phase: {
+                        currentPhase: project.phase.currentPhase,
+                        allPhase: project.phase.allPhase.filter(
+                          (tag, index) => index !== i
+                        ),
+                      },
+                    });
+                  }}
+                >
+                  -
+                </span>
+                <span className="box" key={phase._id}>
+                  {i + 1 < 10 ? `0${i + 1}` : i + 1} {phase.title}
+                </span>
+              </div>
             );
           })}
-
-          <span className="box box--add" onClick={() => setIsAddTag(!isAddTag)}>
-            +
-          </span>
+          {isAddPhase ? (
+            <input
+              type="text"
+              className="content__input"
+              onChange={(e) => setPhase(e.target.value)}
+              onKeyDown={(e) => handleAddPhase(e)}
+            />
+          ) : (
+            <span
+              className="box box--add"
+              onClick={() => setIsAddPhase(!isAddPhase)}
+            >
+              +
+            </span>
+          )}
         </div>
       </div>
       <div className="content__text  content__text--column">
@@ -83,8 +135,18 @@ const Phase = ({ project }) => {
         <div className="content__box content__box--white">
           {project?.tags.map((tag, i) => {
             return (
-              <div className="box box--tag">
-                <span className="delete">-</span>
+              <div className="box box--tag" key={i}>
+                <span
+                  className="delete"
+                  onClick={() => {
+                    updateProjectItem({
+                      _id: project._id,
+                      tags: project.tags.filter((tag, index) => index !== i),
+                    });
+                  }}
+                >
+                  -
+                </span>
                 <span className="tag">{tag}</span>
               </div>
             );

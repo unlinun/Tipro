@@ -173,7 +173,7 @@ const Info = ({ project }) => {
         </div>
         <div className="content__text">
           <h6>priority</h6>
-          <div className="select">
+          <div className={`select select--${project?.priority}`}>
             <select
               name="priority"
               className="select__input"

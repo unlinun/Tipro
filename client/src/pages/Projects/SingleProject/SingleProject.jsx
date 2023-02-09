@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
 import { getSingleProject } from "../../../api/projects";
+import Contact from "./components/Contact";
 import Info from "./components/Info";
 import Phase from "./components/Phase";
 
@@ -40,34 +41,7 @@ const SingleProject = () => {
           </div>
         </div>
       </div>
-      <div className="project__box project__contact">
-        <div className="project__edit project__edit--add">+</div>
-        <div className="project__title">contact info</div>
-        <table className="contact__table table">
-          <thead className="table__head">
-            <tr className="table__row table__row--head">
-              <th className="table__title">name</th>
-              <th className="table__title">employer</th>
-              <th className="table__title">position</th>
-              <th className="table__title">phone</th>
-            </tr>
-          </thead>
-          <tbody className="table__body">
-            <tr className="table__row">
-              <td className="table__cell">anna</td>
-              <td className="table__cell">daju</td>
-              <td className="table__cell">manager</td>
-              <td className="table__cell">02-2223-1111#333</td>
-            </tr>
-            <tr className="table__row">
-              <td className="table__cell">anna</td>
-              <td className="table__cell">daju</td>
-              <td className="table__cell">manager</td>
-              <td className="table__cell">02-2223-1111#333</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      <Contact project={project} />
       <div className="project__box project__task">
         <div className="project__title">Tasks</div>
         <table className="contact__table table">

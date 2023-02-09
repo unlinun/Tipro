@@ -132,12 +132,17 @@ const ProjectTableRow = ({ project }) => {
             name="status"
             className="select__input"
             value={project?.status}
-            onChange={() => console.log("!")}
+            onChange={(e) => {
+              updateProjectItem({
+                _id: project?._id,
+                status: e.target.value,
+              });
+            }}
           >
             <option disabled>{project?.status}</option>
             {status.map((status, i) => {
               return (
-                <option value="status" key={i}>
+                <option value={status} key={i}>
                   {status}
                 </option>
               );
