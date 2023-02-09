@@ -11,7 +11,7 @@ export const getAllProjects = async (req, res) => {
       { staff: user.userID },
       { createdBy: user.userID },
     ],
-  });
+  }).sort({ startDate: -1 });
   res.status(StatusCodes.OK).json({ projects, totalProjects: projects.length });
 };
 
@@ -54,6 +54,7 @@ export const createProject = async (req, res) => {
 // 更新一個項目
 export const updateProject = async (req, res) => {
   const user = req.user;
+  console.log(user);
   const { id } = req.params;
   try {
     const project = await Projects.findOneAndUpdate(

@@ -10,6 +10,7 @@ dotenv.config();
 
 // router
 import authRoute from "./routes/auth.js";
+import companyRoute from "./routes/company.js";
 import projectsRoute from "./routes/projects.js";
 
 // security
@@ -39,6 +40,7 @@ app.use(xss());
 
 // routes
 app.use("/auth", authRoute);
+app.use("/staffs", authorizationToken, companyRoute);
 app.use("/projects", authorizationToken, projectsRoute);
 
 const PORT = process.env.PORT || 3001;

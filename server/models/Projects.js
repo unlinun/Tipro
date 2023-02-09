@@ -13,17 +13,11 @@ const PhaseSchema = new mongoose.Schema({
     required: true,
     max: 15,
   },
-  dueDate: {
-    type: Date,
-  },
   duration: {
     type: Number,
     default: 0,
   },
-  isCurrentPhase: {
-    type: Boolean,
-    required: true,
-  },
+
   tasks: {
     type: Array,
     default: [],
@@ -58,6 +52,7 @@ const ProjectsSchema = new mongoose.Schema({
     enum: ["initiating", "in progress", "canceled", "finished"],
     default: "initiating",
   },
+
   priority: {
     type: String,
     enum: ["low", "medium", "high"],
@@ -71,8 +66,8 @@ const ProjectsSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  managers: {
-    type: Array,
+  manager: {
+    type: String,
     required: true,
   },
   staff: {
@@ -84,12 +79,19 @@ const ProjectsSchema = new mongoose.Schema({
       type: ContactInfoSchema,
     },
   ],
-  phase: [
-    {
-      type: PhaseSchema,
+  phase: {
+    currentPhase: {
+      type: String,
       required: true,
     },
-  ],
+    allPhase: [
+      {
+        type: PhaseSchema,
+        required: true,
+      },
+    ],
+  },
+
   createdBy: {
     type: mongoose.Types.ObjectId,
     ref: "User",

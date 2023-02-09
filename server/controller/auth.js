@@ -44,12 +44,15 @@ export const login = async (req, res) => {
       });
     }
     const token = user.createToken();
-    res
-      .status(StatusCodes.OK)
-      .json({
-        user: { username: user.username, position: user.position },
-        token,
-      });
+    console.log(user);
+    res.status(StatusCodes.OK).json({
+      user: {
+        username: user.username,
+        position: user.position,
+        companyID: user.companyID,
+      },
+      token,
+    });
   } catch (error) {
     console.log(error.message);
   }

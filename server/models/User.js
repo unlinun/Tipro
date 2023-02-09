@@ -27,6 +27,10 @@ const UserSchema = new mongoose.Schema({
     type: Date,
     required: [true, "Please provide birthday"],
   },
+  companyID: {
+    type: String,
+    default: "TEST123",
+  },
   avatar: {
     type: String,
     default: "",
@@ -49,11 +53,11 @@ const UserSchema = new mongoose.Schema({
   },
   adminProjects: {
     type: Boolean,
-    default: false,
+    default: true,
   },
   adminReport: {
     type: Boolean,
-    default: false,
+    default: true,
   },
 });
 
@@ -66,7 +70,7 @@ UserSchema.pre("save", async function () {
 // 建立 token (此處使用 Schema 的 methods)
 UserSchema.methods.createToken = function () {
   return jwt.sign(
-    { userID: this._id, username: this.username },
+    { userID: this._id, username: this.username, companyID: this.companyID },
     process.env.JWT_SECRET
   );
 };
