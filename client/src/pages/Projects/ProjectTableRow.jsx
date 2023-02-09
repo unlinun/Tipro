@@ -16,6 +16,7 @@ import { useSelector } from "react-redux";
 const ProjectTableRow = ({ project }) => {
   const startDate = dateFormat(project?.startDate, "isoDate");
   const token = useSelector((state) => state.auth.token);
+  const status = useSelector((state) => state.project.status);
   const queryClient = useQueryClient();
   const [isEdit, setIsEdit] = useState(false);
 
@@ -102,7 +103,8 @@ const ProjectTableRow = ({ project }) => {
       <td className="table__cell">
         <div className="table__select select select--phase">
           <select name="phase" className="select__input">
-            {project?.phase.map((phase) => {
+            <option disabled>{project?.phase.currentPhase}</option>
+            {project?.phase?.allPhase?.map((phase) => {
               return (
                 <option value="" key={phase?._id}>
                   {phase?.title}
@@ -126,9 +128,20 @@ const ProjectTableRow = ({ project }) => {
       <td className="table__cell">{startDate}</td>
       <td className="table__cell">
         <div className="table__select select select--status">
-          <select name="status" className="select__input">
-            <option value="">jkjk;</option>
-            <option value="">jj;</option>
+          <select
+            name="status"
+            className="select__input"
+            value={project?.status}
+            onChange={() => console.log("!")}
+          >
+            <option disabled>{project?.status}</option>
+            {status.map((status, i) => {
+              return (
+                <option value="status" key={i}>
+                  {status}
+                </option>
+              );
+            })}
           </select>
         </div>
       </td>

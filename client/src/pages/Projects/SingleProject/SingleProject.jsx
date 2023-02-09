@@ -2,8 +2,10 @@ import React from "react";
 import { useQuery } from "react-query";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import dateFormat from "dateformat";
+
 import { getSingleProject } from "../../../api/projects";
+import Info from "./components/Info";
+import Phase from "./components/Phase";
 
 const SingleProject = () => {
   const { id } = useParams();
@@ -11,112 +13,13 @@ const SingleProject = () => {
   const { data: project } = useQuery("singleProject", () =>
     getSingleProject(id, token)
   );
-  console.log(project);
 
   return (
     <div className="project">
-      <div className="project__box project__info">
-        <div className="project__title">{project?.title}</div>
-        <div className="info">
-          <div className="info__description">
-            <h6>Project description</h6>
-            <p>{project?.description}</p>
-          </div>
-          <div className="content__text">
-            <h6>start date</h6>
-            <p>{dateFormat(project?.startDate, "isoDate")}</p>
-          </div>
-          <div className="content__text">
-            <h6>location</h6>
-            <p>
-              {project?.location.city}, {project?.location.country}
-            </p>
-          </div>
-          <div className="content__text">
-            <h6>business owner</h6>
-            <p>{project?.businessOwner}</p>
-          </div>
-          <div className="content__text">
-            <h6>status</h6>
-            <div className="select">
-              <select
-                name="status"
-                className="select__input"
-                defaultValue={project?.status}
-              >
-                <option value="initiating">initiating</option>
-                <option value="in progress">inprogress</option>
-                <option value="canceled">canceled</option>
-                <option value="finished">finished</option>
-              </select>
-            </div>
-          </div>
-          <div className="content__text">
-            <h6>priority</h6>
-            <div className="select">
-              <select
-                name="status"
-                className="select__input"
-                defaultValue={project?.priority}
-              >
-                <option value="low">low</option>
-                <option value="medium">medium</option>
-                <option value="high">high</option>
-              </select>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="project__box project__phase phase">
-        <div className="content__text">
-          <h6>current phase</h6>
-          <div className="select">
-            <select name="phase" className="select__input">
-              {project?.phase.map((phase) => {
-                return (
-                  <option value={phase.title} key={phase._id}>
-                    {phase.title}
-                  </option>
-                );
-              })}
-            </select>
-          </div>
-        </div>
-        <div className="content__text">
-          <h6>phase due date</h6>
-          <p>2023/06/11</p>
-          <span className="box box--phase">in progress</span>
-        </div>
-        <div className="content__text content__text--column">
-          <h6>all phase</h6>
-          <div className="content__box">
-            {project?.phase.map((phase, i) => {
-              return (
-                <span className="box" key={phase._id}>
-                  {i + 1 < 10 ? `0${i + 1}` : i + 1}-{phase.title}
-                </span>
-              );
-            })}
-
-            <span className="box box--add">+</span>
-          </div>
-        </div>
-        <div className="content__text  content__text--column">
-          <h6>tags</h6>
-          <div className="content__box content__box--white">
-            {project?.tags.map((tag, i) => {
-              return (
-                <span className="box box--tag" key={i}>
-                  {tag}
-                </span>
-              );
-            })}
-            <span className="box box--add">+</span>
-          </div>
-        </div>
-      </div>
+      <Info project={project} />
+      <Phase project={project} />
       <div className="project__box project__staff">
-        <div className="project__add">+</div>
+        <div className="project__edit project__edit--add">+</div>
         <div className="staff__manager">
           <h6>manager</h6>
           <div className="manager__info">
@@ -138,7 +41,7 @@ const SingleProject = () => {
         </div>
       </div>
       <div className="project__box project__contact">
-        <div className="project__add">+</div>
+        <div className="project__edit project__edit--add">+</div>
         <div className="project__title">contact info</div>
         <table className="contact__table table">
           <thead className="table__head">

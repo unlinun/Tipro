@@ -46,7 +46,7 @@ const Login = () => {
         navigator("/");
       }
     } catch (error) {
-      setErrorMsg("Incorrect email & password, please try again!");
+      setErrorMsg(error.message);
     }
   };
 
@@ -54,7 +54,7 @@ const Login = () => {
   useEffect(() => {
     setTimeout(() => {
       setErrorMsg("");
-    }, 3000);
+    }, 5000);
   }, [errorMsg]);
 
   return (

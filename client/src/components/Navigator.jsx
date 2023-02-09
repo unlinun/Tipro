@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { SearchIcon, AddIcon, SunIcon } from "../assets/icons";
 import dateFormat from "dateformat";
-import { setMode } from "../state/authSlice";
+import { setMode, setCreatingProject } from "../state/authSlice";
 import ProjectForm from "./ProjectForm";
 
 export const Navigator = () => {
@@ -16,6 +16,8 @@ export const Navigator = () => {
 
   // 取得現在的時間點
   const [date, setDate] = useState(new Date());
+  const [createForm, setCreateForm] = useState("");
+  const isCreating = useSelector((state) => state.auth.creating);
   const weekDay = dateFormat(date, "ddd");
   const time = dateFormat(date, "shortTime");
   const day = dateFormat(date, "dd");
@@ -35,6 +37,11 @@ export const Navigator = () => {
     document.querySelector("body").dataset.theme = mode;
   }, [mode]);
 
+  const handleCreate = (form) => {
+    dispatch(setCreatingProject());
+    setCreateForm(form);
+  };
+
   return (
     <nav className="navigator">
       <div className="navigator__search">
@@ -46,19 +53,28 @@ export const Navigator = () => {
 
       {/* 新增 task 還是 project */}
       {currentURL.startsWith("/projects") ? (
-        <div className="navigator__add">
+        <div className="navigator__add" onClick={() => handleCreate("project")}>
           <p>New Project</p>
           <AddIcon />
         </div>
       ) : (
-        <div className="navigator__add">
+        <div className="navigator__add" onClick={() => handleCreate("task")}>
           <p>New Task</p>
           <AddIcon />
         </div>
       )}
-      <div className="navigator__form">
-        <ProjectForm />
-      </div>
+      {isCreating ? (
+        <div className="navigator__form">
+          <div
+            className="navigator__overlay"
+            onClick={() => dispatch(setCreatingProject())}
+          ></div>
+          {createForm === "project" ? <ProjectForm /> : ""}
+          {isCreating && createForm === "task" ? <h1>task</h1> : ""}
+        </div>
+      ) : (
+        ""
+      )}
       <div className="navigator__info info">
         <div className="info__time">
           <h6>
