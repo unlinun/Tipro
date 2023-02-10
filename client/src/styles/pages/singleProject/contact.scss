@@ -1,0 +1,104 @@
+@use "../../utils/" as *;
+
+.project__contact {
+  position: relative;
+  grid-column: 3/4;
+  grid-row: 2/3;
+  max-height: rem(240);
+  overflow: scroll;
+  .table {
+    width: 100%;
+    &__row {
+      grid-template-columns: rem(20) 1fr 1.5fr 1fr 1.5fr;
+      &--head {
+        margin-bottom: rem(4);
+      }
+    }
+    &__title {
+      text-transform: lowercase;
+      font-weight: 400;
+    }
+    &__body {
+      gap: rem(4);
+    }
+    &__cell {
+      font-size: rem(14);
+      .delete {
+        width: rem(12);
+        height: rem(12);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: var(--light-gray);
+        border-radius: 50%;
+        color: var(--light-white);
+        cursor: pointer;
+        &:hover {
+          opacity: 0.7;
+        }
+      }
+    }
+  }
+  .contact__form {
+    padding: rem(20);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 70%;
+    height: 80%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: rem(20);
+    justify-items: center;
+    align-items: center;
+    background-color: var(--primary-bgc);
+    border-radius: rem(10);
+    .close {
+      position: absolute;
+      right: rem(4);
+      top: rem(4);
+      width: rem(16);
+      height: rem(16);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--primary-bgc);
+      border-radius: 50%;
+      color: var(--light-white-text);
+      font-size: rem(14);
+      cursor: pointer;
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+    .error {
+      border: 1px solid var(--event-red);
+    }
+
+    input {
+      padding: rem(4) rem(8);
+      width: 100%;
+      height: 80%;
+      background-color: var(--light-white-bgc);
+      border: 1px solid var(--light-gray);
+      border-radius: rem(20);
+      color: var(--light-white-text);
+    }
+    input[type="button"] {
+      width: 30%;
+      height: 100%;
+      grid-column: 1/3;
+      justify-self: center;
+      background-color: var(--light-white-bgc);
+      border: none;
+      color: var(--light-white-text);
+      font-weight: 600;
+      text-transform: uppercase;
+      cursor: pointer;
+      &:hover {
+        transform: scale(0.95);
+      }
+    }
+  }
+}

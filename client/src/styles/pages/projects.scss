@@ -14,7 +14,7 @@
     width: 100%;
     padding: rem(8);
     margin-bottom: rem(20);
-    background-color: var(--light-white);
+    background-color: var(--light-white-bgc);
     border-radius: 0 rem(20) rem(20) rem(20);
   }
   &__pagination {
@@ -34,6 +34,9 @@
     }
     svg {
       cursor: pointer;
+      path {
+        stroke: var(--light-white-text);
+      }
       &:hover {
         opacity: 0.5;
       }
@@ -59,7 +62,7 @@
       background-color: var(--primary-lightgray);
     }
     &.active {
-      background-color: var(--light-white);
+      background-color: var(--light-white-bgc);
       color: var(--dark-gray);
     }
   }
@@ -68,6 +71,7 @@
 // TABLE
 
 .table {
+  color: var(--light-white-text);
   &__body {
     display: grid;
     grid-template-columns: 1fr;
@@ -102,9 +106,9 @@
     }
     input {
       width: 100%;
-      padding: rem(4);
+      padding: rem(2) rem(8);
       border: 1px solid var(--light-lightgray);
-      border-radius: rem(5);
+      border-radius: rem(10);
       font-size: rem(16);
       color: var(--dark-black);
     }
@@ -141,6 +145,12 @@
     justify-content: space-around;
     gap: rem(12);
     cursor: pointer;
+    svg {
+      width: rem(16);
+      path {
+        stroke: var(--light-white-text);
+      }
+    }
   }
   &__edit {
     display: flex;
@@ -148,9 +158,15 @@
     gap: rem(16);
     svg {
       width: rem(16);
+      path {
+        stroke: var(--light-white-text);
+      }
     }
   }
   &__icon {
+    path {
+      stroke: var(--light-white-text);
+    }
     &--green {
       path {
         stroke: var(--event-red);
@@ -216,7 +232,7 @@
     background-color: var(--light-gray);
   }
   &__input {
-    color: var(--light-white);
+    color: var(--dark-black);
     font-weight: 500;
   }
 

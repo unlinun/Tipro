@@ -10,11 +10,11 @@
 
 .container {
   width: 100vw;
-  height: 100vh;
+  // height: 100vh;
   display: grid;
   grid-template-columns: 1fr 6fr;
   grid-template-rows: 1fr;
-  background-color: var(--primary-lightgray);
+  background-color: var(--light-white-bgc);
   transition: all 0.5s ease-in-out;
   position: relative;
   &--close {
@@ -30,7 +30,7 @@
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: auto 7fr;
-  background-color: var(--primary-gray);
+  background-color: var(--primary-bgc);
   border-radius: rem(50) 0 0 rem(50);
   position: relative;
   transition: all 0.4s ease-in-out;
@@ -45,7 +45,7 @@
     top: rem(60);
     left: 0;
     transform: translate(-50%, 0);
-    background-color: var(--primary-green);
+    background-color: var(--primary-bgc);
     border-radius: rem(5);
     cursor: pointer;
     transition: all 0.2s;
@@ -59,10 +59,10 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      width: rem(10);
-      height: rem(10);
-      color: var(--primary-lightgray);
-      font-weight: 600;
+      width: rem(8);
+      height: rem(8);
+      color: var(--light-white-text);
+      font-weight: 500;
     }
   }
 }

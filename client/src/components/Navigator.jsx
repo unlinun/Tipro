@@ -1,21 +1,29 @@
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
+import { useQuery } from "react-query";
 import { useSelector, useDispatch } from "react-redux";
-import { useLocation } from "react-router-dom";
-import { SearchIcon, AddIcon, SunIcon } from "../assets/icons";
+import { Link, useLocation } from "react-router-dom";
+import reactStringReplace from "react-string-replace";
 import dateFormat from "dateformat";
+
+import { SearchIcon, AddIcon, SunIcon } from "../assets/icons";
 import { setMode, setCreatingProject } from "../state/authSlice";
 import ProjectForm from "./ProjectForm";
+import { getAllProjects } from "../api/projects";
 
 export const Navigator = () => {
   // 找到現在的 url pathname
   const location = useLocation();
   const currentURL = location.pathname;
   const dispatch = useDispatch();
+  const token = useSelector((state) => state.auth.token);
+  const { data: projects } = useQuery("projects", () => getAllProjects(token));
 
   // 取得現在的時間點
   const [date, setDate] = useState(new Date());
+  const [searchValue, setSearchValue] = useState("");
+  const [searchData, setSearchData] = useState([]);
   const [createForm, setCreateForm] = useState("");
   const isCreating = useSelector((state) => state.auth.creating);
   const weekDay = dateFormat(date, "ddd");
@@ -42,15 +50,91 @@ export const Navigator = () => {
     setCreateForm(form);
   };
 
+  const handleSearch = (e) => {
+    const value = e.target.value.toLowerCase();
+    setSearchValue(value);
+    if (!searchValue) setSearchData([]);
+    const searchProject = projects.projects.filter((item) => {
+      return (
+        item.title.includes(value) ||
+        item.location.country.toLowerCase().includes(value) ||
+        item.location.city.toLowerCase().includes(value) ||
+        item.description.includes(value) ||
+        item.businessOwner.includes(value)
+      );
+    });
+    setSearchData(searchProject);
+  };
+
   return (
     <nav className="navigator">
-      <div className="navigator__search">
+      <div className="navigator__search" onChange={(e) => handleSearch(e)}>
         <div className="wrapper">
           <SearchIcon />
-          <input type="text" />
+          <input type="text" placeholder="search project" />
         </div>
       </div>
-
+      {searchValue ? (
+        <div className="navigator__search__content">
+          {searchData.length > 0 ? (
+            searchData?.map((item, i) => {
+              return (
+                <Link
+                  className="search__item"
+                  to={`/projects/${item._id}`}
+                  key={item._id}
+                  onClick={() => {
+                    setSearchValue("");
+                    setSearchData([]);
+                  }}
+                >
+                  <div className="item">{i + 1}</div>
+                  <div className="item">
+                    {reactStringReplace(
+                      `${item.title}`,
+                      `${searchValue}`,
+                      (match, i) => (
+                        <span key={i} className="item__highlight">
+                          {match}
+                        </span>
+                      )
+                    )}
+                  </div>
+                  <div className="item item--description">
+                    {reactStringReplace(
+                      `${item.description}`,
+                      `${searchValue}`,
+                      (match, i) => (
+                        <span key={i} className="item__highlight">
+                          {match}
+                        </span>
+                      )
+                    )}
+                  </div>
+                  <div className="item__businessOwner">
+                    {reactStringReplace(
+                      `${item.businessOwner}`,
+                      `${searchValue}`,
+                      (match, i) => (
+                        <span key={i} className="item__highlight">
+                          {match}
+                        </span>
+                      )
+                    )}
+                  </div>
+                  <div className="item"></div>
+                </Link>
+              );
+            })
+          ) : (
+            <div className="search__item">
+              <p className="item__empty">no results found</p>
+            </div>
+          )}
+        </div>
+      ) : (
+        ""
+      )}
       {/* 新增 task 還是 project */}
       {currentURL.startsWith("/projects") ? (
         <div className="navigator__add" onClick={() => handleCreate("project")}>

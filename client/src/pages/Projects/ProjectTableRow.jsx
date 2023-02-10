@@ -102,11 +102,23 @@ const ProjectTableRow = ({ project }) => {
       )}
       <td className="table__cell">
         <div className="table__select select select--phase">
-          <select name="phase" className="select__input">
+          <select
+            name="phase"
+            className="select__input"
+            onChange={(e) => {
+              updateProjectItem({
+                _id: project?._id,
+                phase: {
+                  currentPhase: e.target.value,
+                  allPhase: project?.phase.allPhase,
+                },
+              });
+            }}
+          >
             <option disabled>{project?.phase.currentPhase}</option>
             {project?.phase?.allPhase?.map((phase) => {
               return (
-                <option value="" key={phase?._id}>
+                <option value={phase?.title} key={phase?._id}>
                   {phase?.title}
                 </option>
               );

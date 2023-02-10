@@ -49,7 +49,10 @@ const Contact = ({ project }) => {
     <div className="project__box project__contact">
       <div
         className="project__edit project__edit--add"
-        onClick={() => setIsCreate(!isCreate)}
+        onClick={() => {
+          setIsCreate(!isCreate);
+          reset();
+        }}
       >
         +
       </div>
