@@ -1,15 +1,19 @@
 import React, { useState } from "react";
-import { useForm } from "react-hook-form";
-import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useQueryClient, useMutation } from "react-query";
-import { updateProject } from "../../../../api/projects";
+import { useMutation, useQueryClient } from "react-query";
 import { useSelector } from "react-redux";
+import { updateProject } from "../../../../api/projects";
 
-const Contact = ({ project }) => {
-  const [isCreate, setIsCreate] = useState(false);
+const Contact = ({ project, index, contact }) => {
   const token = useSelector((state) => state.auth.token);
   const queryClient = useQueryClient();
+  const [isEdit, setIsEdit] = useState(false);
+  const [contactInfo, setContactInfo] = useState({
+    company: contact.company,
+    name: contact.name,
+    responsibility: contact.responsibility,
+    contactNumber: contact.contactNumber,
+  });
+
   const { mutate: updateProjectItem } = useMutation(
     (updateProjectItem) => {
       return updateProject(updateProjectItem, token);
@@ -21,117 +25,95 @@ const Contact = ({ project }) => {
     }
   );
 
-  const schema = yup.object().shape({
-    name: yup.string().required("Please provide name"),
-    company: yup.string().required("Please provide company"),
-    responsibility: yup.string(),
-    contactNumber: yup.string(),
-  });
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(schema),
-  });
-
-  const createContactInfo = (data, e) => {
-    setIsCreate(false);
+  const handleEditContact = () => {
+    if (isEdit === false) {
+      setIsEdit(true);
+      return;
+    }
+    setIsEdit(false);
+    const editContacts = [...project.contactInfo];
+    editContacts[index] = contactInfo;
     updateProjectItem({
       _id: project._id,
-      contactInfo: [...project.contactInfo, data],
+      contactInfo: editContacts,
     });
-    reset();
   };
-
   return (
-    <div className="project__box project__contact">
-      <div
-        className="project__edit project__edit--add"
-        onClick={() => {
-          setIsCreate(!isCreate);
-          reset();
-        }}
-      >
-        +
-      </div>
-      {isCreate ? (
-        <form className="contact__form">
-          <div className="close" onClick={() => setIsCreate(false)}>
-            x
-          </div>
+    <tr className="table__row">
+      <td className="table__cell table__cell--flex">
+        <div
+          className="delete"
+          onClick={() => {
+            updateProjectItem({
+              _id: project._id,
+              contactInfo: project.contactInfo.filter((item, i) => index !== i),
+            });
+          }}
+        >
+          -
+        </div>
+        <div
+          className="edit"
+          onClick={() => {
+            handleEditContact();
+          }}
+        >
+          {isEdit ? "✔︎" : "✐"}
+        </div>
+      </td>
+      <td className="table__cell">
+        {isEdit ? (
           <input
             type="text"
-            placeholder="name"
-            className={errors?.name?.message ? "error" : ""}
-            {...register("name")}
+            defaultValue={contact.name}
+            onChange={(e) =>
+              setContactInfo({ ...contactInfo, name: e.target.value })
+            }
           />
+        ) : (
+          `${contact.name}`
+        )}
+      </td>
+      <td className="table__cell">
+        {isEdit ? (
           <input
             type="text"
-            placeholder="company"
-            className={errors?.company?.message ? "error" : ""}
-            {...register("company")}
+            defaultValue={contact.company}
+            onChange={(e) =>
+              setContactInfo({ ...contactInfo, company: e.target.value })
+            }
           />
+        ) : (
+          `${contact.company}`
+        )}
+      </td>
+      <td className="table__cell">
+        {isEdit ? (
           <input
             type="text"
-            placeholder="responsibility"
-            {...register("responsibility")}
+            defaultValue={contact.responsibility}
+            onChange={(e) =>
+              setContactInfo({ ...contactInfo, responsibility: e.target.value })
+            }
           />
+        ) : (
+          `${contact.responsibility}`
+        )}
+      </td>
+      <td className="table__cell">
+        {isEdit ? (
           <input
             type="text"
-            placeholder="contact number"
-            {...register("contactNumber")}
+            defaultValue={contact.contactNumber}
+            onChange={(e) =>
+              setContactInfo({ ...contactInfo, contactNumber: e.target.value })
+            }
           />
-          <input
-            type="button"
-            value="add"
-            onClick={handleSubmit(createContactInfo)}
-          />
-        </form>
-      ) : (
-        ""
-      )}
-      <div className="project__title">contact info</div>
-      <table className="contact__table table">
-        <thead className="table__head">
-          <tr className="table__row table__row--head">
-            <th className="table__title"></th>
-            <th className="table__title">name</th>
-            <th className="table__title">company</th>
-            <th className="table__title">responsibility</th>
-            <th className="table__title">contact number</th>
-          </tr>
-        </thead>
-        <tbody className="table__body">
-          {project?.contactInfo.map((contact, i) => {
-            return (
-              <tr className="table__row" key={i}>
-                <td className="table__cell">
-                  <div
-                    className="delete"
-                    onClick={() => {
-                      updateProjectItem({
-                        _id: project._id,
-                        contactInfo: project.contactInfo.filter(
-                          (item, index) => index !== i
-                        ),
-                      });
-                    }}
-                  >
-                    -
-                  </div>
-                </td>
-                <td className="table__cell">{contact.name}</td>
-                <td className="table__cell">{contact.company}</td>
-                <td className="table__cell">{contact.responsibility}</td>
-                <td className="table__cell">{contact.contactNumber}</td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-    </div>
+        ) : (
+          `${contact.contactNumber}`
+        )}
+      </td>
+    </tr>
   );
 };
 

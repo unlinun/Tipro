@@ -37,7 +37,7 @@ const Info = ({ project }) => {
   );
 
   return (
-    <div className="project__box project__info">
+    <div className="project__card card project__info">
       <div className="project__edit" onClick={() => setIsEdit(!isEdit)}>
         {isEdit ? "X" : "Edit"}
       </div>

@@ -56,7 +56,7 @@ const Phase = ({ project }) => {
   };
 
   return (
-    <div className="project__box project__phase phase">
+    <div className="project__card card project__phase phase">
       <div className="content__text">
         <h6>current phase</h6>
         <div className="select">

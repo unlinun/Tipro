@@ -1,25 +1,23 @@
 @use "../utils/" as *;
 .form {
-  &--project {
-    width: 60%;
+  &--task {
+    width: 40%;
     padding: rem(20);
+    gap: rem(20);
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    display: grid;
-    gap: rem(40);
-    grid-template-columns: 1fr 1fr;
     background-color: var(--primary-bgc);
     border-radius: rem(10);
     z-index: 20;
-    .form__section {
-      display: flex;
-      flex-direction: column;
-      gap: rem(8);
+    .form__item {
+      min-height: rem(40);
     }
     .form__inputs {
+      align-items: center;
       max-width: 100%;
+      margin-bottom: 0;
     }
     .form__input {
       border: none;

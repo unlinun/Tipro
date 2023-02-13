@@ -11,6 +11,7 @@ import { SearchIcon, AddIcon, SunIcon } from "../assets/icons";
 import { setMode, setCreatingProject } from "../state/authSlice";
 import ProjectForm from "./ProjectForm";
 import { getAllProjects } from "../api/projects";
+import TaskFrom from "./TaskFrom";
 
 export const Navigator = () => {
   // 找到現在的 url pathname
@@ -154,7 +155,7 @@ export const Navigator = () => {
             onClick={() => dispatch(setCreatingProject())}
           ></div>
           {createForm === "project" ? <ProjectForm /> : ""}
-          {isCreating && createForm === "task" ? <h1>task</h1> : ""}
+          {isCreating && createForm === "task" ? <TaskFrom /> : ""}
         </div>
       ) : (
         ""

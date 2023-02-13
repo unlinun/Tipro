@@ -8,12 +8,6 @@
   grid-template-rows: repeat(4, 1fr);
   gap: rem(32);
   color: var(--light-white-text);
-  &__box {
-    background-color: var(--light-white-bgc);
-    border-radius: rem(20);
-    padding: rem(16);
-    position: relative;
-  }
 
   &__phase {
     grid-column: 2/3;

@@ -42,6 +42,11 @@ const ProjectForm = () => {
         })
         .required("please provide phase")
     ),
+    contact: yup.array(
+      yup.object().shape({
+        name: yup.string().required("PLease provide name"),
+      })
+    ),
   });
 
   // 使用 useForm 來驗證表單，並取得 error 資訊
@@ -349,6 +354,7 @@ const ProjectForm = () => {
                   name={`contact.${i}.name`}
                   className="form__input"
                   placeholder="name"
+                  {...register(`contact.${i}.name`)}
                   onChange={(e) => {
                     handleContactInfo(e, i, "name");
                   }}
@@ -398,7 +404,9 @@ const ProjectForm = () => {
               -
             </div>
           </div>
-          <p className="form__alert form__alert--error"></p>
+          <p className="form__alert form__alert--error">
+            {errors?.contact ? "Please provide name" : ""}
+          </p>
         </div>
       </div>
       <input

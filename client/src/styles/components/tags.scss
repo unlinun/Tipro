@@ -11,7 +11,7 @@
   border-radius: rem(10);
   &__item {
     padding: rem(2) rem(8);
-    background-color: var(--light-lightgray);
+    background-color: var(--light-white-bgc);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -34,6 +34,7 @@
     max-width: rem(50);
     background-color: transparent;
     border: none;
+    color: var(--light-white-text);
   }
   &__input {
     flex-grow: 1;

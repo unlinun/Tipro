@@ -115,7 +115,7 @@ const ProjectTableRow = ({ project }) => {
               });
             }}
           >
-            <option disabled>{project?.phase.currentPhase}</option>
+            <option disabled>{project?.phase?.currentPhase}</option>
             {project?.phase?.allPhase?.map((phase) => {
               return (
                 <option value={phase?.title} key={phase?._id}>

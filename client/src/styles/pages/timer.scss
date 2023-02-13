@@ -1,0 +1,13 @@
+@use "../utils/" as *;
+
+.timer {
+  display: flex;
+  flex-direction: column;
+  gap: rem(32);
+  &__table {
+    width: 100%;
+  }
+  .table__row {
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  }
+}
