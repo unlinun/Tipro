@@ -47,10 +47,6 @@ const UserSchema = new mongoose.Schema({
     type: Array,
     default: [],
   },
-  tasks: {
-    type: Array,
-    default: [],
-  },
   adminProjects: {
     type: Boolean,
     default: true,

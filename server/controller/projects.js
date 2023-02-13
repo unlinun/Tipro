@@ -48,13 +48,13 @@ export const createProject = async (req, res) => {
     ...req.body,
     createdBy: user.userID,
   });
+
   res.status(StatusCodes.CREATED).json(project);
 };
 
 // 更新一個項目
 export const updateProject = async (req, res) => {
   const user = req.user;
-  console.log(user);
   const { id } = req.params;
   try {
     const project = await Projects.findOneAndUpdate(

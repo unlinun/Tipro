@@ -10,6 +10,7 @@ const ContactInfoSchema = new mongoose.Schema({
 const PhaseSchema = new mongoose.Schema({
   title: {
     type: String,
+    unique: [true, "Phase title cannot repeat"], //是否唯一？
     required: true,
     max: 15,
   },
@@ -17,7 +18,6 @@ const PhaseSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
-
   tasks: {
     type: Array,
     default: [],
@@ -49,7 +49,6 @@ const ProjectsSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ["initiating", "in progress", "canceled", "finished"],
     default: "initiating",
   },
 
