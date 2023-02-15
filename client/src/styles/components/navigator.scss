@@ -145,7 +145,7 @@
     width: rem(30);
     height: rem(30);
     object-fit: cover;
-    background-color: rgb(147, 150, 150);
+    background-color: var(--primary-bgc);
     border-radius: 50%;
   }
   &__mode {

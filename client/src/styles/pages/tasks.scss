@@ -1,0 +1,25 @@
+@use "../utils/" as *;
+
+.tasks {
+  display: flex;
+  flex-direction: column;
+  gap: rem(32);
+  &__card {
+    max-height: 100vh;
+    overflow: scroll;
+  }
+  &__table {
+    height: 100vh;
+    width: 100%;
+  }
+  .table__select {
+    background-color: var(--light-gray);
+    .select__input {
+      color: var(--light-white-text);
+    }
+  }
+  .table__row {
+    grid-template-columns: 1.5fr 1fr 1fr 0.5fr 0.5fr 1fr 0.5fr 0.2fr 0.5fr;
+    gap: rem(60);
+  }
+}

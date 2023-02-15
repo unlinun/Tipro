@@ -11,6 +11,9 @@
     display: flex;
     flex-direction: column;
     gap: rem(4);
+    &--center {
+      align-items: center;
+    }
   }
   &__label {
     font-size: rem(14);

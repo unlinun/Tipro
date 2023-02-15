@@ -1,8 +1,9 @@
 @use "../utils/" as *;
 
 .sidebar {
+  padding-top: rem(200);
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   color: var(--light-white-text);
   &__wrapper {
     width: 100%;
@@ -38,7 +39,7 @@
       height: rem(40);
       border-radius: 50%;
       object-fit: cover;
-      background-color: rgb(103, 103, 103);
+      background-color: var(--primary-bgc);
     }
     &__info {
       display: flex;
