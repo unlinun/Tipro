@@ -7,12 +7,12 @@ const Navbar = () => {
   const currentURL = location.pathname;
 
   return (
-    <nav className="nav">
+    <nav className="nav flex flex--bt mg__b--20">
       <Link to="/home">
         <img className="logo nav__logo" src={logo} alt="TiPro-logo" />
       </Link>
       {currentURL === "/home" ? (
-        <div className="nav__menu">
+        <div className="nav__menu flex gap--20">
           <Link to="login" className="link">
             login
           </Link>

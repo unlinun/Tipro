@@ -26,6 +26,11 @@ const Sidebar = () => {
             <p>{user?.position}</p>
           </div>
         </div>
+        {/* <div className="sidebar__hamburger">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div> */}
         <div className="sidebar__menu menu">
           {/* <div className="menu__arrow ">
           <LeftArrowIcon />

@@ -70,20 +70,23 @@ export const Navigator = () => {
   };
 
   return (
-    <nav className="navigator">
-      <div className="navigator__search" onChange={(e) => handleSearch(e)}>
-        <div className="wrapper">
+    <nav className="navigator flex flex--bt pd__topleft--816 mg__b--20">
+      <div
+        className="navigator__search search"
+        onChange={(e) => handleSearch(e)}
+      >
+        <div className="search__wrapper flex gap--8 pd--8">
           <SearchIcon />
           <input type="text" placeholder="search project" />
         </div>
       </div>
       {searchValue ? (
-        <div className="navigator__search__content">
+        <div className="search__content flex flex__col gap--8 pd--10">
           {searchData.length > 0 ? (
             searchData?.map((item, i) => {
               return (
                 <Link
-                  className="search__item"
+                  className="search__items grid grid--cc pd--8"
                   to={`/projects/${item._id}`}
                   key={item._id}
                   onClick={() => {
@@ -97,41 +100,40 @@ export const Navigator = () => {
                       `${item.title}`,
                       `${searchValue}`,
                       (match, i) => (
-                        <span key={i} className="item__highlight">
+                        <span key={i} className="search__highlight">
                           {match}
                         </span>
                       )
                     )}
                   </div>
-                  <div className="item item--description">
+                  <div className="search__items text--ellipsis">
                     {reactStringReplace(
                       `${item.description}`,
                       `${searchValue}`,
                       (match, i) => (
-                        <span key={i} className="item__highlight">
+                        <span key={i} className="search__highlight">
                           {match}
                         </span>
                       )
                     )}
                   </div>
-                  <div className="item__businessOwner">
+                  <div className="item">
                     {reactStringReplace(
                       `${item.businessOwner}`,
                       `${searchValue}`,
                       (match, i) => (
-                        <span key={i} className="item__highlight">
+                        <span key={i} className="search__highlight">
                           {match}
                         </span>
                       )
                     )}
                   </div>
-                  <div className="item"></div>
                 </Link>
               );
             })
           ) : (
-            <div className="search__item">
-              <p className="item__empty">no results found</p>
+            <div className="search__items grid grid--cc pd--8">
+              <p className="search__empty">no results found</p>
             </div>
           )}
         </div>
@@ -140,12 +142,18 @@ export const Navigator = () => {
       )}
       {/* 新增 task 還是 project */}
       {currentURL.startsWith("/projects") ? (
-        <div className="navigator__add" onClick={() => handleCreate("project")}>
+        <div
+          className="navigator__btn btn btn--nav"
+          onClick={() => handleCreate("project")}
+        >
           <p>New Project</p>
           <AddIcon />
         </div>
       ) : (
-        <div className="navigator__add" onClick={() => handleCreate("task")}>
+        <div
+          className="navigator__btn btn btn--nav"
+          onClick={() => handleCreate("task")}
+        >
           <p>New Task</p>
           <AddIcon />
         </div>
@@ -153,7 +161,7 @@ export const Navigator = () => {
       {isCreating ? (
         <div className="navigator__form">
           <div
-            className="navigator__overlay"
+            className="navigator__overlay overlay"
             onClick={() => {
               dispatch(setForm({ form: null }));
               dispatch(setCreating());
@@ -164,8 +172,8 @@ export const Navigator = () => {
       ) : (
         ""
       )}
-      <div className="navigator__info info">
-        <div className="info__time">
+      <div className="navigator__info flex flex--bt gap--20">
+        <div className="flex gap--16">
           <h6>
             {month}
             <span>/</span>
@@ -174,12 +182,12 @@ export const Navigator = () => {
           <h6>{weekDay}</h6>
           <h6>{time}</h6>
         </div>
-        <img className="info__user" src={avatar} alt="logo" />
-        <div className="info__mode">
+        <img className="navigator__user" src={avatar} alt="logo" />
+        <div className="navigator__mode flex gap--8">
           <div className="toggle">
             <input
               type="radio"
-              className="toggle__dark"
+              className="dark"
               id="dark"
               name="toggle"
               checked={mode === "dark" ? true : false}
@@ -187,7 +195,7 @@ export const Navigator = () => {
             />
             <input
               type="radio"
-              className="toggle__light"
+              className="light"
               id="light"
               name="toggle"
               checked={mode === "light" ? true : false}

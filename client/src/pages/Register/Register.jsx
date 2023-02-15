@@ -130,7 +130,7 @@ const Register = () => {
         </div>
         <div className="form__submit">
           <input
-            className="form__submit__btn"
+            className="btn btn--form"
             type="submit"
             value="Create my account"
           />

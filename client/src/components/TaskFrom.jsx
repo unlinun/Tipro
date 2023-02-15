@@ -46,11 +46,11 @@ const TaskFrom = () => {
 
   //選擇了項目後會顯示該項目的 project
   useEffect(() => {
-    const chooseProject = projects.projects.filter((project) => {
+    const chooseProject = projects?.projects.find((project) => {
       return project._id === projectId;
     });
 
-    setPhase(chooseProject[0]?.phase);
+    setPhase(chooseProject?.phase);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [projectId]);
 
@@ -91,7 +91,7 @@ const TaskFrom = () => {
   };
 
   return (
-    <form className="form form--task">
+    <form className="form form__absolute form__absolute--task">
       <div className="form__item">
         <label className="form__label">task title*</label>
         <input
@@ -143,7 +143,7 @@ const TaskFrom = () => {
             <option value="" disabled>
               choose project
             </option>
-            {projects.projects.map((project) => {
+            {projects?.projects.map((project) => {
               return (
                 <option value={project._id} key={project._id}>
                   {project.title}
@@ -179,7 +179,7 @@ const TaskFrom = () => {
       </div>
       <div className="form__item form__item--center">
         <input
-          className="form__submit"
+          className="btn btn--project"
           type="button"
           value="Create new task"
           onClick={handleSubmit(createTaskInfo)}

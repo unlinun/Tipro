@@ -90,7 +90,7 @@ const Login = () => {
         </div>
         <p className="form__alert form__alert--error">{errorMsg}</p>
         <div className="form__submit">
-          <button className="form__submit__btn" type="submit" form="form">
+          <button className="btn btn--form" type="submit" form="form">
             Continue Login
           </button>
           <p>

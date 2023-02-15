@@ -1,0 +1,39 @@
+@use "../utils/" as *;
+
+.toggle {
+  background-color: var(--primary-gray);
+  width: rem(40);
+  height: rem(20);
+  border-radius: rem(10);
+  display: flex;
+  justify-content: space-around;
+  gap: rem(8);
+  position: relative;
+  input[type="radio"] {
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    cursor: pointer;
+  }
+  &__switcher {
+    width: rem(16);
+    height: rem(16);
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: var(--primary-green);
+    border-radius: 50%;
+    transition: all 0.3s cubic-bezier(0.445, 0.05, 0.55, 0.95);
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+}
+#light:checked ~ .toggle__switcher {
+  left: 70%;
+}
+#dark:checked ~ .toggle__switcher {
+  left: 30%;
+  background-color: var(--light-gray);
+}

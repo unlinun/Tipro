@@ -14,8 +14,7 @@ import TagsInput from "./TagsInput";
 const ProjectForm = () => {
   const navigator = useNavigate();
 
-  // 表單驗證
-  //  創建 yup schema
+  //  創建 yup schema , 進行表單驗證
   const schema = yup.object().shape({
     title: yup.string().required("Please provide project title"),
     description: yup
@@ -72,6 +71,7 @@ const ProjectForm = () => {
   const [staff, setStaff] = useState([]);
   // 取得 status
   const token = useSelector((state) => state.auth.token);
+  const staffs = useSelector((state) => state.auth.staffs);
   const status = useSelector((state) => state.project.status);
   const dispatch = useDispatch();
 
@@ -131,7 +131,7 @@ const ProjectForm = () => {
   };
 
   return (
-    <form className="form form--project" id="form">
+    <form className="form form__absolute form__absolute--project" id="form">
       <div className="form__section">
         <div className="form__item">
           <label className="form__label">project title*</label>
@@ -311,10 +311,10 @@ const ProjectForm = () => {
               name="manager"
               {...register("manager")}
             >
-              {status.map((status, i) => {
+              {staffs.map((staff, i) => {
                 return (
-                  <option value={status} key={i}>
-                    {status}
+                  <option value={staff._id} key={staff._id}>
+                    {staff.username}
                   </option>
                 );
               })}
@@ -326,8 +326,8 @@ const ProjectForm = () => {
           <div className="form__label">staffs</div>
           <Select
             className="select__multi"
-            options={status.map((status) => {
-              return { value: status, label: status };
+            options={staffs.map((staff) => {
+              return { value: staff._id, label: staff.username };
             })}
             isMulti
             isSearchable={true}
@@ -410,7 +410,7 @@ const ProjectForm = () => {
         </div>
       </div>
       <input
-        className="form__submit"
+        className="btn btn--project"
         type="button"
         value="Create new project"
         onClick={handleSubmit(createProjectInfo)}

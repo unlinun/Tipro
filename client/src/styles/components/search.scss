@@ -1,0 +1,67 @@
+@use "../utils/" as *;
+
+// search bar
+.search {
+  @include breakpoint-down(large) {
+    width: rem(100);
+  }
+  svg {
+    max-width: rem(12);
+    max-height: rem(12);
+    path {
+      stroke-width: 1.5;
+      stroke: var(--dark-gray);
+    }
+  }
+  input {
+    width: 100%;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    color: var(--light-white-text);
+    &::placeholder {
+      @include breakpoint-down(small) {
+        color: transparent;
+      }
+    }
+  }
+  &__wrapper {
+    width: rem(140);
+    height: rem(30);
+    background-color: var(--primary-bgc);
+    border-radius: rem(20);
+    transition: all 0.3s;
+    @include breakpoint-down(large) {
+      width: rem(80);
+    }
+    &:focus,
+    &:focus-within {
+      width: rem(100);
+    }
+  }
+  &__content {
+    width: 32%;
+    position: absolute;
+    top: rem(80);
+    background-color: var(--light-white-bgc);
+    border-radius: rem(5);
+    box-shadow: 0 rem(2) rem(8) rgba(156, 156, 156, 0.1);
+    z-index: 10;
+  }
+  &__items {
+    width: 100%;
+    grid-template-columns: 0.5fr 1fr 1fr 1fr;
+    font-size: rem(12);
+    color: var(--light-white-text);
+    border-radius: rem(20);
+    &:hover {
+      background-color: var(--primary-bgc);
+    }
+  }
+  &__empty {
+    grid-column: 1/5;
+  }
+  &__highlight {
+    color: var(--event-red);
+  }
+}
