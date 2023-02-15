@@ -18,10 +18,13 @@ const PhaseSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
-  tasks: {
-    type: Array,
-    default: [],
-  },
+  tasks: [
+    {
+      type: mongoose.Types.ObjectId,
+      ref: "Tasks",
+      required: true,
+    },
+  ],
 });
 
 const ProjectsSchema = new mongoose.Schema({

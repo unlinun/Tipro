@@ -39,14 +39,6 @@ const UserSchema = new mongoose.Schema({
     type: String,
     default: "Staff",
   },
-  createdProjects: {
-    type: Array,
-    default: [],
-  },
-  assignProjects: {
-    type: Array,
-    default: [],
-  },
   adminProjects: {
     type: Boolean,
     default: true,
@@ -65,10 +57,7 @@ UserSchema.pre("save", async function () {
 
 // 建立 token (此處使用 Schema 的 methods)
 UserSchema.methods.createToken = function () {
-  return jwt.sign(
-    { userID: this._id, username: this.username, companyID: this.companyID },
-    process.env.JWT_SECRET
-  );
+  return jwt.sign({ id: this._id }, process.env.JWT_SECRET);
 };
 
 //進行密碼比較

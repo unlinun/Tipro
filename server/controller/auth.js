@@ -44,13 +44,10 @@ export const login = async (req, res) => {
       });
     }
     const token = user.createToken();
-    console.log(user);
+    // 將密碼從 user 物件中移除
+    user.password = undefined;
     res.status(StatusCodes.OK).json({
-      user: {
-        username: user.username,
-        position: user.position,
-        companyID: user.companyID,
-      },
+      user,
       token,
     });
   } catch (error) {
