@@ -70,6 +70,11 @@
     @include breakpoint-down(large) {
       grid-column: 1/2;
     }
+    @include breakpoint-down(small) {
+      padding: rem(4) rem(12);
+      width: rem(120);
+      font-size: rem(12);
+    }
     &:hover {
       transform: scale(0.97);
       opacity: 0.9;

@@ -22,7 +22,7 @@
     font-weight: 500;
     display: flex;
     flex-direction: column;
-    @include breakpoint-down(small) {
+    @include breakpoint-down(medium) {
       font-size: rem(14);
     }
   }
