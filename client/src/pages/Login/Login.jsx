@@ -35,6 +35,7 @@ const Login = () => {
   const login = async (data, e) => {
     try {
       const loginData = await loginAuth(data.email, data.password);
+      console.log(loginData);
       // 如果登入成功，即可取得 token，並將 token 儲存於 redux 當中以便後續使用
       if (loginData) {
         dispatch(

@@ -47,7 +47,7 @@ const TagsInput = ({ tags, setTags }) => {
       <input
         type="text"
         className="tags__input"
-        placeholder="Type something..."
+        placeholder="Add your tags"
         onKeyDown={handleKeyDown}
       />
     </div>

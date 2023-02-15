@@ -11,12 +11,14 @@ import { updateProject, deleteProject } from "../../api/projects";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { setCreating, setForm } from "../../state/authSlice";
 
 const ProjectTableRow = ({ project }) => {
   const startDate = dateFormat(project?.startDate, "isoDate");
   const token = useSelector((state) => state.auth.token);
   const status = useSelector((state) => state.project.status);
+  const dispatch = useDispatch();
   const queryClient = useQueryClient();
   const [isEdit, setIsEdit] = useState(false);
 
@@ -185,7 +187,13 @@ const ProjectTableRow = ({ project }) => {
               <DeleteIcon />
             </span>
           </div>
-          <div className="table__add">
+          <div
+            className="table__add"
+            onClick={() => {
+              dispatch(setForm({ form: "task" }));
+              dispatch(setCreating());
+            }}
+          >
             <p>Task</p>
             <AddIcon />
           </div>

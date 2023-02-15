@@ -2,10 +2,9 @@ import React from "react";
 import { useQuery } from "react-query";
 import { useSelector } from "react-redux";
 import { getAllProjects } from "../../api/projects";
-import { RightArrowIcon, LeftArrowIcon } from "../../assets/icons";
 import ProjectTableRow from "./ProjectTableRow";
 
-const ProjectTable = ({ projectsFilter }) => {
+const ProjectTable = ({ projectsFilter, setForm }) => {
   // 取得 token
   const token = useSelector((state) => state.auth.token);
   // 使用 useQuery 取得所有 projects
@@ -64,11 +63,6 @@ const ProjectTable = ({ projectsFilter }) => {
           )}
         </tbody>
       </table>
-      <div className="projects__pagination">
-        <LeftArrowIcon />
-        <span className="pagination">1/10</span>
-        <RightArrowIcon />
-      </div>
     </>
   );
 };

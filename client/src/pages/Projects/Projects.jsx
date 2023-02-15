@@ -1,11 +1,15 @@
 import React from "react";
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import TaskFrom from "../../components/TaskFrom";
 
 import ProjectTable from "./ProjectTable";
 
 const Projects = () => {
   // get filter item
   const [projectsFilter, setProjectsFilter] = useState("all");
+  const form = useSelector((state) => state.auth.form);
+  const isCreating = useSelector((state) => state.auth.creating);
 
   // 點擊按鈕時改變 filter item
   const handleProjectsFilter = (filter) => {
@@ -14,6 +18,7 @@ const Projects = () => {
 
   return (
     <div className="projects">
+      {isCreating && form === "task" ? <TaskFrom /> : ""}
       <div className="projects__menu menu">
         {/* filter nav*/}
         <div
@@ -55,6 +60,7 @@ const Projects = () => {
           finished
         </div>
       </div>
+      {}
       <ProjectTable projectsFilter={projectsFilter} />
     </div>
   );

@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { createProject, getCountry } from "../api/projects";
-import { setCreatingProject } from "../state/authSlice";
+import { setCreating } from "../state/authSlice";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -123,7 +123,7 @@ const ProjectForm = () => {
     };
     const res = await createProject(createData, token);
     if (res.status === 201) {
-      dispatch(setCreatingProject());
+      dispatch(setCreating());
       navigator("/projects");
     } else {
       setError("Oops, Unable to create project");

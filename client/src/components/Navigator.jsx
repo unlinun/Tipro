@@ -7,8 +7,9 @@ import { Link, useLocation } from "react-router-dom";
 import reactStringReplace from "react-string-replace";
 import dateFormat from "dateformat";
 
+import avatar from "../assets/avatar.svg";
 import { SearchIcon, AddIcon, SunIcon } from "../assets/icons";
-import { setMode, setCreatingProject } from "../state/authSlice";
+import { setMode, setCreating, setForm } from "../state/authSlice";
 import ProjectForm from "./ProjectForm";
 import { getAllProjects } from "../api/projects";
 import TaskFrom from "./TaskFrom";
@@ -19,13 +20,14 @@ export const Navigator = () => {
   const currentURL = location.pathname;
   const dispatch = useDispatch();
   const token = useSelector((state) => state.auth.token);
+  const createForm = useSelector((state) => state.auth.form);
   const { data: projects } = useQuery("projects", () => getAllProjects(token));
 
   // 取得現在的時間點
   const [date, setDate] = useState(new Date());
   const [searchValue, setSearchValue] = useState("");
   const [searchData, setSearchData] = useState([]);
-  const [createForm, setCreateForm] = useState("");
+  // const [createForm, setCreateForm] = useState("");
   const isCreating = useSelector((state) => state.auth.creating);
   const weekDay = dateFormat(date, "ddd");
   const time = dateFormat(date, "shortTime");
@@ -47,8 +49,8 @@ export const Navigator = () => {
   }, [mode]);
 
   const handleCreate = (form) => {
-    dispatch(setCreatingProject());
-    setCreateForm(form);
+    dispatch(setCreating());
+    dispatch(setForm({ form }));
   };
 
   const handleSearch = (e) => {
@@ -152,10 +154,12 @@ export const Navigator = () => {
         <div className="navigator__form">
           <div
             className="navigator__overlay"
-            onClick={() => dispatch(setCreatingProject())}
+            onClick={() => {
+              dispatch(setForm({ form: null }));
+              dispatch(setCreating());
+            }}
           ></div>
-          {createForm === "project" ? <ProjectForm /> : ""}
-          {isCreating && createForm === "task" ? <TaskFrom /> : ""}
+          {createForm === "project" ? <ProjectForm /> : <TaskFrom />}
         </div>
       ) : (
         ""
@@ -170,7 +174,7 @@ export const Navigator = () => {
           <h6>{weekDay}</h6>
           <h6>{time}</h6>
         </div>
-        <img className="info__user" src="" alt="logo" />
+        <img className="info__user" src={avatar} alt="logo" />
         <div className="info__mode">
           <div className="toggle">
             <input
