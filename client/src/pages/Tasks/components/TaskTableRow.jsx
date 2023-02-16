@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { EditIcon, DeleteIcon, TickCircleIcon } from "../../../assets/icons";
 import dateFormat from "dateformat";
 
-const TaskTableRow = ({ task, projects }) => {
+const TaskTableRow = ({ task, index, projects }) => {
   const [isEdit, setIsEdit] = useState(false);
   const project = projects?.projects.find(
     (project) => project._id === task?.projectId
@@ -12,6 +12,7 @@ const TaskTableRow = ({ task, projects }) => {
   );
   return (
     <tr className="table__row" key={task?._id}>
+      <td className="table__cell">{index + 1}</td>
       <td className="table__cell">{task?.title}</td>
       <td className="table__cell">{project.title}</td>
       <td className="table__cell">
@@ -33,7 +34,7 @@ const TaskTableRow = ({ task, projects }) => {
         </div>
       </td>
       <td className="table__cell">{dateFormat(task?.startDate, "isoDate")}</td>
-      <td className="table__cell"> {dateFormat(task?.dueDate, "isoDate")}</td>
+
       <td className="table__cell cell cell--flex">
         {task?.tags.map((tag, i) => {
           return (
@@ -70,7 +71,7 @@ const TaskTableRow = ({ task, projects }) => {
                 <EditIcon />
               </span>
             )}
-            <span>
+            <span className="table__icon">
               <DeleteIcon />
             </span>
           </div>

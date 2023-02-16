@@ -41,6 +41,14 @@
     &--success {
       color: var(--event-green);
     }
+    a {
+      padding-left: rem(4);
+      color: var(--event-red);
+      font-weight: 500;
+      &:hover {
+        opacity: 0.7;
+      }
+    }
   }
   &__submit {
     margin-top: rem(24);
@@ -74,7 +82,7 @@
   z-index: 20;
 
   &--task {
-    width: calc(100% - rem(80));
+    width: calc(100% - rem(400));
     gap: rem(20);
     @include breakpoint-down(small) {
       width: rem(300);

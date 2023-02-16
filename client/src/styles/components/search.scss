@@ -36,6 +36,9 @@
     }
     &:focus,
     &:focus-within {
+      width: rem(240);
+    }
+    @include breakpoint-down(large) {
       width: rem(140);
     }
   }

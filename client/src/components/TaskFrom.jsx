@@ -8,7 +8,7 @@ import { getAllProjects, updateProject } from "../api/projects";
 import { useDispatch, useSelector } from "react-redux";
 import { createTask } from "../api/task";
 import { setCreating } from "../state/authSlice";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const TaskFrom = () => {
   const token = useSelector((state) => state.auth.token);
@@ -27,10 +27,6 @@ const TaskFrom = () => {
   const schema = yup.object().shape({
     title: yup.string().required("Please provide title"),
     startDate: yup.date("Please provide date").required("Please provide date"),
-    dueDate: yup
-      .date("Please provide date")
-      .min(yup.ref("startDate"), "end date can't be before start date")
-      .required("Please provide date"),
     projectId: yup.string().required("Please select project"),
     phaseId: yup.string().required("Please select phase"),
   });
@@ -92,6 +88,12 @@ const TaskFrom = () => {
 
   return (
     <form className="form form__absolute form__absolute--task">
+      <p className="form__alert">
+        No project yet?
+        <Link to="/projects" onClick={() => dispatch(setCreating())}>
+          go add one!
+        </Link>
+      </p>
       <div className="form__item">
         <label className="form__label">task title*</label>
         <input
@@ -114,16 +116,9 @@ const TaskFrom = () => {
             className="form__input"
             {...register("startDate")}
           />
-          <label className="form__label">end*</label>
-          <input
-            type="date"
-            name="dueDate"
-            className="form__input"
-            {...register("dueDate")}
-          />
         </div>
         <p className="form__alert form__alert--error">
-          {errors?.dueDate?.message}
+          {errors?.startDate?.message}
         </p>
       </div>
       <div className="form__item">

@@ -1,19 +1,19 @@
 @use "../utils/" as *;
 
 .tasks {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: 1fr;
   gap: rem(32);
   @include breakpoint-down(large) {
     overflow: scroll;
   }
   &__card {
-    max-height: 100vh;
+    max-height: 95%;
     overflow: scroll;
   }
   &__table {
-    height: 100vh;
     width: 100%;
+    min-width: rem(1000);
   }
   .table__select {
     background-color: var(--light-gray);
@@ -22,7 +22,11 @@
     }
   }
   .table__row {
-    grid-template-columns: 1.5fr 1fr 1fr 0.5fr 0.5fr 1fr 0.5fr 0.2fr 0.5fr;
-    gap: rem(60);
+    grid-template-columns: rem(20) 1.5fr 1fr 1fr 0.5fr 1fr 0.5fr 0.2fr 0.5fr;
+    gap: rem(40);
+    @include breakpoint-down(medium) {
+      grid-template-columns: rem(120) 0.5fr 0.5fr 0.5fr 0.5fr 1fr 0.5fr rem(20) 0.5fr;
+      gap: rem(20);
+    }
   }
 }

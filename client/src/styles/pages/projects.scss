@@ -11,13 +11,21 @@
     flex-direction: row;
     gap: 0;
     align-self: flex-start;
+    min-height: rem(40);
   }
   &__table {
-    min-width: rem(1000);
     padding: rem(8);
+    min-width: rem(1000);
     margin-bottom: rem(20);
     background-color: var(--light-white-bgc);
     border-radius: 0 rem(20) rem(20) rem(20);
+    .table__row {
+      grid-template-columns: 1fr rem(100) 0.5fr 1fr rem(50) rem(100) 0.5fr 1fr 1fr;
+      column-gap: rem(28);
+      @include breakpoint-down(medium) {
+        grid-template-columns: 1fr rem(20) 0.5fr 1fr rem(40) rem(100) 0.5fr 1fr 1fr;
+      }
+    }
   }
   &__pagination {
     width: rem(200);

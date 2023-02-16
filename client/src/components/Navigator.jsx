@@ -183,7 +183,7 @@ export const Navigator = () => {
           <h6>{time}</h6>
         </div>
         <img className="navigator__user" src={avatar} alt="logo" />
-        <div className="__mode flex gap--8">
+        <div className="navigator__mode flex gap--8">
           <div className="toggle">
             <input
               type="radio"

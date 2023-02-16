@@ -12,18 +12,20 @@
   &__row {
     padding: rem(6);
     display: grid;
-    grid-template-columns: 1fr rem(100) 0.5fr 1fr rem(50) rem(100) 0.5fr 1fr 1fr;
     align-items: center;
     justify-items: left;
-    column-gap: rem(28);
     &--head {
       margin-bottom: rem(16);
     }
   }
   &__title {
-    font-size: rem(12);
-    font-weight: 400;
+    font-size: rem(14);
+    font-weight: 500;
     text-transform: uppercase;
+    @include breakpoint-down(medium) {
+      font-size: rem(12);
+      font-weight: 400;
+    }
   }
   &__cell {
     width: 100%;
@@ -31,6 +33,10 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     text-transform: capitalize;
+    @include breakpoint-down(medium) {
+      font-size: rem(12);
+      font-weight: 400;
+    }
     &--center {
       width: 100%;
       display: flex;
@@ -45,9 +51,6 @@
       font-size: rem(16);
       color: var(--dark-black);
     }
-  }
-  &__select {
-    min-width: rem(120);
   }
   &__image {
     display: flex;
@@ -95,6 +98,9 @@
       path {
         stroke: var(--light-white-text);
       }
+      &:hover {
+        opacity: 0.5;
+      }
     }
   }
   &__icon {
@@ -140,6 +146,10 @@
     width: rem(12);
     height: rem(12);
     background-color: var(--light-gray);
+    cursor: pointer;
+    &:hover {
+      opacity: 0.8;
+    }
     &--checked {
       background-color: var(--primary-green);
     }
