@@ -1,13 +1,12 @@
 import { StatusCodes } from "http-status-codes";
 import Projects from "../models/Projects.js";
-
 // 取得所有跟自己有關的項目
 export const getAllProjects = async (req, res) => {
   const user = req.user;
   // 找尋包含自己的項目
   const projects = await Projects.find({
     $or: [{ manager: user.id }, { staff: user.id }, { createdBy: user.id }],
-  }).sort({ startDate: -1 });
+  }).sort({ createdAt: -1 });
   res.status(StatusCodes.OK).json({ projects, totalProjects: projects.length });
 };
 

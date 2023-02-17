@@ -10,10 +10,6 @@ const TasksSchema = new mongoose.Schema({
     type: String,
     required: [true, "Please provide start date"],
   },
-  dueDate: {
-    type: String,
-    required: [true, "please provide due date"],
-  },
   tags: {
     type: Array,
     default: [],
@@ -21,10 +17,6 @@ const TasksSchema = new mongoose.Schema({
   finished: {
     type: Boolean,
     default: false,
-  },
-  timers: {
-    type: Array,
-    default: [],
   },
   createdBy: {
     type: mongoose.Types.ObjectId,
@@ -40,6 +32,10 @@ const TasksSchema = new mongoose.Schema({
     type: mongoose.Types.ObjectId,
     ref: "Project",
     required: true,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now(),
   },
 });
 

@@ -7,26 +7,6 @@ const ContactInfoSchema = new mongoose.Schema({
   contactNumber: String,
 });
 
-const PhaseSchema = new mongoose.Schema({
-  title: {
-    type: String,
-    unique: [true, "Phase title cannot repeat"], //是否唯一？
-    required: true,
-    max: 15,
-  },
-  duration: {
-    type: Number,
-    default: 0,
-  },
-  tasks: [
-    {
-      type: mongoose.Types.ObjectId,
-      ref: "Tasks",
-      required: true,
-    },
-  ],
-});
-
 const ProjectsSchema = new mongoose.Schema({
   title: {
     type: String,
@@ -82,22 +62,23 @@ const ProjectsSchema = new mongoose.Schema({
     },
   ],
   phase: {
-    currentPhase: {
-      type: String,
-      required: true,
-    },
-    allPhase: [
-      {
-        type: PhaseSchema,
-        required: true,
-      },
-    ],
+    type: mongoose.Types.ObjectId,
+    ref: "Phase",
+    required: true,
   },
-
+  currentPhase: {
+    type: mongoose.Types.ObjectId,
+    ref: "Phase",
+    required: true,
+  },
   createdBy: {
     type: mongoose.Types.ObjectId,
     ref: "User",
     required: true,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now(),
   },
 });
 

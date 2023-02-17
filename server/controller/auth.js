@@ -6,9 +6,7 @@ export const register = async (req, res) => {
   // 1.在 UserSchema 中先對密碼進行預處理（詳見 ../models/User.js）
   try {
     const user = await User.create({ ...req.body });
-    res
-      .status(StatusCodes.CREATED)
-      .json({ user: { username: user.username, position: user.position } });
+    res.status(StatusCodes.CREATED).json({ user: { username: user.username } });
   } catch (error) {
     res
       .status(StatusCodes.BAD_REQUEST)

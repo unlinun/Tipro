@@ -13,6 +13,7 @@ import authRoute from "./routes/auth.js";
 import companyRoute from "./routes/company.js";
 import projectsRoute from "./routes/projects.js";
 import taskRoute from "./routes/tasks.js";
+import phaseRoute from "./routes/phase.js";
 
 // security
 import helmet from "helmet";
@@ -44,6 +45,7 @@ app.use("/auth", authRoute);
 app.use("/staffs", authorizationToken, companyRoute);
 app.use("/projects", authorizationToken, projectsRoute);
 app.use("/tasks", authorizationToken, taskRoute);
+app.use("/phase", authorizationToken, phaseRoute);
 
 const PORT = process.env.PORT || 3001;
 
