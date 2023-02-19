@@ -1,61 +1,69 @@
 import React from "react";
-import {
-  EditIcon,
-  DeleteIcon,
-  AddIcon,
-  RightArrowIcon,
-} from "../../assets/icons";
+import { useQuery } from "react-query";
+import { useSelector } from "react-redux";
+import { getAllProjects } from "../../api/projects";
+import ProjectTableRow from "./ProjectTableRow";
 
-const ProjectTable = () => {
+const ProjectTable = ({ projectsFilter, setForm }) => {
+  // 取得 token
+  const token = useSelector((state) => state.auth.token);
+  // 使用 useQuery 取得所有 projects
+  const { isLoading, data } = useQuery("projects", () => getAllProjects(token));
+  // 根據 projectsFilter 來取得對應的 project
+  const filterProjects = data?.projects.filter((project) => {
+    if (projectsFilter !== "all") {
+      return project.status === projectsFilter;
+    }
+    return project;
+  });
+
   return (
-    <tr className="table__row">
-      <td className="table__cell table__cell--name">
-        Hanzong landscape project design
-      </td>
-      <td className="table__cell table__cell--center">
-        <div className="status status--low"></div>
-      </td>
-      <td className="table__cell">Daju architecture</td>
-      <td className="table__cell">
-        <div className="table__select select select--phase">
-          <select name="phase" className="select__input">
-            <option value="">jkjk;</option>
-            <option value="">jj;</option>
-          </select>
-        </div>
-      </td>
-      <td className="table__cell">
-        <img className="table__image" src="" alt="" />
-      </td>
-      <td className="table__cell">
-        <div className="table__staff">
-          <div className="table__image table__image--staff">+3</div>
-          <img className="table__image table__image--staff" src="" alt="" />
-          <img className="table__image table__image--staff" src="" alt="" />
-          <img className="table__image table__image--staff" src="" alt="" />
-        </div>
-      </td>
-      <td className="table__cell">2022/03/05</td>
-      <td className="table__cell">
-        <div className="table__select select select--status">
-          <select name="status" className="select__input">
-            <option value="">jkjk;</option>
-            <option value="">jj;</option>
-          </select>
-        </div>
-      </td>
-      <td className="table__cell">
-        <div className="table__function">
-          <EditIcon />
-          <DeleteIcon />
-          <div className="table__add">
-            <p>Task</p>
-            <AddIcon />
-          </div>
-          <RightArrowIcon />
-        </div>
-      </td>
-    </tr>
+    <>
+      <table className="projects__table table">
+        <thead className="table__head">
+          <tr className="table__row table__row--head">
+            <th className="table__title">project name</th>
+            <th className="table__title"></th>
+            <th className="table__title">owner</th>
+            <th className="table__title">phase</th>
+            <th className="table__title">PM</th>
+            <th className="table__title">staff</th>
+            <th className="table__title">start date</th>
+            <th className="table__title">status</th>
+            <th className="table__title"></th>
+            <th className="table__title"></th>
+          </tr>
+        </thead>
+        <tbody className="table__body">
+          {isLoading ? (
+            <tr style={{ textAlign: "center", justifySelf: "center" }}>
+              <td
+                style={{
+                  textAlign: "center",
+                  margin: "12px",
+                }}
+              >
+                Loading...
+              </td>
+            </tr>
+          ) : null}
+          {filterProjects?.length > 0 ? (
+            filterProjects.map((project) => {
+              return <ProjectTableRow key={project._id} project={project} />;
+            })
+          ) : (
+            <tr style={{ textAlign: "center", justifySelf: "center" }}>
+              <td
+                style={{
+                  textAlign: "center",
+                  margin: "12px",
+                }}
+              >{`No ${projectsFilter} projects`}</td>
+            </tr>
+          )}
+        </tbody>
+      </table>
+    </>
   );
 };
 

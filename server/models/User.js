@@ -27,29 +27,25 @@ const UserSchema = new mongoose.Schema({
     type: Date,
     required: [true, "Please provide birthday"],
   },
+  companyID: {
+    type: String,
+    default: "TEST123",
+  },
   avatar: {
     type: String,
     default: "",
   },
-  createdProjects: {
-    type: Array,
-    default: [],
-  },
-  assignProjects: {
-    type: Array,
-    default: [],
-  },
-  tasks: {
-    type: Array,
-    default: [],
+  position: {
+    type: String,
+    default: "Staff",
   },
   adminProjects: {
     type: Boolean,
-    default: false,
+    default: true,
   },
   adminReport: {
     type: Boolean,
-    default: false,
+    default: true,
   },
 });
 
@@ -61,10 +57,7 @@ UserSchema.pre("save", async function () {
 
 // 建立 token (此處使用 Schema 的 methods)
 UserSchema.methods.createToken = function () {
-  return jwt.sign(
-    { userID: this._id, username: this.username },
-    process.env.JWT_SECRET
-  );
+  return jwt.sign({ id: this._id }, process.env.JWT_SECRET);
 };
 
 //進行密碼比較

@@ -7,29 +7,6 @@ const ContactInfoSchema = new mongoose.Schema({
   contactNumber: String,
 });
 
-const PhaseSchema = new mongoose.Schema({
-  title: {
-    type: String,
-    required: true,
-    max: 15,
-  },
-  dueDate: {
-    type: Date,
-  },
-  duration: {
-    type: Number,
-    default: 0,
-  },
-  isCurrentPhase: {
-    type: Boolean,
-    required: true,
-  },
-  tasks: {
-    type: Array,
-    default: [],
-  },
-});
-
 const ProjectsSchema = new mongoose.Schema({
   title: {
     type: String,
@@ -55,9 +32,9 @@ const ProjectsSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ["initiating", "in progress", "canceled", "finished"],
     default: "initiating",
   },
+
   priority: {
     type: String,
     enum: ["low", "medium", "high"],
@@ -71,8 +48,8 @@ const ProjectsSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  managers: {
-    type: Array,
+  manager: {
+    type: String,
     required: true,
   },
   staff: {
@@ -84,16 +61,24 @@ const ProjectsSchema = new mongoose.Schema({
       type: ContactInfoSchema,
     },
   ],
-  phase: [
-    {
-      type: PhaseSchema,
-      required: true,
-    },
-  ],
+  phase: {
+    type: mongoose.Types.ObjectId,
+    ref: "Phase",
+    required: true,
+  },
+  currentPhase: {
+    type: mongoose.Types.ObjectId,
+    ref: "Phase",
+    required: true,
+  },
   createdBy: {
     type: mongoose.Types.ObjectId,
     ref: "User",
     required: true,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now(),
   },
 });
 

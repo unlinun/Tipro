@@ -3,19 +3,29 @@
 .projects {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  @include breakpoint-down(large) {
+    overflow: scroll;
+  }
   &__menu {
     display: flex;
     flex-direction: row;
     gap: 0;
     align-self: flex-start;
+    min-height: rem(40);
   }
   &__table {
-    width: 100%;
     padding: rem(8);
+    min-width: rem(1000);
     margin-bottom: rem(20);
-    background-color: var(--light-white);
+    background-color: var(--light-white-bgc);
     border-radius: 0 rem(20) rem(20) rem(20);
+    .table__row {
+      grid-template-columns: 1fr rem(100) 0.5fr 1fr rem(50) rem(100) 0.5fr 1fr 1fr;
+      column-gap: rem(28);
+      @include breakpoint-down(medium) {
+        grid-template-columns: 1fr rem(20) 0.5fr 1fr rem(40) rem(100) 0.5fr 1fr 1fr;
+      }
+    }
   }
   &__pagination {
     width: rem(200);
@@ -34,6 +44,9 @@
     }
     svg {
       cursor: pointer;
+      path {
+        stroke: var(--light-white-text);
+      }
       &:hover {
         opacity: 0.5;
       }
@@ -59,97 +72,8 @@
       background-color: var(--primary-lightgray);
     }
     &.active {
-      background-color: var(--light-white);
+      background-color: var(--light-white-bgc);
       color: var(--dark-gray);
-    }
-  }
-}
-
-// TABLE
-
-.table {
-  &__body {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: rem(20);
-  }
-  &__row {
-    padding: rem(6);
-    display: grid;
-    grid-template-columns: 2fr 0.25fr 1fr 1fr 0.5fr 1fr 1fr 1fr 1fr;
-    align-items: center;
-    justify-items: left;
-    column-gap: rem(12);
-    &--head {
-      margin-bottom: rem(12);
-    }
-  }
-  &__title {
-    font-size: rem(12);
-    text-transform: uppercase;
-  }
-  &__cell {
-    max-width: 100%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    text-transform: capitalize;
-    &--center {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-  }
-  &__select {
-    width: rem(120);
-  }
-  &__image {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: rem(32);
-    height: rem(32);
-    object-fit: cover;
-    background-color: var(--event-darkgreen);
-    border-radius: 50%;
-    &--staff {
-      font-size: rem(12);
-      &:nth-child(-1) {
-        margin-left: 0;
-      }
-      margin-left: rem(-8);
-    }
-  }
-  &__staff {
-    display: flex;
-    flex-direction: row-reverse;
-    margin-left: rem(8);
-  }
-  &__function {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: rem(12);
-    cursor: pointer;
-  }
-  &__add {
-    padding: 0 rem(8);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: rem(8);
-    p {
-      font-size: rem(14);
-    }
-    svg {
-      width: rem(16);
-      height: rem(16);
-      background-color: var(--primary-green);
-      border-radius: 50%;
-      path {
-        stroke: var(--light-white);
-      }
     }
   }
 }
@@ -187,8 +111,11 @@
   &--status {
     background-color: var(--event-lightblue);
   }
+  &--priority {
+    background-color: var(--light-gray);
+  }
   &__input {
-    color: var(--light-white);
+    color: var(--dark-black);
     font-weight: 500;
   }
 
@@ -204,7 +131,6 @@
 }
 
 select {
-  width: 100%;
   // A reset of styles, including removing the default dropdown arrow
   appearance: none;
   // Additional resets for further consistency

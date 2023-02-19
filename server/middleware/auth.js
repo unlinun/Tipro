@@ -17,7 +17,7 @@ export const authorizationToken = (req, res, next) => {
     }
     // token驗證 => 透過 jwt.verify完成 base64解碼與 token 驗證
     const payload = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = { userID: payload.userID, username: payload.username };
+    req.user = payload;
     next();
   } catch (error) {
     res

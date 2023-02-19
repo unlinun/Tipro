@@ -2,7 +2,7 @@
 
 #root {
   width: calc(100vw - rem(80));
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -10,36 +10,67 @@
 
 .container {
   width: 100vw;
-  height: 100vh;
+  height: 100%;
   display: grid;
-  grid-template-columns: 1fr 5fr;
+  grid-template-columns: 1fr 6fr;
   grid-template-rows: 1fr;
-  background-color: var(--primary-lightgray);
-  transition: all 0.4s ease-in-out;
+  background-color: var(--light-white-bgc);
+  transition: all 0.5s ease-in-out;
+  position: fixed;
+  overflow: scroll;
+  @include breakpoint-down(large) {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 6fr;
+    // justify-items: center;
+  }
+
+  &--close {
+    .content__toggle::after {
+      content: ">";
+    }
+    grid-template-columns: rem(80) 24fr;
+  }
 }
 .content {
-  min-height: rem(800);
   padding: rem(24);
+  width: 100%;
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: auto 7fr;
-  background-color: var(--primary-gray);
+  background-color: var(--primary-bgc);
   border-radius: rem(50) 0 0 rem(50);
   position: relative;
+  transition: all 0.4s ease-in-out;
+  @include breakpoint-down(large) {
+    border-radius: rem(50) rem(50) rem(50) rem(50);
+    width: calc(100vw - rem(8));
+    justify-self: center;
+  }
+  @include breakpoint-down(medium) {
+    width: calc(100vw - rem(20));
+    min-height: 100%;
+    padding: rem(16) rem(8);
+    overflow-y: scroll;
+  }
+
   &__toggle {
     position: absolute;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: rem(20);
-    height: rem(20);
+    width: rem(24);
+    height: rem(24);
     top: rem(60);
     left: 0;
     transform: translate(-50%, 0);
-    background-color: var(--primary-green);
-    border-radius: rem(10);
+    background-color: var(--primary-bgc);
+    border-radius: rem(5);
     cursor: pointer;
     transition: all 0.2s;
+    z-index: 10;
+    @include breakpoint-down(large) {
+      display: none;
+    }
     &:hover {
       opacity: 0.5;
     }
@@ -48,10 +79,10 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      width: rem(10);
-      height: rem(10);
-      color: var(--primary-lightgray);
-      font-weight: 600;
+      width: rem(8);
+      height: rem(8);
+      color: var(--light-white-text);
+      font-weight: 500;
     }
   }
 }
@@ -60,6 +91,94 @@
   display: none;
 }
 
+.overlay {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: var(--opacity-bgc);
+  z-index: 10;
+}
+
 .logo {
   width: rem(80);
+}
+
+// margin __b(bottom)
+.mg {
+  &__b {
+    &--20 {
+      margin-bottom: rem(20);
+    }
+  }
+}
+
+// padding __l(left)
+.pd {
+  &--8 {
+    padding: rem(8);
+  }
+  &--10 {
+    padding: rem(10);
+  }
+  &--20 {
+    padding: rem(20);
+  }
+  &__l {
+    &--8 {
+      padding-left: rem(8);
+    }
+  }
+  &__topleft {
+    &--24 {
+      padding: rem(2) rem(4);
+    }
+    &--48 {
+      padding: rem(4) rem(8);
+    }
+    &--816 {
+      padding: rem(8) rem(16);
+    }
+  }
+}
+
+// flex
+.flex {
+  display: flex;
+  align-items: center;
+  &--bt {
+    justify-content: space-between;
+  }
+  &--cen {
+    justify-content: center;
+  }
+  &__clo {
+    flex-direction: column;
+  }
+}
+
+// grid
+.grid {
+  display: grid;
+  &--cc {
+    justify-items: center;
+    align-items: center;
+  }
+}
+
+//gap
+.gap {
+  &--8 {
+    gap: rem(8);
+  }
+  &--16 {
+    gap: rem(16);
+  }
+  &--20 {
+    gap: rem(20);
+  }
+  &--32 {
+    gap: rem(32);
+  }
 }

@@ -1,17 +1,12 @@
 import { StatusCodes } from "http-status-codes";
 import Projects from "../models/Projects.js";
-
 // 取得所有跟自己有關的項目
 export const getAllProjects = async (req, res) => {
   const user = req.user;
   // 找尋包含自己的項目
   const projects = await Projects.find({
-    $or: [
-      { manager: user.userID },
-      { staff: user.userID },
-      { createdBy: user.userID },
-    ],
-  });
+    $or: [{ manager: user.id }, { staff: user.id }, { createdBy: user.id }],
+  }).sort({ createdAt: -1 });
   res.status(StatusCodes.OK).json({ projects, totalProjects: projects.length });
 };
 
@@ -22,11 +17,7 @@ export const getSingleProject = async (req, res) => {
   try {
     const project = await Projects.findOne({
       _id: id,
-      $or: [
-        { manager: user.userID },
-        { staff: user.userID },
-        { createdBy: user.userID },
-      ],
+      $or: [{ manager: user.id }, { staff: user.id }, { createdBy: user.id }],
     });
     if (!project) {
       return res
@@ -46,8 +37,9 @@ export const createProject = async (req, res) => {
   const user = req.user;
   const project = await Projects.create({
     ...req.body,
-    createdBy: user.userID,
+    createdBy: user.id,
   });
+
   res.status(StatusCodes.CREATED).json(project);
 };
 
@@ -57,7 +49,7 @@ export const updateProject = async (req, res) => {
   const { id } = req.params;
   try {
     const project = await Projects.findOneAndUpdate(
-      { _id: id, $or: [{ manager: user.userID }, { createdBy: user.userID }] },
+      { _id: id, $or: [{ manager: user.id }, { createdBy: user.id }] },
       req.body,
       {
         new: true,
@@ -84,7 +76,7 @@ export const deleteProject = async (req, res) => {
   try {
     const project = await Projects.findOneAndDelete({
       _id: id,
-      $or: [{ manager: user.userID }, { createdBy: user.userID }],
+      $or: [{ manager: user.id }, { createdBy: user.id }],
     });
     if (!project) {
       return res

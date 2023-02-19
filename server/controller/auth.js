@@ -42,9 +42,12 @@ export const login = async (req, res) => {
       });
     }
     const token = user.createToken();
-    res
-      .status(StatusCodes.OK)
-      .json({ user: { username: user.username }, token });
+    // 將密碼從 user 物件中移除
+    user.password = undefined;
+    res.status(StatusCodes.OK).json({
+      user,
+      token,
+    });
   } catch (error) {
     console.log(error.message);
   }

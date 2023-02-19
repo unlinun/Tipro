@@ -1,48 +1,67 @@
 import React from "react";
-import { LeftArrowIcon, RightArrowIcon } from "../../assets/icons";
+import { useState } from "react";
+import { useSelector } from "react-redux";
+import TaskFrom from "../../components/TaskFrom";
+
 import ProjectTable from "./ProjectTable";
+
 const Projects = () => {
+  // get filter item
+  const [projectsFilter, setProjectsFilter] = useState("all");
+  const form = useSelector((state) => state.auth.form);
+  const isCreating = useSelector((state) => state.auth.creating);
+
+  // 點擊按鈕時改變 filter item
+  const handleProjectsFilter = (filter) => {
+    setProjectsFilter(filter);
+  };
+
   return (
     <div className="projects">
+      {isCreating && form === "task" ? <TaskFrom /> : ""}
       <div className="projects__menu menu">
-        <div className="menu__item active">in progress</div>
-        <div className="menu__item">in progress</div>
-        <div className="menu__item">in progress</div>
-        <div className="menu__item">in progress</div>
+        {/* filter nav*/}
+        <div
+          className={`menu__item ${projectsFilter === "all" ? "active" : ""}`}
+          onClick={() => handleProjectsFilter("all")}
+        >
+          all
+        </div>
+        <div
+          className={`menu__item ${
+            projectsFilter === "initiating" ? "active" : ""
+          }`}
+          onClick={() => handleProjectsFilter("initiating")}
+        >
+          initiating
+        </div>
+        <div
+          className={`menu__item ${
+            projectsFilter === "in progress" ? "active" : ""
+          }`}
+          onClick={() => handleProjectsFilter("in progress")}
+        >
+          in progress
+        </div>
+        <div
+          className={`menu__item ${
+            projectsFilter === "canceled" ? "active" : ""
+          }`}
+          onClick={() => handleProjectsFilter("canceled")}
+        >
+          canceled
+        </div>
+        <div
+          className={`menu__item ${
+            projectsFilter === "finished" ? "active" : ""
+          }`}
+          onClick={() => handleProjectsFilter("finished")}
+        >
+          finished
+        </div>
       </div>
-      <table className="projects__table table">
-        <thead className="table__head">
-          <tr className="table__row table__row--head">
-            <th className="table__title">project name</th>
-            <th className="table__title"></th>
-            <th className="table__title">owner</th>
-            <th className="table__title">phase</th>
-            <th className="table__title">PM</th>
-            <th className="table__title">staff</th>
-            <th className="table__title">start date</th>
-            <th className="table__title">status</th>
-            <th className="table__title"></th>
-            <th className="table__title"></th>
-          </tr>
-        </thead>
-        <tbody className="table__body">
-          <ProjectTable />
-          <ProjectTable />
-          <ProjectTable />
-          <ProjectTable />
-          <ProjectTable />
-          <ProjectTable />
-          <ProjectTable />
-          <ProjectTable />
-          <ProjectTable />
-          <ProjectTable />
-        </tbody>
-      </table>
-      <div className="projects__pagination">
-        <LeftArrowIcon />
-        <span className="pagination">1/10</span>
-        <RightArrowIcon />
-      </div>
+      {}
+      <ProjectTable projectsFilter={projectsFilter} />
     </div>
   );
 };

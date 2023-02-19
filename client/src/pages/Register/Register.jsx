@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { registerAuth } from "../../api/auth.js";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -37,8 +38,13 @@ const Register = () => {
     resolver: yupResolver(schema),
   });
 
-  const registerUser = (data) => {
-    console.log(data);
+  const registerUser = async (data) => {
+    try {
+      await registerAuth(data);
+      navigate("/home/login");
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 
   return (
@@ -124,7 +130,7 @@ const Register = () => {
         </div>
         <div className="form__submit">
           <input
-            className="form__submit__btn"
+            className="btn btn--form"
             type="submit"
             value="Create my account"
           />
