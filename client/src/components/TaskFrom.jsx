@@ -26,7 +26,10 @@ const TaskFrom = () => {
   // 創建 yup schema
   const schema = yup.object().shape({
     title: yup.string().required("Please provide title"),
-    startDate: yup.date("Please provide date").required("Please provide date"),
+    startDate: yup
+      .date()
+      .typeError("Expected a value of type date")
+      .required("Please provide date"),
     projectId: yup.string().required("Please select project"),
     phaseId: yup.string().required("Please select phase"),
   });

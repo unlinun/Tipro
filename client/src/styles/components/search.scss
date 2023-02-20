@@ -3,7 +3,15 @@
 // search bar
 .search {
   @include breakpoint-down(large) {
-    width: rem(100);
+    width: rem(140);
+  }
+
+  @include breakpoint-down(medium) {
+    width: rem(120);
+  }
+
+  @include breakpoint-down(small) {
+    width: rem(40);
   }
   svg {
     max-width: rem(12);
@@ -26,20 +34,20 @@
     }
   }
   &__wrapper {
-    width: rem(140);
+    width: 100%;
     height: rem(30);
     background-color: var(--primary-bgc);
     border-radius: rem(20);
     transition: all 0.3s;
-    @include breakpoint-down(large) {
-      width: rem(80);
-    }
+    // @include breakpoint-down(large) {
+    //   width: rem(140);
+    // }
+    // @include breakpoint-down(small) {
+    //   width: rem(40);
+    // }
     &:focus,
     &:focus-within {
-      width: rem(240);
-    }
-    @include breakpoint-down(large) {
-      width: rem(140);
+      width: 120%;
     }
   }
   &__content {

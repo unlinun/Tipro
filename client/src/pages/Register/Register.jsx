@@ -15,13 +15,17 @@ const Register = () => {
       .max(10, "Username cannot over 10 words")
       .required("Please provide username"),
     companyID: yup.string().max(10, "CompanyID cannot over 10 words"),
-    birthday: yup.date().required("Please provide date"),
+    birthday: yup
+      .date()
+      .typeError("Expected a value of type date")
+      .required("Please provide date"),
     email: yup
       .string()
       .email("Wrong email format")
       .required("Please provide email"),
     password: yup
       .string()
+      .matches(/^\S*$/, "Whitespace is not allowed")
       .min(8, "Password cannot less than 8 words")
       .max(20, "Password cannot over 20 words")
       .required("Please provide password"),
@@ -108,7 +112,7 @@ const Register = () => {
             type="password"
             name="password"
             className="form__input"
-            placeholder="at least 6 character"
+            placeholder="at least 8 character"
             {...register("password")}
           />
           <p className="form__alert form__alert--error">
@@ -121,7 +125,7 @@ const Register = () => {
             type="password"
             name="confirmPassword"
             className="form__input"
-            placeholder="at least 6 character"
+            placeholder="at least 8 character"
             {...register("confirmPassword")}
           />
           <p className="form__alert form__alert--error">

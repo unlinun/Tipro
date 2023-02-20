@@ -58,7 +58,7 @@ const ProjectTable = ({ projectsFilter, setForm }) => {
                   textAlign: "center",
                   margin: "12px",
                 }}
-              >{`No ${projectsFilter} projects`}</td>
+              >{`${projectsFilter} projects is empty`}</td>
             </tr>
           )}
         </tbody>

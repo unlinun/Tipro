@@ -14,11 +14,9 @@ import Reports from "./pages/Reports/Reports";
 import Setting from "./pages/Setting/Setting";
 import NotFound from "./pages/Not found/NotFound";
 import ProtectedRoute from "./components/ProtectedRoute";
-import { useSelector } from "react-redux";
-import SingleProject from "./pages/Projects/SingleProject/SingleProject";
+import SingleProject from "./pages/Projects/singleProject/SingleProject";
 
 const App = () => {
-  const token = useSelector((state) => state.auth.token);
   return (
     <Router>
       <Routes>
@@ -30,9 +28,9 @@ const App = () => {
         <Route
           path="/"
           element={
-            <ProtectedRoute token={token}>
-              <ShareSidebarNav />
-            </ProtectedRoute>
+            // <ProtectedRoute>
+            <ShareSidebarNav />
+            // </ProtectedRoute>
           }
         >
           <Route index element={<Dashboard />} />

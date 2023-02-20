@@ -29,6 +29,14 @@
       content: ">";
     }
     grid-template-columns: rem(80) 24fr;
+    .menu {
+      a {
+        h6 {
+          opacity: 0;
+          display: none;
+        }
+      }
+    }
   }
 }
 .content {

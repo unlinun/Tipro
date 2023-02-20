@@ -27,7 +27,10 @@ const ProjectForm = () => {
       country: yup.string().required("Please provide country"),
       city: yup.string().required("Please provide city"),
     }),
-    startDate: yup.date().required("Please provide start date"),
+    startDate: yup
+      .date()
+      .typeError("Expected a value of type date")
+      .required("Please provide start date"),
     status: yup.string().required("Please provide status"),
     priority: yup.string().required("Please provide priority"),
     businessOwner: yup.string().required("PLease provide business owner"),
@@ -315,7 +318,7 @@ const ProjectForm = () => {
               name="manager"
               {...register("manager")}
             >
-              {staffs.map((staff, i) => {
+              {staffs?.map((staff, i) => {
                 return (
                   <option value={staff._id} key={staff._id}>
                     {staff.username}
@@ -330,7 +333,7 @@ const ProjectForm = () => {
           <div className="form__label">staffs</div>
           <Select
             className="select__multi"
-            options={staffs.map((staff) => {
+            options={staffs?.map((staff) => {
               return { value: staff._id, label: staff.username };
             })}
             isMulti

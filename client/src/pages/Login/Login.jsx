@@ -19,7 +19,10 @@ const Login = () => {
       .string()
       .email("Wrong email format")
       .required("Please provide email"),
-    password: yup.string().required("Please provide password"),
+    password: yup
+      .string()
+      .min(8, "Password cannot less than 8 words")
+      .required("Please provide password"),
   });
   const {
     register,
@@ -81,7 +84,7 @@ const Login = () => {
             type="password"
             name="password"
             className="form__input"
-            placeholder="at least 6 character"
+            placeholder="password"
             {...register("password")}
           />
           <p className="form__alert form__alert--error">
