@@ -21,15 +21,11 @@ export const getSingleTask = async (req, res) => {
   try {
     const task = Tasks.findOne({ _id: id, $or: [{ createdBy: user.id }] });
     if (!task) {
-      return res
-        .status(StatusCodes.NOT_FOUND)
-        .json({ error: { message: "Task not found" } });
+      throw new NotFoundError("No task found!");
     }
     return res.status(StatusCodes.OK).json(task);
   } catch (error) {
-    res
-      .status(StatusCodes.BAD_REQUEST)
-      .json({ error: { message: error.message } });
+    throw new BadRequestError("Cannot get task, something went wrong!");
   }
 };
 
@@ -58,15 +54,11 @@ export const updateTask = async (req, res) => {
       }
     );
     if (!task) {
-      return res
-        .status(StatusCodes.NOT_FOUND)
-        .json({ error: { message: "Task not found" } });
+      throw new NotFoundError("No task found!");
     }
     return res.status(StatusCodes.OK).json(task);
   } catch (error) {
-    res
-      .status(StatusCodes.BAD_REQUEST)
-      .json({ error: { message: error.message } });
+    throw new BadRequestError("Cannot update task, something went wrong!");
   }
 };
 
@@ -80,14 +72,10 @@ export const deleteTask = async (req, res) => {
       $or: [{ createdBy: user.id }],
     });
     if (!task) {
-      return res.status(StatusCodes.NOT_FOUND).json({
-        error: { message: "task not found" },
-      });
+      throw new NotFoundError("No task found!");
     }
     res.status(StatusCodes.OK).json({ message: "Success deleted" });
   } catch (error) {
-    res
-      .status(StatusCodes.BAD_REQUEST)
-      .json({ error: { message: error.message } });
+    throw new BadRequestError("Cannot delete task, something went wrong!");
   }
 };

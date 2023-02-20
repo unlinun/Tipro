@@ -1,16 +1,16 @@
 import User from "../models/User.js";
 import { StatusCodes } from "http-status-codes";
+import { BadRequestError, UnauthenticatedError } from "../errors";
 
 // register 註冊
 export const register = async (req, res) => {
   // 1.在 UserSchema 中先對密碼進行預處理（詳見 ../models/User.js）
   try {
-    const user = await User.create({ ...req.body });
+    const avatar = "/assets/avatar.svg";
+    const user = await User.create({ ...req.body, avatar });
     res.status(StatusCodes.CREATED).json({ user: { username: user.username } });
   } catch (error) {
-    res
-      .status(StatusCodes.BAD_REQUEST)
-      .json({ error: { message: error.message } });
+    throw new BadRequestError("Register fail, something when wrong!");
   }
 };
 
@@ -18,28 +18,17 @@ export const register = async (req, res) => {
 export const login = async (req, res) => {
   const { email, password } = req.body;
   if (email === "" || password === "") {
-    return res.status(StatusCodes.BAD_REQUEST).json({
-      error: {
-        message: "Please provide email and password",
-      },
-    });
+    throw new BadRequestError("Please provide email and password");
   }
   try {
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(StatusCodes.UNAUTHORIZED).json({
-        error: {
-          message: "Invalid Credential",
-        },
-      });
+      throw new UnauthenticatedError("Invalid Credential");
     }
+
     const isPasswordMatch = await user.comparePassword(password);
     if (!isPasswordMatch) {
-      return res.status(StatusCodes.UNAUTHORIZED).json({
-        error: {
-          message: "Invalid Credential",
-        },
-      });
+      throw new UnauthenticatedError("Invalid Credential");
     }
     const token = user.createToken();
     // 將密碼從 user 物件中移除
@@ -49,6 +38,6 @@ export const login = async (req, res) => {
       token,
     });
   } catch (error) {
-    console.log(error.message);
+    throw new BadRequestError("login fail, something when wrong!");
   }
 };

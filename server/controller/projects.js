@@ -1,4 +1,6 @@
 import { StatusCodes } from "http-status-codes";
+import { NotFoundError, BadRequestError } from "../errors";
+
 import Projects from "../models/Projects.js";
 // 取得所有跟自己有關的項目
 export const getAllProjects = async (req, res) => {
@@ -20,15 +22,11 @@ export const getSingleProject = async (req, res) => {
       $or: [{ manager: user.id }, { staff: user.id }, { createdBy: user.id }],
     });
     if (!project) {
-      return res
-        .status(StatusCodes.NOT_FOUND)
-        .json({ error: { message: "Project not found" } });
+      throw new NotFoundError("No project found!");
     }
     return res.status(StatusCodes.OK).json(project);
   } catch (error) {
-    res
-      .status(StatusCodes.BAD_REQUEST)
-      .json({ error: { message: error.message } });
+    throw new BadRequestError("Cannot get project, something went wrong!");
   }
 };
 
@@ -57,15 +55,11 @@ export const updateProject = async (req, res) => {
       }
     );
     if (!project) {
-      return res
-        .status(StatusCodes.NOT_FOUND)
-        .json({ error: { message: "Project not found" } });
+      throw new NotFoundError("No project found!");
     }
     res.status(StatusCodes.OK).json(project);
   } catch (error) {
-    res
-      .status(StatusCodes.BAD_REQUEST)
-      .json({ error: { message: error.message } });
+    throw new BadRequestError("Cannot update project, something went wrong!");
   }
 };
 
@@ -79,14 +73,10 @@ export const deleteProject = async (req, res) => {
       $or: [{ manager: user.id }, { createdBy: user.id }],
     });
     if (!project) {
-      return res
-        .status(StatusCodes.NOT_FOUND)
-        .json({ error: { message: "Project not found" } });
+      throw new NotFoundError("No project found!");
     }
     res.status(StatusCodes.OK).json({ message: "success deleted" });
   } catch (error) {
-    res
-      .status(StatusCodes.BAD_REQUEST)
-      .json({ error: { message: error.message } });
+    throw new BadRequestError("Cannot delete project, something went wrong!");
   }
 };
