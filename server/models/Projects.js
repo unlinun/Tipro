@@ -75,6 +75,7 @@ const ProjectsSchema = new mongoose.Schema({
     type: mongoose.Types.ObjectId,
     ref: "User",
     required: true,
+    // index 的使用？以後要查找可以方便搜尋 2023/2/20 待解決
   },
   createdAt: {
     type: Date,

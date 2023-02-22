@@ -37,6 +37,10 @@
         }
       }
     }
+    @include breakpoint-down(large) {
+      grid-template-columns: 1fr;
+      grid-template-rows: 1fr 6fr;
+    }
   }
 }
 .content {
@@ -50,11 +54,12 @@
   position: relative;
   transition: all 0.4s ease-in-out;
   @include breakpoint-down(large) {
-    border-radius: rem(50) rem(50) rem(50) rem(50);
+    border-radius: rem(50);
     width: calc(100vw - rem(8));
     justify-self: center;
   }
   @include breakpoint-down(medium) {
+    border-radius: rem(20);
     width: calc(100vw - rem(20));
     min-height: 100%;
     padding: rem(16) rem(8);

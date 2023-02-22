@@ -15,6 +15,9 @@
     @include breakpoint-down(large) {
       border-radius: rem(50);
     }
+    @include breakpoint-down(medium) {
+      border-radius: rem(20);
+    }
   }
   &__search {
     width: rem(250);
@@ -45,6 +48,9 @@
     object-fit: cover;
     background-color: var(--primary-bgc);
     border-radius: 50%;
+    @include breakpoint-down(small) {
+      display: none;
+    }
   }
   &__mode {
     svg {

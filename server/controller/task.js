@@ -1,5 +1,5 @@
 import { StatusCodes } from "http-status-codes";
-import Tasks from "../models/Tasks.js";
+import Task from "../models/Task.js";
 
 //取得所有 tasks 包含所有人創建的或是自己創建的
 export const getAllTasks = async (req, res) => {
@@ -9,7 +9,7 @@ export const getAllTasks = async (req, res) => {
   if (user) {
     queryObject.createdBy = user;
   }
-  let result = Tasks.find(queryObject).sort({ startDate: -1 });
+  let result = Task.find(queryObject).sort({ startDate: -1 });
   const tasks = await result;
   res.status(StatusCodes.OK).json({ tasks, totalTasks: tasks.length });
 };
@@ -19,7 +19,7 @@ export const getSingleTask = async (req, res) => {
   const user = req.user;
   const { id } = req.params;
   try {
-    const task = Tasks.findOne({ _id: id, $or: [{ createdBy: user.id }] });
+    const task = Task.findOne({ _id: id, $or: [{ createdBy: user.id }] });
     if (!task) {
       throw new NotFoundError("No task found!");
     }
@@ -32,7 +32,7 @@ export const getSingleTask = async (req, res) => {
 //創建 task
 export const createTask = async (req, res) => {
   const user = req.user;
-  const tasks = await Tasks.create({ ...req.body, createdBy: user.id });
+  const tasks = await Task.create({ ...req.body, createdBy: user.id });
 
   res.status(StatusCodes.CREATED).json(tasks);
 };
@@ -42,7 +42,7 @@ export const updateTask = async (req, res) => {
   const user = req.user;
   const { id } = req.params;
   try {
-    const task = await Tasks.findOneAndUpdate(
+    const task = await Task.findOneAndUpdate(
       {
         _id: id,
         $or: [{ createdBy: user.id }],
@@ -67,7 +67,7 @@ export const deleteTask = async (req, res) => {
   const user = req.user;
   const { id } = req.params;
   try {
-    const task = await Tasks.findOneAndDelete({
+    const task = await Task.findOneAndDelete({
       _id: id,
       $or: [{ createdBy: user.id }],
     });

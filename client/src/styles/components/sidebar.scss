@@ -8,10 +8,9 @@
   @include breakpoint-down(large) {
     padding-top: 0;
     justify-self: center;
-  }
-  @include breakpoint-down(medium) {
     align-items: center;
   }
+
   &__wrapper {
     width: 100%;
     display: flex;

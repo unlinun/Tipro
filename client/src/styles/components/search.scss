@@ -3,15 +3,15 @@
 // search bar
 .search {
   @include breakpoint-down(large) {
-    width: rem(140);
+    width: rem(160);
   }
 
   @include breakpoint-down(medium) {
-    width: rem(120);
+    width: rem(140);
   }
 
   @include breakpoint-down(small) {
-    width: rem(40);
+    width: rem(60);
   }
   svg {
     max-width: rem(12);
@@ -47,7 +47,7 @@
     // }
     &:focus,
     &:focus-within {
-      width: 120%;
+      width: 125%;
     }
   }
   &__content {
