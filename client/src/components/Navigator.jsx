@@ -6,13 +6,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import reactStringReplace from "react-string-replace";
 import dateFormat from "dateformat";
-
-import avatar from "../assets/avatar.svg";
 import { SearchIcon, AddIcon, SunIcon } from "../assets/icons";
 import { setMode, setCreating, setForm } from "../state/authSlice";
 import ProjectForm from "./ProjectForm";
-import { getAllProjects } from "../api/projects";
 import TaskFrom from "./TaskFrom";
+import { getAllProjects } from "../api/projects";
 
 export const Navigator = () => {
   // 找到現在的 url pathname
@@ -20,6 +18,8 @@ export const Navigator = () => {
   const currentURL = location.pathname;
   const dispatch = useDispatch();
   const token = useSelector((state) => state.auth.token);
+  const user = useSelector((state) => state.auth.user);
+
   const createForm = useSelector((state) => state.auth.form);
   const { data: projects } = useQuery("projects", () => getAllProjects(token));
 
@@ -59,7 +59,7 @@ export const Navigator = () => {
     if (!searchValue) setSearchData([]);
     const searchProject = projects.projects.filter((item) => {
       return (
-        item.title.includes(value) ||
+        item.title.toLowerCase().includes(value) ||
         item.location.country.toLowerCase().includes(value) ||
         item.location.city.toLowerCase().includes(value) ||
         item.description.includes(value) ||
@@ -182,7 +182,11 @@ export const Navigator = () => {
           <h6>{weekDay}</h6>
           <h6>{time}</h6>
         </div>
-        <img className="navigator__user" src={avatar} alt="logo" />
+        <img
+          className="navigator__user"
+          src={`http://localhost:6001/${user?.avatar}`}
+          alt="user"
+        />
         <div className="navigator__mode flex gap--8">
           <div className="toggle">
             <input

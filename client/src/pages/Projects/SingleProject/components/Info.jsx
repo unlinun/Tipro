@@ -41,7 +41,22 @@ const Info = ({ project }) => {
       <div className="project__edit" onClick={() => setIsEdit(!isEdit)}>
         {isEdit ? "X" : "Edit"}
       </div>
-      <div className="project__title">{project?.title}</div>
+      {isEdit ? (
+        <input
+          type="text"
+          name="title"
+          defaultValue={project?.title}
+          onChange={(e) =>
+            updateProjectItem({
+              _id: project._id,
+              title: e.target.value,
+            })
+          }
+        />
+      ) : (
+        <div className="project__title">{project?.title}</div>
+      )}
+
       <div className="info">
         <div className="info__description">
           <h6>Project description</h6>

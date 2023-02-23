@@ -10,18 +10,19 @@ import dateFormat from "dateformat";
 import { updateProject, deleteProject } from "../../api/projects";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { useMutation, useQueryClient } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useSelector, useDispatch } from "react-redux";
 import { setCreating, setForm } from "../../state/authSlice";
 
 const ProjectTableRow = ({ project }) => {
   const startDate = dateFormat(project?.startDate, "isoDate");
   const token = useSelector((state) => state.auth.token);
+  const staffs = useSelector((state) => state.auth.staffs);
   const status = useSelector((state) => state.project.status);
+
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
   const [isEdit, setIsEdit] = useState(false);
-
   const { mutate: updateProjectItem } = useMutation(
     (updateProjectItem) => {
       return updateProject(updateProjectItem, token);
@@ -110,15 +111,12 @@ const ProjectTableRow = ({ project }) => {
             onChange={(e) => {
               updateProjectItem({
                 _id: project?._id,
-                phase: {
-                  currentPhase: e.target.value,
-                  allPhase: project?.phase.allPhase,
-                },
+                currentPhase: e.target.value,
               });
             }}
           >
-            <option disabled>{project?.phase?.currentPhase}</option>
-            {project?.phase?.allPhase?.map((phase) => {
+            <option disabled>{project?.currentPhase}</option>
+            {project?.phase?.map((phase) => {
               return (
                 <option value={phase?.title} key={phase?._id}>
                   {phase?.title}
@@ -129,14 +127,34 @@ const ProjectTableRow = ({ project }) => {
         </div>
       </td>
       <td className="table__cell">
-        <img className="table__image" src="" alt="" />
+        <img
+          className="table__image"
+          src={`http://localhost:6001/${
+            staffs.find((staff) => staff._id === project?.manager).avatar
+          }`}
+          alt="manager"
+          title={
+            staffs.find((staff) => staff._id === project?.manager).username
+          }
+        />
       </td>
       <td className="table__cell">
         <div className="table__staff">
-          <div className="table__image table__image--staff">{``}</div>
-          <img className="table__image table__image--staff" src="" alt="" />
-          <img className="table__image table__image--staff" src="" alt="" />
-          <img className="table__image table__image--staff" src="" alt="" />
+          {staffs
+            ?.filter((staff, i) =>
+              project.staff.filter((item) => item === staff._id)
+            )
+            .map((staff) => {
+              return (
+                <img
+                  className="table__image table__image--staff"
+                  src={`http://localhost:6001/${staff.avatar}`}
+                  alt={staff.username}
+                  key={staff._id}
+                  title={staff.username}
+                />
+              );
+            })}
         </div>
       </td>
       <td className="table__cell">{startDate}</td>

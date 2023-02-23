@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { createProject, getCountry } from "../api/projects";
-import { createPhase } from "../api/phase";
 import { setCreating } from "../state/authSlice";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
@@ -118,12 +117,10 @@ const ProjectForm = () => {
   // 與後段串接，創建一個 project
   const createProjectInfo = async (data, e) => {
     e.preventDefault();
-    // 先創建 phase 再創建 project
-    const phaseData = await createPhase({ allPhase: phase }, token);
     const createData = {
       ...data,
-      phase: phaseData._id,
-      currentPhase: phaseData.allPhase[0]._id,
+      phase: phase,
+      currentPhase: phase[0].title,
       tags,
       staff,
       contactInfo,
@@ -131,6 +128,7 @@ const ProjectForm = () => {
     const res = await createProject(createData, token);
     if (res.status === 201) {
       dispatch(setCreating());
+      navigator(0);
       navigator("/projects");
     } else {
       setError("Oops, Unable to create project");

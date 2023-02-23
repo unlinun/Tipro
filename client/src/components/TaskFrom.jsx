@@ -59,29 +59,7 @@ const TaskFrom = () => {
     const newTask = { ...data, tags };
     // createTask 的 response
     const res = await createTask(newTask, token);
-    // 修改 project 的phase task
-    const project = projects.projects.find(
-      (project) => project._id === projectId
-    );
-    const newTasks = project.phase.allPhase.map((item) => {
-      if (item._id === res.data.phaseId) {
-        item.tasks.push(res.data._id);
-        return item;
-      }
-      return item;
-    });
-
     if (res.status === 201) {
-      await updateProject(
-        {
-          _id: project._id,
-          phase: {
-            currentPhase: project.phase.currentPhase,
-            allPhase: newTasks,
-          },
-        },
-        token
-      );
       dispatch(setCreating());
       navigator("/tasks");
     } else {
@@ -162,7 +140,7 @@ const TaskFrom = () => {
             name="projectId"
             {...register("phaseId")}
           >
-            {phase?.allPhase?.map((phase) => {
+            {phase?.map((phase) => {
               return (
                 <option value={phase._id} key={phase._id}>
                   {phase.title}

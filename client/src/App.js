@@ -13,8 +13,8 @@ import Staffs from "./pages/Staffs/Staffs";
 import Reports from "./pages/Reports/Reports";
 import Setting from "./pages/Setting/Setting";
 import NotFound from "./pages/Not found/NotFound";
+import SingleProject from "./pages/Projects/SingleProject/SingleProject";
 import ProtectedRoute from "./components/ProtectedRoute";
-import SingleProject from "./pages/Projects/singleProject/SingleProject";
 
 const App = () => {
   return (
@@ -28,9 +28,9 @@ const App = () => {
         <Route
           path="/"
           element={
-            // <ProtectedRoute>
-            <ShareSidebarNav />
-            // </ProtectedRoute>
+            <ProtectedRoute>
+              <ShareSidebarNav />
+            </ProtectedRoute>
           }
         >
           <Route index element={<Dashboard />} />

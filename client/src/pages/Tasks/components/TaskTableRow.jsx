@@ -7,9 +7,7 @@ const TaskTableRow = ({ task, index, projects }) => {
   const project = projects?.projects.find(
     (project) => project._id === task?.projectId
   );
-  const phase = project.phase.allPhase.find(
-    (phase) => phase._id === task.phaseId
-  );
+  const phase = project.phase.find((phase) => phase._id === task.phaseId);
   return (
     <tr className="table__row" key={task?._id}>
       <td className="table__cell">{index + 1}</td>
@@ -25,7 +23,7 @@ const TaskTableRow = ({ task, index, projects }) => {
             <option value={task?.phaseId} disabled>
               {phase.title}
             </option>
-            {project.phase.allPhase.map((phase) => (
+            {project.phase.map((phase) => (
               <option value={phase._id} key={phase._id}>
                 {phase.title}
               </option>

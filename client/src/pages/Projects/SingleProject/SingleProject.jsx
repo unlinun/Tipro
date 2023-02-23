@@ -2,8 +2,8 @@ import React from "react";
 import { useQuery } from "react-query";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-
 import { getSingleProject } from "../../../api/projects";
+import NotFound from "../../Not found/NotFound";
 import Contacts from "./components/Contacts";
 import Info from "./components/Info";
 import Phase from "./components/Phase";
@@ -11,9 +11,18 @@ import Phase from "./components/Phase";
 const SingleProject = () => {
   const { id } = useParams();
   const token = useSelector((state) => state.auth.token);
-  const { data: project } = useQuery("singleProject", () =>
+  const staffs = useSelector((state) => state.auth.staffs);
+  const { isLoading, data: project } = useQuery("singleProject", () =>
     getSingleProject(id, token)
   );
+
+  if (isLoading) {
+    return <p> is loading</p>;
+  }
+  // 如果 project 不存在，則顯示 not found
+  if (!project) {
+    return <NotFound />;
+  }
 
   return (
     <div className="project">
@@ -24,20 +33,30 @@ const SingleProject = () => {
         <div className="staff__manager">
           <h6>manager</h6>
           <div className="manager__info">
-            <img src="" alt="" />
-            <p>name</p>
+            <img
+              src={`http://localhost:6001/${
+                staffs.find((staff) => staff._id === project.manager).avatar
+              }`}
+              alt="manager"
+            />
+            <p>
+              {staffs.find((staff) => staff._id === project.manager).username}
+            </p>
           </div>
         </div>
         <div className="staff__staff">
           <h6>staff</h6>
           <div className="staff__info">
-            <img src="" alt="" />
-            <img src="" alt="" />
-            <img src="" alt="" />
-            <img src="" alt="" />
-            <img src="" alt="" />
-            <img src="" alt="" />
-            <img src="" alt="" />
+            {staffs.map((staff) => {
+              return (
+                <img
+                  src={`http://localhost:6001/${staff.avatar}`}
+                  alt={staff.username}
+                  key={staff._id}
+                  title={staff.username}
+                />
+              );
+            })}
           </div>
         </div>
       </div>
