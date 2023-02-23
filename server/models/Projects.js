@@ -61,14 +61,16 @@ const ProjectsSchema = new mongoose.Schema({
       type: ContactInfoSchema,
     },
   ],
-  phase: {
-    type: mongoose.Types.ObjectId,
-    ref: "Phase",
-    required: true,
-  },
+  phase: [
+    {
+      title: {
+        type: String,
+        required: true,
+      },
+    },
+  ],
   currentPhase: {
-    type: mongoose.Types.ObjectId,
-    ref: "Phase",
+    type: String,
     required: true,
   },
   createdBy: {

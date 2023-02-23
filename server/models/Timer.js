@@ -24,3 +24,6 @@ const TimerSchema = new mongoose.Schema({
 
 const Timer = mongoose.model("Timer", TimerSchema);
 export default Timer;
+
+/* 利用秒數來儲存時間，
+如果使用者一個小時都沒按下暫停鍵，則會跳出彈窗，詢問是否繼續計時 */

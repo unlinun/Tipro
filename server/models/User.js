@@ -33,7 +33,7 @@ const UserSchema = new mongoose.Schema({
   },
   avatar: {
     type: String,
-    default: "",
+    default: "assets/avatar.svg",
   },
   position: {
     type: String,

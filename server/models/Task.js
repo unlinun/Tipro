@@ -14,18 +14,6 @@ const TaskSchema = new mongoose.Schema({
     type: Array,
     default: [],
   },
-  timer: {
-    currentDuration: {
-      type: Number,
-      default: 0,
-      required: true,
-    },
-    totalDuration: {
-      type: Number,
-      default: 0,
-      required: true,
-    },
-  },
   finished: {
     type: Boolean,
     default: false,
