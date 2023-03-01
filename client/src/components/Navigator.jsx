@@ -106,7 +106,7 @@ export const Navigator = () => {
                       )
                     )}
                   </div>
-                  <div className="search__items text--ellipsis">
+                  <div className="item text--ellipsis">
                     {reactStringReplace(
                       `${item.description}`,
                       `${searchValue}`,

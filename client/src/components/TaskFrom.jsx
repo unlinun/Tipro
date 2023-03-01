@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import TagsInput from "./TagsInput";
-import { getAllProjects, updateProject } from "../api/projects";
+import { getAllProjects } from "../api/projects";
 import { useDispatch, useSelector } from "react-redux";
 import { createTask } from "../api/task";
 import { setCreating } from "../state/authSlice";
@@ -56,11 +56,16 @@ const TaskFrom = () => {
   // 創建一個新的任務 new task 並且同時更新 project 的資料！(是否有更好的方法可以操作？當 task 新增時一併更新 project? 待研究 ，感覺用此方法好像有點影響效能，更新速度有點慢，大約要 90ms)
   const createTaskInfo = async (data, e) => {
     e.preventDefault();
+    if (tags.length > 5) {
+      setError("tags over 5");
+      return;
+    }
     const newTask = { ...data, tags };
     // createTask 的 response
     const res = await createTask(newTask, token);
     if (res.status === 201) {
       dispatch(setCreating());
+      navigator(0);
       navigator("/tasks");
     } else {
       setError("Oops, Unable to create task");

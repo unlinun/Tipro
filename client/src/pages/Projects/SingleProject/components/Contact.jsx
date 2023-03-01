@@ -3,7 +3,7 @@ import { useMutation, useQueryClient } from "react-query";
 import { useSelector } from "react-redux";
 import { updateProject } from "../../../../api/projects";
 
-const Contact = ({ project, index, contact }) => {
+const Contact = ({ project, index, contact, setIsCreate }) => {
   const token = useSelector((state) => state.auth.token);
   const queryClient = useQueryClient();
   const [isEdit, setIsEdit] = useState(false);
@@ -28,9 +28,12 @@ const Contact = ({ project, index, contact }) => {
   const handleEditContact = () => {
     if (isEdit === false) {
       setIsEdit(true);
+      setIsCreate(false);
       return;
     }
     setIsEdit(false);
+    setIsCreate(false);
+
     const editContacts = [...project.contactInfo];
     editContacts[index] = contactInfo;
     updateProjectItem({

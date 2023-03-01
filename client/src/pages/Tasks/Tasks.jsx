@@ -1,8 +1,6 @@
 import React from "react";
 import { useQuery } from "react-query";
 import { useSelector } from "react-redux";
-
-import { getAllProjects } from "../../api/projects";
 import { getAllTasksByUser } from "../../api/task";
 import TaskTableRow from "./components/TaskTableRow";
 
@@ -13,7 +11,6 @@ const Tasks = () => {
   const { isLoading, data: tasks } = useQuery("tasksByUser", () =>
     getAllTasksByUser(user._id, token)
   );
-  const { data: projects } = useQuery("projects", () => getAllProjects(token));
 
   return (
     <div className="tasks">
@@ -54,14 +51,7 @@ const Tasks = () => {
               </tr>
             ) : null}
             {tasks?.tasks.map((task, i) => {
-              return (
-                <TaskTableRow
-                  key={task?._id}
-                  task={task}
-                  index={i}
-                  projects={projects}
-                />
-              );
+              return <TaskTableRow key={task?._id} task={task} index={i} />;
             })}
           </tbody>
         </table>

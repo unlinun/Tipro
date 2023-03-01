@@ -112,6 +112,7 @@ const Contacts = ({ project }) => {
                 index={index}
                 project={project}
                 key={contact._id}
+                setIsCreate={setIsCreate}
               />
             );
           })}

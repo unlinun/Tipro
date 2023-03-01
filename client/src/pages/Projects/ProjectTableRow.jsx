@@ -10,19 +10,21 @@ import dateFormat from "dateformat";
 import { updateProject, deleteProject } from "../../api/projects";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import { useSelector, useDispatch } from "react-redux";
 import { setCreating, setForm } from "../../state/authSlice";
 
 const ProjectTableRow = ({ project }) => {
   const startDate = dateFormat(project?.startDate, "isoDate");
   const token = useSelector((state) => state.auth.token);
-  const staffs = useSelector((state) => state.auth.staffs);
   const status = useSelector((state) => state.project.status);
+  const [isEdit, setIsEdit] = useState(false);
 
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
-  const [isEdit, setIsEdit] = useState(false);
+  console.log(project);
+
+  // 更新 project
   const { mutate: updateProjectItem } = useMutation(
     (updateProjectItem) => {
       return updateProject(updateProjectItem, token);
@@ -34,6 +36,7 @@ const ProjectTableRow = ({ project }) => {
     }
   );
 
+  // 刪除 project
   const { mutate: deleteProjectItem } = useMutation(
     (deleteProjectItem) => {
       const isDelete = window.confirm("Delete this project?");
@@ -129,32 +132,24 @@ const ProjectTableRow = ({ project }) => {
       <td className="table__cell">
         <img
           className="table__image"
-          src={`http://localhost:6001/${
-            staffs.find((staff) => staff._id === project?.manager).avatar
-          }`}
+          src={`http://localhost:6001/${project.manager[0].avatar}`}
           alt="manager"
-          title={
-            staffs.find((staff) => staff._id === project?.manager).username
-          }
+          title={project?.manager[0].username}
         />
       </td>
       <td className="table__cell">
         <div className="table__staff">
-          {staffs
-            ?.filter((staff, i) =>
-              project.staff.filter((item) => item === staff._id)
-            )
-            .map((staff) => {
-              return (
-                <img
-                  className="table__image table__image--staff"
-                  src={`http://localhost:6001/${staff.avatar}`}
-                  alt={staff.username}
-                  key={staff._id}
-                  title={staff.username}
-                />
-              );
-            })}
+          {project?.staff.map((s) => {
+            return (
+              <img
+                className="table__image table__image--staff"
+                src={`http://localhost:6001/${s.avatar}`}
+                alt={s.username}
+                key={s._id}
+                title={s.username}
+              />
+            );
+          })}
         </div>
       </td>
       <td className="table__cell">{startDate}</td>

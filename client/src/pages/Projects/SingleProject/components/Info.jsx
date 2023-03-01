@@ -108,7 +108,7 @@ const Info = ({ project }) => {
                     setCurrentCountry(e.target.value);
                   }}
                 >
-                  {countries.map((country, i) => {
+                  {countries?.map((country, i) => {
                     return (
                       <option value={country.country} key={i}>
                         {country.country}

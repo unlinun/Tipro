@@ -156,12 +156,14 @@
   }
   &__tag {
     padding: rem(0) rem(8);
+    line-height: rem(20);
+    height: rem(20);
     background-color: var(--event-purple);
     border-radius: rem(10);
     color: var(--dark-black);
     font-size: rem(14);
     &--checked {
-      background-color: var(--event-darkgreen);
+      background-color: var(--primary-green);
     }
     &--working {
       background-color: var(--event-orange);
