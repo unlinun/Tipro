@@ -1,15 +1,57 @@
 import { StatusCodes } from "http-status-codes";
+import mongoose from "mongoose";
+import NotFoundError from "../errors/notFound.js";
+import BadRequestError from "../errors/badRequest.js";
 import Task from "../models/Task.js";
 
 //取得所有 tasks 包含所有人創建的或是自己創建的
 export const getAllTasks = async (req, res) => {
-  const { user } = req.query;
+  const { user, project } = req.query;
   const queryObject = {};
+
   // 找尋為自己創建的 task
   if (user) {
-    queryObject.createdBy = user;
+    queryObject.createdBy = mongoose.Types.ObjectId(user);
   }
-  let result = Task.find(queryObject).sort({ startDate: -1 });
+  if (project) {
+    queryObject.projectId = mongoose.Types.ObjectId(project);
+  }
+
+  let result = Task.aggregate([
+    { $match: queryObject },
+    {
+      $lookup: {
+        from: "projects",
+        let: { projectId: "$projectId" },
+        pipeline: [
+          {
+            $match: {
+              $expr: {
+                $eq: ["$_id", { $toObjectId: "$$projectId" }],
+              },
+            },
+          },
+          {
+            $project: { title: 1 },
+          },
+        ],
+        as: "project",
+      },
+    },
+    {
+      $lookup: {
+        from: "projects",
+        localField: "phaseId",
+        foreignField: "phase._id",
+        as: "phase",
+      },
+    },
+    {
+      $set: {
+        phase: { $arrayElemAt: ["$phase.phase", 0] },
+      },
+    },
+  ]).sort({ startDate: -1 });
   const tasks = await result;
   res.status(StatusCodes.OK).json({ tasks, totalTasks: tasks.length });
 };
@@ -19,7 +61,7 @@ export const getSingleTask = async (req, res) => {
   const user = req.user;
   const { id } = req.params;
   try {
-    const task = Task.findOne({ _id: id, $or: [{ createdBy: user.id }] });
+    const task = await Task.findOne({ _id: id, $or: [{ createdBy: user.id }] });
     if (!task) {
       throw new NotFoundError("No task found!");
     }
@@ -32,9 +74,9 @@ export const getSingleTask = async (req, res) => {
 //創建 task
 export const createTask = async (req, res) => {
   const user = req.user;
-  const tasks = await Task.create({ ...req.body, createdBy: user.id });
+  const task = await Task.create({ ...req.body, createdBy: user.id });
 
-  res.status(StatusCodes.CREATED).json(tasks);
+  res.status(StatusCodes.CREATED).json(task);
 };
 
 // 更新 task

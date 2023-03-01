@@ -1,13 +1,21 @@
 import User from "../models/User.js";
 import { StatusCodes } from "http-status-codes";
-import { BadRequestError, UnauthenticatedError } from "../errors";
+import BadRequestError from "../errors/badRequest.js";
+import UnauthenticatedError from "../errors/unauthenticated.js";
 
 // register 註冊
 export const register = async (req, res) => {
   // 1.在 UserSchema 中先對密碼進行預處理（詳見 ../models/User.js）
+  let avatar = undefined;
+  if (req.file && req.file.originalname) {
+    return (avatar = req.file.originalname);
+  }
   try {
-    const avatar = "/assets/avatar.svg";
-    const user = await User.create({ ...req.body, avatar });
+    const user = new User({
+      ...req.body,
+      avatar,
+    });
+    user.save();
     res.status(StatusCodes.CREATED).json({ user: { username: user.username } });
   } catch (error) {
     throw new BadRequestError("Register fail, something when wrong!");
