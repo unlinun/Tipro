@@ -139,6 +139,7 @@ export const createProject = async (req, res) => {
 
 // 更新一個項目
 export const updateProject = async (req, res) => {
+  console.log(req.body);
   const user = req.user;
   const { id } = req.params;
   try {

@@ -51,12 +51,20 @@ const storage = multer.diskStorage({
     cb(null, "public/assets");
   },
   filename: function (req, file, cb) {
-    cb(null, file.filename + "-" + Date.now());
+    cb(
+      null,
+      "avatar" +
+        new Date().getFullYear() +
+        new Date().getDate() +
+        new Date().getHours() +
+        new Date().getSeconds() +
+        path.extname(file.originalname)
+    );
   },
 });
 const upload = multer({
-  storage,
-  limit: { fileSize: 1000000 },
+  storage: storage,
+  limits: { fileSize: 1000000 },
   fileFilter(req, file, cb) {
     // 只接受三種圖片格式
     if (!file.originalname.match(/\.(jpg|jpeg|png|svg)$/)) {
@@ -69,7 +77,7 @@ const upload = multer({
 // routes
 app.use("/auth", authRoute);
 app.use("/auth/login", authRoute);
-app.use("/user:id", authorizationToken, upload.single("avatar"), updateUser);
+app.patch("/user/:id", authorizationToken, upload.single("avatar"), updateUser);
 app.use("/user", authorizationToken, userRoute);
 app.use("/projects", authorizationToken, projectsRoute);
 app.use("/tasks", authorizationToken, taskRoute);

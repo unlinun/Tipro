@@ -1,5 +1,6 @@
 import { StatusCodes } from "http-status-codes";
 import User from "../models/User.js";
+import BadRequestError from "../errors/badRequest.js";
 
 // 取得使用者
 export const getUser = async (req, res) => {
@@ -25,23 +26,24 @@ export const getStaffs = async (req, res) => {
 
 // 更新使用者資料（要更新使用者的大頭貼） 2023/02/19 待解決
 export const updateUser = async (req, res) => {
-  const userId = req.user._id;
-  const avatar = req.file.avatar;
-  try {
-    const user = await User.findOneAndUpdate(
-      { _id: userId },
-      {
-        ...req.body,
-        avatar,
-      },
-      {
-        new: true,
-        runValidators: true,
-      },
-      { password: 0 }
-    );
-    res.status(StatusCodes.OK).json(user);
-  } catch (error) {
-    throw new BadRequestError(error.message);
+  const { id } = req.params;
+  const { username, position, birthday, email } = req.body;
+  const user = await User.findOneAndUpdate(
+    { _id: id },
+    {
+      avatar: `assets/${req.file.filename}`,
+      username,
+      position,
+      birthday,
+      email,
+    },
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
+  if (!user) {
+    throw new NotFoundError("No project found!");
   }
+  res.status(StatusCodes.OK).json(user);
 };

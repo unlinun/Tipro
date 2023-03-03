@@ -39,11 +39,21 @@ export const authSlice = createSlice({
       state.form = action.payload.form;
     },
     setStaffs: (state, action) => {
-      state.staffs = action.payload.staffs;
+      state.staffs = action.payload;
+    },
+    setUser: (state, action) => {
+      state.user = action.payload;
     },
   },
 });
 
-export const { setLogin, setLogout, setMode, setForm, setCreating, setStaffs } =
-  authSlice.actions;
+export const {
+  setLogin,
+  setLogout,
+  setMode,
+  setForm,
+  setCreating,
+  setStaffs,
+  setUser,
+} = authSlice.actions;
 export default authSlice.reducer;

@@ -18,7 +18,7 @@ export const register = async (req, res) => {
     user.save();
     res.status(StatusCodes.CREATED).json({ user: { username: user.username } });
   } catch (error) {
-    throw new BadRequestError("Register fail, something when wrong!");
+    throw new BadRequestError(error.message);
   }
 };
 
@@ -46,6 +46,6 @@ export const login = async (req, res) => {
       token,
     });
   } catch (error) {
-    throw new BadRequestError("login fail, something when wrong!");
+    throw new BadRequestError(error.message);
   }
 };

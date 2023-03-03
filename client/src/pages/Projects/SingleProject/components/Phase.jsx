@@ -67,7 +67,7 @@ const Phase = ({ project }) => {
               });
             }}
           >
-            <option disabled>{project?.phase.currentPhase}</option>
+            <option disabled>{project?.currentPhase}</option>
             {project?.phase.map((phase) => {
               return (
                 <option value={phase.title} key={phase._id}>

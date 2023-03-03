@@ -37,6 +37,9 @@
       font-size: rem(12);
       font-weight: 400;
     }
+    &--low {
+      text-transform: lowercase;
+    }
     &--center {
       width: 100%;
       display: flex;
@@ -59,7 +62,7 @@
     width: rem(32);
     height: rem(32);
     object-fit: cover;
-    background-color: var(--event-darkgreen);
+    background-color: var(--primary-gray);
     border-radius: 50%;
     &--staff {
       font-size: rem(12);

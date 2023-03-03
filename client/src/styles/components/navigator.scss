@@ -46,7 +46,7 @@
     width: rem(30);
     height: rem(30);
     object-fit: cover;
-    background-color: var(--primary-bgc);
+    background-color: var(--primary-gray);
     border-radius: 50%;
     @include breakpoint-down(small) {
       display: none;

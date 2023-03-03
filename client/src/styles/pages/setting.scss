@@ -1,0 +1,35 @@
+@use "../utils/" as *;
+
+.setting {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  @include breakpoint-down(large) {
+    overflow: scroll;
+  }
+  &__image {
+    width: rem(100);
+    height: rem(100);
+    background-color: var(--primary-bgc);
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  &__card {
+    width: rem(500);
+  }
+  .card__title {
+    border-left: none;
+    color: var(--light-white-text);
+  }
+  .card__text {
+    text-transform: lowercase;
+  }
+  input {
+    padding: rem(2) rem(8);
+    border: 1px solid var(--light-lightgray);
+    border-radius: rem(10);
+    background-color: var(--light-white-bgc);
+    color: var(--light-white-text);
+  }
+}

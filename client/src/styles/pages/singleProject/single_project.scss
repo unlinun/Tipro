@@ -44,6 +44,9 @@
       flex-wrap: wrap;
       gap: rem(20);
     }
+    .staff__image {
+      object-fit: cover;
+    }
   }
 
   &__task {

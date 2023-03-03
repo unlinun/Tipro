@@ -166,7 +166,7 @@
   &--cen {
     justify-content: center;
   }
-  &__clo {
+  &__col {
     flex-direction: column;
   }
 }
@@ -192,6 +192,9 @@
     gap: rem(20);
   }
   &--32 {
+    gap: rem(32);
+  }
+  &--40 {
     gap: rem(32);
   }
 }

@@ -22,7 +22,6 @@ const ProjectTableRow = ({ project }) => {
 
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
-  console.log(project);
 
   // 更新 project
   const { mutate: updateProjectItem } = useMutation(

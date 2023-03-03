@@ -97,6 +97,13 @@ const Task = ({ project }) => {
               </tr>
             );
           })}
+          {projectTask?.length > 0 ? (
+            ""
+          ) : (
+            <tr style={{ justifySelf: "center" }}>
+              <td>No task for this project...</td>
+            </tr>
+          )}
         </tbody>
       </table>
     </div>

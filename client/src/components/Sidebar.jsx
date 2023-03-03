@@ -8,7 +8,7 @@ import {
   TimerIcon,
   SettingIcon,
   UserSquareIcon,
-  ChartCircleIcon,
+  MemoIcon,
 } from "../assets/icons";
 import { setLogout } from "../state/authSlice";
 
@@ -46,13 +46,13 @@ const Sidebar = () => {
             <TaskIcon />
             <h6> tasks</h6>
           </NavLink>
+          <NavLink to="memos">
+            <MemoIcon />
+            <h6> memos</h6>
+          </NavLink>
           <NavLink to="staffs">
             <UserSquareIcon />
             <h6> staffs</h6>
-          </NavLink>
-          <NavLink to="reports">
-            <ChartCircleIcon />
-            <h6> reports</h6>
           </NavLink>
           <NavLink to="setting">
             <SettingIcon />

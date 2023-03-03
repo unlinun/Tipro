@@ -1,18 +1,17 @@
 @use "../utils/" as *;
 
-.tasks {
+.staffs {
   display: grid;
-  grid-template-rows: 1fr 0.5fr;
-  gap: rem(32);
+  justify-items: center;
+  grid-template-rows: 1fr;
   @include breakpoint-down(large) {
     overflow: scroll;
   }
   &__card {
-    overflow: scroll;
+    width: 50%;
   }
   &__table {
     width: 100%;
-    min-width: rem(1000);
   }
   .table__select {
     background-color: var(--light-gray);
@@ -21,11 +20,18 @@
     }
   }
   .table__row {
-    grid-template-columns: rem(20) 1.5fr 1fr 1fr 0.6fr 1fr 0.5fr 0.2fr 0.5fr;
+    grid-template-columns: rem(20) rem(100) rem(100) rem(100) 0.5fr 1fr;
     gap: rem(40);
     @include breakpoint-down(medium) {
-      grid-template-columns: rem(20) 1fr 0.5fr 1fr 0.5fr 1fr 0.5fr 0.2fr 0.5fr;
+      grid-template-columns: rem(20) 0.5fr 0.5fr 0.5fr 0.5fr 1fr;
       gap: rem(20);
     }
+  }
+  .table__cell,
+  .table__title {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }
