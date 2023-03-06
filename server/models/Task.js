@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import Timer from "./Timer.js";
 
 const TaskSchema = new mongoose.Schema({
   title: {
@@ -25,12 +26,12 @@ const TaskSchema = new mongoose.Schema({
   },
   projectId: {
     type: mongoose.Types.ObjectId,
-    ref: "Project",
+    ref: "Projects",
     required: true,
   },
   phaseId: {
     type: mongoose.Types.ObjectId,
-    ref: "Project",
+    ref: "Projects",
     required: true,
   },
   createdAt: {
@@ -39,15 +40,84 @@ const TaskSchema = new mongoose.Schema({
   },
 });
 
+// 預先 pre-save hook to create timesheet document when a new task is created
+// pre-save hook是Mongoose中的一個middleware，它在執行保存操作之前執行
+
+// helper function to get week start date
+function getWeekStartDate(date) {
+  const dayOfWeek = date.getDay();
+  const diff = date.getDate() - dayOfWeek + (dayOfWeek === 0 ? -6 : 1);
+  return new Date(date.setDate(diff));
+}
+
+// helper function to get week end date
+function getWeekEndDate(weekStartDate) {
+  const weekEndDate = new Date(weekStartDate);
+  weekEndDate.setDate(weekEndDate.getDate() + 6);
+  return weekEndDate;
+}
+
+TaskSchema.pre("save", async function (next) {
+  const task = this;
+
+  // get week start date and end date
+  const weekStartDate = getWeekStartDate(new Date());
+  const weekEndDate = getWeekEndDate(weekStartDate);
+  const dayOfWeek = [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday",
+  ];
+
+  try {
+    // create timer document
+    const timer = new Timer({
+      projectId: task.projectId,
+      phaseId: task.phaseId,
+      taskId: task._id,
+      weekStartDate,
+      weekEndDate,
+      weekTimeRecord: dayOfWeek.map((day) => {
+        return {
+          dayOfWeek: day,
+        };
+      }),
+    });
+    // save timer document
+    await timer.save();
+  } catch (err) {
+    throw new Error(err.message);
+  }
+
+  next();
+});
+
+// 預先 pre-remove hook !!!
+// pre-remove hook ，可以在刪除 task 時，一併刪除有關連的 timer data!!
+TaskSchema.pre(
+  "deleteOne",
+  { document: true, query: false },
+  async function (next) {
+    await Timer.deleteMany({ taskId: this._id });
+    next();
+  }
+);
+
 const Task = mongoose.model("Task", TaskSchema);
 export default Task;
 
+//  紀錄一些想法
 /* TASK 裡面會有 timer,
+如何在創建 task 時一併創建 timer?
 每一個task裡面會有多個timer（因為每天工作 8小時算，過了一天，就會產生一個新的 timer 直到 task 完成）
 每一個task會有所有timer相加的時間
 每一個timer會有一個對應的日期，
 每一個timer會有一個duration(已經加總過後的)，
-還會有一個currentDuration, 以免使用者跳出去之後所儲存的資料消失。
+還會有一個previousDuration, 以免使用者跳出去之後所儲存的資料消失。
 使用者要可以修改每一天的 duration ,還要可以讓 task 的 totalDuration 相加
 
 要思考一下如何將正在計算的時間一直保持（是否使用update? 但就會每一秒都更新）

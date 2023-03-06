@@ -161,17 +161,19 @@ export const updateProject = async (req, res) => {
 };
 
 // 刪除一個項目
+// 刪除 project  => 在刪除 project 後也需要一起刪除關聯的 timer!!!!
 export const deleteProject = async (req, res) => {
   const user = req.user;
   const { id } = req.params;
   try {
-    const project = await Projects.findOneAndDelete({
+    const project = await Projects.findOne({
       _id: id,
       $or: [{ manager: user.id }, { createdBy: user.id }],
     });
     if (!project) {
       throw new NotFoundError("No project found!");
     }
+    await project.deleteOne();
     res.status(StatusCodes.OK).json({ message: "success deleted" });
   } catch (error) {
     throw new BadRequestError(error.message);

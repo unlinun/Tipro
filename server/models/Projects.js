@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import Task from "./Task.js";
 
 const ContactInfoSchema = new mongoose.Schema({
   company: String,
@@ -84,6 +85,16 @@ const ProjectsSchema = new mongoose.Schema({
     default: Date.now(),
   },
 });
+
+// add pre hook to delete related task
+ProjectsSchema.pre(
+  "deleteOne",
+  { document: true, query: false },
+  async function (next) {
+    await Task.deleteMany({ projectId: this._id });
+    next();
+  }
+);
 
 const Projects = mongoose.model("Projects", ProjectsSchema);
 export default Projects;

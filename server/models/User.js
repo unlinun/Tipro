@@ -37,7 +37,7 @@ const UserSchema = new mongoose.Schema({
   },
   position: {
     type: String,
-    default: "Staff",
+    default: "staff",
   },
   adminProjects: {
     type: Boolean,

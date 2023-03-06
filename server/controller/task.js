@@ -67,7 +67,7 @@ export const getSingleTask = async (req, res) => {
     }
     return res.status(StatusCodes.OK).json(task);
   } catch (error) {
-    throw new BadRequestError("Cannot get task, something went wrong!");
+    throw new BadRequestError(error.message);
   }
 };
 
@@ -100,24 +100,22 @@ export const updateTask = async (req, res) => {
     }
     return res.status(StatusCodes.OK).json(task);
   } catch (error) {
-    throw new BadRequestError("Cannot update task, something went wrong!");
+    throw new BadRequestError(error.message);
   }
 };
 
-// 刪除 task
+// 刪除 task  => 在刪除 task後也需要一起刪除關聯的 timer!!!!
 export const deleteTask = async (req, res) => {
   const user = req.user;
   const { id } = req.params;
   try {
-    const task = await Task.findOneAndDelete({
-      _id: id,
-      $or: [{ createdBy: user.id }],
-    });
+    const task = await Task.findOne({ _id: id, createdBy: user.id });
     if (!task) {
       throw new NotFoundError("No task found!");
     }
+    await task.deleteOne();
     res.status(StatusCodes.OK).json({ message: "Success deleted" });
   } catch (error) {
-    throw new BadRequestError("Cannot delete task, something went wrong!");
+    throw new BadRequestError(error.message);
   }
 };

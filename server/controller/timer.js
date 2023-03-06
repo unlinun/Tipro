@@ -2,9 +2,20 @@ import { StatusCodes } from "http-status-codes";
 import Timer from "../models/Timer.js";
 
 // 根據 task id 來取得相對應的 timer
-export const getTimerFromTask = async (req, res) => {
-  const { id: taskId } = req.id;
-  const timer = await Timer.find({ taskId });
+export const getTimer = async (req, res) => {
+  const timer = await Timer.aggregate([
+    {
+      $match: { taskId: taskId },
+    },
+    {
+      $lookup: {
+        from: "tasks",
+        localField: "taskId",
+        foreignField: "_id",
+        as: "task",
+      },
+    },
+  ]);
   console.log(timer);
 };
 
