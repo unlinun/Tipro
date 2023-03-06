@@ -14,6 +14,7 @@ const Tasks = () => {
     getAllTasksByUser(user._id, token)
   );
 
+  console.log(workingTask, finishedTask);
   useEffect(() => {
     setWorkingTask(tasks?.tasks.filter((task) => task.finished === false));
     setFinishedTask(tasks?.tasks.filter((task) => task.finished === true));
@@ -57,9 +58,22 @@ const Tasks = () => {
                 </td>
               </tr>
             ) : null}
-            {workingTask?.map((task, i) => {
-              return <TaskTableRow key={task?._id} task={task} index={i} />;
-            })}
+            {workingTask.length > 0 ? (
+              workingTask.map((task, i) => {
+                return <TaskTableRow key={task?._id} task={task} index={i} />;
+              })
+            ) : (
+              <tr style={{ textAlign: "center", justifySelf: "center" }}>
+                <td
+                  style={{
+                    textAlign: "center",
+                    margin: "16px",
+                  }}
+                >
+                  working tasks is empty
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>
@@ -92,16 +106,29 @@ const Tasks = () => {
                 <td
                   style={{
                     textAlign: "center",
-                    margin: "12px",
+                    padding: "16px",
                   }}
                 >
                   Loading...
                 </td>
               </tr>
             ) : null}
-            {finishedTask?.map((task, i) => {
-              return <TaskTableRow key={task?._id} task={task} index={i} />;
-            })}
+            {finishedTask.length > 0 ? (
+              finishedTask?.map((task, i) => {
+                return <TaskTableRow key={task?._id} task={task} index={i} />;
+              })
+            ) : (
+              <tr style={{ textAlign: "center", justifySelf: "center" }}>
+                <td
+                  style={{
+                    textAlign: "center",
+                    padding: "16px",
+                  }}
+                >
+                  finished tasks is empty
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>

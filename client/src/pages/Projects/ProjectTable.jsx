@@ -41,7 +41,7 @@ const ProjectTable = ({ projectsFilter, setForm }) => {
               <td
                 style={{
                   textAlign: "center",
-                  margin: "12px",
+                  padding: "16px",
                 }}
               >
                 Loading...
@@ -57,7 +57,7 @@ const ProjectTable = ({ projectsFilter, setForm }) => {
               <td
                 style={{
                   textAlign: "center",
-                  margin: "12px",
+                  padding: "16px",
                 }}
               >{`${projectsFilter} projects is empty`}</td>
             </tr>

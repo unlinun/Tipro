@@ -52,12 +52,7 @@ const Task = ({ project }) => {
             <th className="table__title">phase</th>
             <th className="table__title">creator</th>
             <th className="table__title">
-              <div className="flex gap--8">
-                status
-                <span className="btn" onClick={() => handleSort("finished")}>
-                  ↑↓
-                </span>
-              </div>
+              <div className="flex gap--8">status</div>
             </th>
           </tr>
         </thead>

@@ -44,13 +44,15 @@ const SingleProject = () => {
           <div className="staff__info">
             {project?.staff.map((staff) => {
               return (
-                <img
-                  className="staff__image"
-                  src={`http://localhost:6001/${staff?.avatar}`}
-                  alt={staff.username}
-                  key={staff._id}
-                  title={staff.username}
-                />
+                <div className="manager__info" key={staff._id}>
+                  <img
+                    className="staff__image"
+                    src={`http://localhost:6001/${staff?.avatar}`}
+                    alt={staff.username}
+                    title={staff.username}
+                  />
+                  <p>{staff.username}</p>
+                </div>
               );
             })}
           </div>

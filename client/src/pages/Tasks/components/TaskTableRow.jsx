@@ -11,7 +11,7 @@ const TaskTableRow = ({ task, index }) => {
   const [isEdit, setIsEdit] = useState(false);
   const [isAddTag, setIsAddTag] = useState(false);
   const [tags, setTags] = useState(task?.tags);
-  const currentPhase = task.phase.find(
+  const currentPhase = task?.phase?.find(
     (phase) => phase._id === task.phaseId
   ).title;
 
@@ -85,7 +85,7 @@ const TaskTableRow = ({ task, index }) => {
         <td className="table__cell">{task?.title}</td>
       )}
 
-      <td className="table__cell">{task?.project[0].title}</td>
+      <td className="table__cell">{task?.project[0]?.title}</td>
       <td className="table__cell">
         <div className="table__select select select--status">
           <select
@@ -99,7 +99,7 @@ const TaskTableRow = ({ task, index }) => {
             <option value={task?.phaseId} disabled>
               {currentPhase}
             </option>
-            {task?.phase.map((phase) => (
+            {task?.phase?.map((phase) => (
               <option value={phase._id} key={phase._id}>
                 {phase.title}
               </option>

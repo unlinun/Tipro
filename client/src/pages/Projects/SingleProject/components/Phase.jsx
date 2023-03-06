@@ -60,6 +60,7 @@ const Phase = ({ project }) => {
           <select
             name="phase"
             className="select__input"
+            defaultValue={project.currentPhase}
             onChange={(e) => {
               updateProjectItem({
                 _id: project._id,
