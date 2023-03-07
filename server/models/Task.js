@@ -8,7 +8,7 @@ const TaskSchema = new mongoose.Schema({
     required: [true, "Please provide title"],
   },
   startDate: {
-    type: String,
+    type: Date,
     required: [true, "Please provide start date"],
   },
   tags: {
@@ -43,49 +43,15 @@ const TaskSchema = new mongoose.Schema({
 // 預先 pre-save hook to create timesheet document when a new task is created
 // pre-save hook是Mongoose中的一個middleware，它在執行保存操作之前執行
 
-// helper function to get week start date
-function getWeekStartDate(date) {
-  const dayOfWeek = date.getDay();
-  const diff = date.getDate() - dayOfWeek + (dayOfWeek === 0 ? -6 : 1);
-  return new Date(date.setDate(diff));
-}
-
-// helper function to get week end date
-function getWeekEndDate(weekStartDate) {
-  const weekEndDate = new Date(weekStartDate);
-  weekEndDate.setDate(weekEndDate.getDate() + 6);
-  return weekEndDate;
-}
-
+// 在創建 task 後，直接創建一個 timer
 TaskSchema.pre("save", async function (next) {
   const task = this;
-
-  // get week start date and end date
-  const weekStartDate = getWeekStartDate(new Date());
-  const weekEndDate = getWeekEndDate(weekStartDate);
-  const dayOfWeek = [
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-    "Sunday",
-  ];
-
   try {
     // create timer document
     const timer = new Timer({
+      taskId: this._id,
       projectId: task.projectId,
       phaseId: task.phaseId,
-      taskId: task._id,
-      weekStartDate,
-      weekEndDate,
-      weekTimeRecord: dayOfWeek.map((day) => {
-        return {
-          dayOfWeek: day,
-        };
-      }),
     });
     // save timer document
     await timer.save();
@@ -131,3 +97,37 @@ startDate 如果開始了，都沒有完成，要如何延續到下一天？
 前端先行阻擋，如果 createdAt 一樣的話就不會新增一個新的時間段，而是更新時間，
 因為一個 task 中的 timer 不會有兩個一樣的創建時間
 */
+
+// helper function to get week start date
+function getWeekStartDate(date) {
+  const dayOfWeek = date.getDay();
+  const day = date.getDate() - dayOfWeek + (dayOfWeek === 0 ? -6 : 1);
+  const firstDay = new Date(date.setDate(day));
+  firstDay.setUTCHours(0, 0, 0, 0);
+  // 回傳的是午夜
+  return firstDay;
+}
+
+function generateTimer() {
+  // get week start date and end date
+  const today = new Date();
+  const weekDate = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  const todayOfWeek = today.getDay();
+  const dayOfToday =
+    today.getDate() - todayOfWeek + (todayOfWeek === 0 ? -6 : 1);
+  const weekDates = [...Array(7)].map((_, i) => ({
+    day: weekDate[new Date(today.setDate(dayOfToday + i)).getDay()],
+    date: new Date(today.setDate(dayOfToday + i)).toISOString(),
+  }));
+
+  const startDate = getWeekStartDate(today);
+  return [
+    {
+      weekStartDate: startDate,
+      record: weekDates.map((date) => ({
+        dayOfWeek: date.day,
+        dateOfWeek: date.date,
+      })),
+    },
+  ];
+}

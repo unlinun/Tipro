@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import Task from "./Task.js";
 
 const TimerSchema = new mongoose.Schema({
   projectId: {
@@ -11,46 +12,103 @@ const TimerSchema = new mongoose.Schema({
     ref: "Task",
     required: true,
   },
-  weekStartDate: {
-    type: Date,
+  phaseId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Projects",
     required: true,
   },
-  weekEndDate: {
-    type: Date,
-    required: true,
-  },
-  weekTimeRecord: {
+  timeRecord: {
     type: [
       {
-        dayOfWeek: {
-          type: String,
-          enum: [
-            "Monday",
-            "Tuesday",
-            "Wednesday",
-            "Thursday",
-            "Friday",
-            "Saturday",
-            "Sunday",
-          ],
-        },
-        start_time: {
+        weekStartDate: {
           type: Date,
-          default: "",
+          required: true,
+          default: getWeekStartDate(new Date()),
         },
-        end_time: {
-          type: Date,
-          default: "",
-        },
-        duration: { type: Number, default: 0 }, // seconds
-        previousDuration: { type: Number, default: 0 },
-        recordedDuration: { type: Number, default: 0 },
-        stopwatchActive: { type: Boolean, default: false },
+        record: [
+          {
+            dayOfWeek: {
+              type: String,
+              enum: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+            },
+            dateOfWeek: {
+              type: Date,
+              default: "",
+            },
+            startTime: {
+              type: Date,
+              default: "",
+            },
+            endTime: {
+              type: Date,
+              default: "",
+            },
+            duration: { type: Number, default: 0 }, // seconds
+            previousDuration: { type: Number, default: 0 },
+            recordedDuration: { type: Number, default: 0 },
+            stopwatchActive: { type: Boolean, default: false },
+          },
+        ],
       },
     ],
-    required: true,
+    default: generateTimerDefault(),
   },
 });
+
+// Add a unique index on the taskId field to prevent duplicates
+TimerSchema.index({ taskId: 1 }, { unique: true });
+
+function generateTimerDefault() {
+  const weekDate = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  const startDate = getWeekStartDate(new Date());
+  const endDate = getWeekEndDate(new Date());
+  const weekDates = [];
+  for (
+    let day = new Date(startDate);
+    day < endDate;
+    day.setDate(day.getDate() + 1)
+  ) {
+    weekDates.push({
+      dayOfWeek: weekDate[day.getDay()],
+      dateOfWeek: new Date(day),
+      startTime: null,
+      endTime: null,
+      duration: 0,
+      previousDuration: 0,
+      recordedDuration: 0,
+      stopwatchActive: false,
+    });
+  }
+  return {
+    weekStartDate: startDate,
+    record: weekDates,
+  };
+}
+
+//  在每個禮拜的第一天 自動創建新的 time sheet
+// 涉及到整體的查詢，則應該使用靜態方法。簡單來說，通常靜態方法會涉及到查詢、新增、修改、刪除。
+TimerSchema.statics.createTimerForNewWeek = async function () {
+  const weekStartDate = getWeekStartDate(new Date());
+  const tasks = await Task.find({ finished: false });
+  // loop tasks，找到有符合的 timer
+
+  for (const task of incompleteTasks) {
+    const existingTimer = await Timer.findOne({
+      taskId: task._id,
+      "timeRecord.weekStartDate": { $gte: weekStartDate },
+    });
+
+    if (!existingTimer) {
+      const newTimer = new Timer({
+        projectId: task.projectId,
+        taskId: task._id,
+        phaseId: task.phaseId,
+        timeRecord: generateTimer(),
+      });
+      await newTimer.save();
+    }
+  }
+};
 
 const Timer = mongoose.model("Timer", TimerSchema);
 export default Timer;
@@ -60,3 +118,21 @@ export default Timer;
 
 // 創建或是更新 timer
 // 當使用者按下計時按鈕，則創建一個新的 timer
+
+// helper function to get week start date
+function getWeekStartDate(date) {
+  const dayOfWeek = date.getDay();
+  const day = date.getDate() - dayOfWeek + (dayOfWeek === 0 ? -6 : 1);
+  const firstDay = new Date(date.setDate(day));
+  firstDay.setUTCHours(0, 0, 0, 0);
+  // 回傳的是午夜
+  return firstDay;
+}
+
+// helper function to get week end date
+function getWeekEndDate(weekStartDate) {
+  let weekEndDate = new Date(weekStartDate);
+  weekEndDate.setDate(weekEndDate.getDate() + 6);
+  weekEndDate.setUTCHours(0, 0, 0, 0);
+  return weekEndDate;
+}

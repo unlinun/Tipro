@@ -47,6 +47,11 @@ export const getAllTasks = async (req, res) => {
       },
     },
     {
+      $addFields: {
+        project: { $arrayElemAt: ["$project", 0] },
+      },
+    },
+    {
       $set: {
         phase: { $arrayElemAt: ["$phase.phase", 0] },
       },

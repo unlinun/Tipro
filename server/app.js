@@ -81,7 +81,7 @@ app.patch("/user/:id", authorizationToken, upload.single("avatar"), updateUser);
 app.use("/user", authorizationToken, userRoute);
 app.use("/projects", authorizationToken, projectsRoute);
 app.use("/tasks", authorizationToken, taskRoute);
-app.use("timer", authorizationToken, timerRoute);
+app.use("/timer", authorizationToken, timerRoute);
 
 // Error handler
 app.use(errorHandlerMiddleware);
