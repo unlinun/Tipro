@@ -40,10 +40,10 @@ const Task = ({ project }) => {
       <table className="contact__table table">
         <thead className="table__head">
           <tr className="table__row table__row--head">
-            <th className="table__title">task</th>
+            <th className="table__title">title</th>
             <th className="table__title">
               <div className="flex gap--8">
-                startDate{" "}
+                startDate
                 <span className="btn" onClick={() => handleSort("startDate")}>
                   ↑↓
                 </span>

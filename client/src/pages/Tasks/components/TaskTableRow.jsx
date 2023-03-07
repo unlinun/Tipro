@@ -85,7 +85,7 @@ const TaskTableRow = ({ task, index }) => {
         <td className="table__cell">{task?.title}</td>
       )}
 
-      <td className="table__cell">{task?.project[0]?.title}</td>
+      <td className="table__cell">{task?.project.title}</td>
       <td className="table__cell">
         <div className="table__select select select--status">
           <select

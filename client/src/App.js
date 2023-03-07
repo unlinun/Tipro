@@ -34,10 +34,10 @@ const App = () => {
           }
         >
           <Route index element={<Dashboard />} />
-          <Route path="/timer" element={<Timer />} />
           <Route path="/projects" element={<Projects />} />
           <Route path="/projects/:id" element={<SingleProject />} />
           <Route path="/tasks" element={<Tasks />} />
+          <Route path="/timer" element={<Timer />} />
           <Route path="/memos" element={<Memos />} />
           <Route path="/staffs" element={<Staffs />} />
           <Route path="/setting" element={<Setting />} />

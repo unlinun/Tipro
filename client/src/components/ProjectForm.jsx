@@ -220,7 +220,7 @@ const ProjectForm = () => {
           </p>
         </div>
         <div className="form__item">
-          <div className="form__label">business owner</div>
+          <div className="form__label">business owner*</div>
           <input
             type="text"
             name="businessOwner"
@@ -266,7 +266,7 @@ const ProjectForm = () => {
       </div>
       <div className="form__section">
         <div className="form__item">
-          <div className="form__label">phase</div>
+          <div className="form__label">phase*</div>
           {phase.map((phase, i) => {
             return (
               <div className="form__inputs" key={i}>
@@ -341,7 +341,7 @@ const ProjectForm = () => {
           <p className="form__alert form__alert--error"></p>
         </div>
         <div className="form__item">
-          <div className="form__label">contact</div>
+          <div className="form__label">contact*</div>
           {contactInfo?.map((contact, i) => {
             return (
               <div className="form__inputs" key={i}>

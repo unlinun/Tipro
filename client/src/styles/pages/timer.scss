@@ -4,10 +4,33 @@
   display: flex;
   flex-direction: column;
   gap: rem(32);
+  input {
+    width: rem(120);
+  }
   &__table {
     width: 100%;
+    input {
+      width: rem(40);
+      background-color: var(--light-lightgray);
+      color: var(--light-white-text);
+    }
   }
   .table__row {
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: rem(20) 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr rem(50);
+    gap: rem(20);
+    padding-bottom: rem(12);
+    border-bottom: 1px solid var(--light-lightgray);
+    &--time {
+      grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+      gap: rem(20);
+    }
+  }
+
+  .table__cell,
+  .table__title {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }

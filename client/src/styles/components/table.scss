@@ -48,11 +48,12 @@
     }
     input {
       width: 100%;
-      padding: rem(2) rem(8);
+      // padding: rem(2) rem(4);
       border: 1px solid var(--light-lightgray);
       border-radius: rem(10);
       font-size: rem(16);
       color: var(--dark-black);
+      text-align: center;
       outline: none;
     }
   }

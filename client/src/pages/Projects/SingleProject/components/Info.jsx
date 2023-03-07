@@ -13,6 +13,10 @@ const Info = ({ project }) => {
   // 當使用者選擇某一個國家時，會根據所選國家來跳出該國家的城市
   const [currentCountry, setCurrentCountry] = useState("");
   const [cities, setCities] = useState([]);
+  const [projectTitle, setProjectTitle] = useState(project.title);
+  const [projectDescription, setProjectDescription] = useState(
+    project.description
+  );
 
   const { data: countries } = useQuery("country", getCountry);
   //  當 country 改變時，也改變 cities 的數值
@@ -36,22 +40,30 @@ const Info = ({ project }) => {
     }
   );
 
+  const handleInfoUpdate = () => {
+    setIsEdit(!isEdit);
+    if (projectTitle === "" || projectDescription === "") return;
+    if (isEdit === true) {
+      updateProjectItem({
+        _id: project._id,
+        title: projectTitle,
+        description: projectDescription,
+      });
+    }
+  };
+
   return (
     <div className="project__card card project__info">
-      <div className="project__edit" onClick={() => setIsEdit(!isEdit)}>
+      <div className="project__edit" onClick={(e) => handleInfoUpdate(e)}>
         {isEdit ? "X" : "Edit"}
       </div>
       {isEdit ? (
         <input
           type="text"
           name="title"
+          className="project__title"
           defaultValue={project?.title}
-          onChange={(e) =>
-            updateProjectItem({
-              _id: project._id,
-              title: e.target.value,
-            })
-          }
+          onChange={(e) => setProjectTitle(e.target.value)}
         />
       ) : (
         <div className="project__title">{project?.title}</div>
@@ -66,12 +78,7 @@ const Info = ({ project }) => {
               cols="30"
               rows="10"
               defaultValue={project?.description}
-              onChange={(e) =>
-                updateProjectItem({
-                  _id: project._id,
-                  description: e.target.value,
-                })
-              }
+              onChange={(e) => setProjectDescription(e.target.value)}
             ></textarea>
           ) : (
             <p>{project?.description}</p>

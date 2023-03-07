@@ -14,7 +14,6 @@ const Tasks = () => {
     getAllTasksByUser(user._id, token)
   );
 
-  console.log(workingTask, finishedTask);
   useEffect(() => {
     setWorkingTask(tasks?.tasks.filter((task) => task.finished === false));
     setFinishedTask(tasks?.tasks.filter((task) => task.finished === true));
@@ -58,7 +57,7 @@ const Tasks = () => {
                 </td>
               </tr>
             ) : null}
-            {workingTask.length > 0 ? (
+            {workingTask?.length > 0 ? (
               workingTask.map((task, i) => {
                 return <TaskTableRow key={task?._id} task={task} index={i} />;
               })
@@ -113,7 +112,7 @@ const Tasks = () => {
                 </td>
               </tr>
             ) : null}
-            {finishedTask.length > 0 ? (
+            {finishedTask?.length > 0 ? (
               finishedTask?.map((task, i) => {
                 return <TaskTableRow key={task?._id} task={task} index={i} />;
               })

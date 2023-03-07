@@ -34,10 +34,6 @@ const Sidebar = () => {
             <CategoryIcon />
             <h6> dashboard</h6>
           </NavLink>
-          <NavLink to="timer">
-            <TimerIcon />
-            <h6> time manage</h6>
-          </NavLink>
           <NavLink to="projects">
             <CardTick />
             <h6> projects</h6>
@@ -45,6 +41,10 @@ const Sidebar = () => {
           <NavLink to="tasks">
             <TaskIcon />
             <h6> tasks</h6>
+          </NavLink>
+          <NavLink to="timer">
+            <TimerIcon />
+            <h6> time manage</h6>
           </NavLink>
           <NavLink to="memos">
             <MemoIcon />
