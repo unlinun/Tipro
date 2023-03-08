@@ -12,7 +12,6 @@ export const getTimer = async (weekDate, token) => {
   const data = res.data;
   return data;
 };
-
 export const updateTimer = async (timer, token) => {
   // 取得要查找的日期
   const res = await axios.patch(`${API_URL}/timer/${timer._id}`, timer, {

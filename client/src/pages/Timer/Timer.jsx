@@ -1,41 +1,65 @@
 import React, { useEffect, useState } from "react";
-import { QueryClient, useQuery } from "react-query";
+import { useQuery, useQueryClient } from "react-query";
 import { useSelector } from "react-redux";
 import { getTimer } from "../../api/timer";
-import TimerTableRow from "./components/TimerTableRow";
+import TimerTable from "./components/TimerTable";
 import dateFormat from "dateformat";
 const Timer = () => {
   const token = useSelector((state) => state.auth.token);
-  const [today, setToday] = useState(new Date());
-  // 依據本週時間取得 timer
+  const [currentDate, setCurrentDate] = useState(new Date().toISOString());
   let weekDate = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  const today = new Date(currentDate);
   const dayOfWeek = today.getDay();
-  const day = today.getDate() - dayOfWeek + (dayOfWeek === 0 ? -6 : 1);
-  const weekStartDate = new Date(today.setDate(day)); // sets the hours of the Date object to the specified value, but in the UTC timezone.
-  weekStartDate.setUTCHours(0, 0, 0, 0);
+  const date = today.getDate() - dayOfWeek + (dayOfWeek === 0 ? -6 : 1);
+  const weekStartDate = new Date(
+    new Date(today.setDate(date)).setUTCHours(0, 0, 0, 0)
+  );
   const weekEndDate = new Date(weekStartDate);
   weekEndDate.setDate(weekEndDate.getDate() + 6);
-  // 在 mongoBD中，是iso string
-  const weekStartIsoDate = weekStartDate.toISOString();
-  // 找到一週的時間並且顯示在 js 中
-  const weekDates = [...Array(7)].map((_, i) => ({
-    day: weekDate[new Date(today.setDate(day + i)).getDay()],
-    date: new Date(today.setDate(day + i)).toISOString(),
-  }));
+
+  //取得整週的日期與週一週二...
+  const weekDates = [...Array(7)].map((_, i) => {
+    const currentDate = new Date(weekStartDate);
+    currentDate.setDate(currentDate.getDate() + i);
+    return {
+      day: weekDate[currentDate.getDay()],
+      date: currentDate.toISOString(),
+    };
+  });
 
   // 使用 useQuery 取得 timer data
-  const queryClient = new QueryClient();
+  const queryClient = useQueryClient();
   const { data: timers } = useQuery("timer", () =>
-    getTimer(weekStartIsoDate, token)
+    getTimer(weekStartDate.toISOString(), token)
   );
-  console.log(timers);
+
+  // get current week's timeRecord!!!
+  const timer = timers?.map((timer) => {
+    return {
+      _id: timer._id,
+      project: timer.project,
+      task: timer.task,
+      timeRecord: timer.timeRecord.filter((time) => {
+        return (
+          new Date(time.dateOfWeek) >= new Date(weekStartDate) &&
+          new Date(time.dateOfWeek) <= new Date(weekEndDate)
+        );
+      }),
+    };
+  });
+
+  const handleDateChange = async (e) => {
+    setCurrentDate(e.target.value);
+  };
 
   useEffect(() => {
-    // Call getTimer API whenever the week start date changes
-    const newTimers = getTimer(weekStartIsoDate, token);
-    // Update the timers data in the cache using the setQueryData method
-    queryClient.setQueryData("timer", newTimers);
-  }, [today, token]);
+    const fetchTimer = async () => {
+      const data = await getTimer(weekStartDate.toISOString(), token);
+      queryClient.setQueryData("timer", data);
+    };
+    fetchTimer();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentDate]);
 
   return (
     <div className="timer">
@@ -48,13 +72,11 @@ const Timer = () => {
               type="date"
               max={dateFormat(new Date(), "yyyy-mm-dd")}
               defaultValue={dateFormat(new Date(), "yyyy-mm-dd")}
-              onChange={(e) => setToday(new Date(e.target.value))}
+              onChange={(e) => handleDateChange(e)}
             />
           </div>
           <div className="card__text card__text--sm">
-            {`${weekStartDate.toISOString().slice(0, 10)} - ${weekEndDate
-              .toISOString()
-              .slice(0, 10)}`}
+            {`${weekStartDate.toDateString()} - ${weekEndDate.toDateString()}`}
           </div>
         </div>
         <table className="timer__table table">
@@ -77,29 +99,14 @@ const Timer = () => {
             </tr>
           </thead>
           <tbody className="table__body">
-            {timers?.length > 0 ? (
-              timers?.map((timer, index) => {
-                return (
-                  <TimerTableRow
-                    key={timer._id}
-                    timer={timer}
-                    index={index}
-                    weekStartIsoDate={weekStartIsoDate}
-                  />
-                );
-              })
-            ) : (
-              <tr style={{ textAlign: "center", justifySelf: "center" }}>
-                <td
-                  style={{
-                    textAlign: "center",
-                    margin: "16px",
-                  }}
-                >
-                  no task to generate time sheet
-                </td>
+            {timer?.map((time, i) => (
+              <tr className="table__row">
+                <td className="table__cell">{i + 1}</td>
+                <td className="table__cell">{time?.project.title}</td>
+                <td className="table__cell">{time?.task.title}</td>
+                <TimerTable time={time} />
               </tr>
-            )}
+            ))}
           </tbody>
         </table>
       </div>
@@ -118,15 +125,10 @@ const Timer = () => {
             </tr>
           </thead>
           <tbody className="table__body">
-            {timers?.length > 0 ? (
-              timers?.map((timer, index) => {
+            {/* {currentTimeRecord && currentTimeRecord?.length > 0 ? (
+              currentTimeRecord?.map((timer, index) => {
                 return (
-                  <TimerTableRow
-                    key={timer._id}
-                    timer={timer}
-                    index={index}
-                    weekStartIsoDate={weekStartIsoDate}
-                  />
+                  <TimerTableRow key={timer._id} timer={timer} index={index} />
                 );
               })
             ) : (
@@ -140,7 +142,7 @@ const Timer = () => {
                   no task to generate time sheet
                 </td>
               </tr>
-            )}
+            )} */}
           </tbody>
         </table>
       </div>

@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { updateTimer } from "../../../api/timer";
 import { EditIcon, TickCircleIcon } from "../../../assets/icons";
 
-const TimerTableRow = ({ timer, weekStartIsoDate, index }) => {
+const TimerTable = ({ time }) => {
   const token = useSelector((state) => state.auth.token);
   const [isEdit, setIsEdit] = useState(false);
   const queryClient = useQueryClient();
@@ -19,12 +19,7 @@ const TimerTableRow = ({ timer, weekStartIsoDate, index }) => {
       },
     }
   );
-
-  const timeRecord = timer.timeRecord;
-  const currentRecord = timeRecord.find(
-    (time) => time.weekStartDate === weekStartIsoDate
-  );
-  if (!currentRecord) {
+  if (!time) {
     return (
       <tr style={{ textAlign: "center", justifySelf: "center" }}>
         <td
@@ -52,43 +47,16 @@ const TimerTableRow = ({ timer, weekStartIsoDate, index }) => {
       }
     }
     updateRecordItem({
-      _id: timer._id,
-      timeRecordId: currentRecord._id,
+      _id: time._id,
       recordId: id,
       duration: duration,
     });
   };
 
   return (
-    <tr className="table__row">
-      <td className="table__cell">{index + 1}</td>
-
-      <td className="table__cell">{timer?.project.title}</td>
-      <td className="table__cell">{timer?.task.title}</td>
-      {!isEdit
-        ? currentRecord?.record.map((record) => (
-            <td className="table__cell table__cell--low" key={record._id}>
-              <div className="flex gap--8">
-                <div className="tags__tag ">
-                  <span className="tags__tag--bold">
-                    {Math.floor(record.duration / 3600) > 10
-                      ? Math.floor(record.duration / 3600)
-                      : `0${Math.floor(record.duration / 3600)}`}
-                  </span>
-                  hr
-                </div>
-                <div className="tags__tag ">
-                  <span className="tags__tag--bold">
-                    {Math.floor((record.duration % 3600) / 60) > 10
-                      ? Math.floor((record.duration % 3600) / 60)
-                      : `0${Math.floor((record.duration % 3600) / 60)}`}
-                  </span>
-                  min
-                </div>
-              </div>
-            </td>
-          ))
-        : currentRecord?.record.map((record) => (
+    <>
+      {isEdit
+        ? time?.timeRecord.map((record) => (
             <td className="table__cell table__cell--low " key={record._id}>
               <div className="flex gap--8">
                 <div className="flex gap--4">
@@ -131,8 +99,29 @@ const TimerTableRow = ({ timer, weekStartIsoDate, index }) => {
                 </div>
               </div>
             </td>
+          ))
+        : time?.timeRecord.map((record) => (
+            <td className="table__cell table__cell--low" key={record._id}>
+              <div className="flex gap--8">
+                <div className="tags__tag ">
+                  <span className="tags__tag--bold">
+                    {Math.floor(record.duration / 3600) > 10
+                      ? Math.floor(record.duration / 3600)
+                      : `0${Math.floor(record.duration / 3600)}`}
+                  </span>
+                  hr
+                </div>
+                <div className="tags__tag ">
+                  <span className="tags__tag--bold">
+                    {Math.floor((record.duration % 3600) / 60) > 10
+                      ? Math.floor((record.duration % 3600) / 60)
+                      : `0${Math.floor((record.duration % 3600) / 60)}`}
+                  </span>
+                  min
+                </div>
+              </div>
+            </td>
           ))}
-
       <td className="table__cell">
         <div className="table__function">
           <div className="table__edit">
@@ -151,8 +140,8 @@ const TimerTableRow = ({ timer, weekStartIsoDate, index }) => {
           </div>
         </div>
       </td>
-    </tr>
+    </>
   );
 };
 
-export default TimerTableRow;
+export default TimerTable;
