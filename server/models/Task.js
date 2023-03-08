@@ -52,6 +52,7 @@ TaskSchema.pre("save", async function (next) {
       taskId: this._id,
       projectId: task.projectId,
       phaseId: task.phaseId,
+      createdBy: this.createdBy,
     });
     // save timer document
     await timer.save();

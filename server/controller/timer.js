@@ -1,11 +1,20 @@
 import { StatusCodes } from "http-status-codes";
+import mongoose from "mongoose";
+import BadRequestError from "../errors/badRequest.js";
+import NotFoundError from "../errors/notFound.js";
 import Timer from "../models/Timer.js";
 
 // 根據 task id 來取得相對應的 timer
 export const getTimer = async (req, res) => {
   const { day } = req.query;
+  const user = req.user;
   const startDate = new Date(day);
-  const endDate = new Date(startDate.getTime() + 7 * 24 * 60 * 60 * 1000);
+  let queryObject = {};
+  if (day) {
+    queryObject.weekStartDate = {
+      $eq: new Date(startDate),
+    };
+  }
   const timer = await Timer.aggregate([
     {
       $lookup: {
@@ -13,11 +22,11 @@ export const getTimer = async (req, res) => {
         localField: "taskId",
         foreignField: "_id",
         as: "task",
-        pipeline: [
-          {
-            $project: { title: 1, finished: 1, startDate: 1 },
-          },
-        ],
+        // pipeline: [
+        //   {
+        //     $project: { title: 1, finished: 1, startDate: 1 },
+        //   },
+        // ],
       },
     },
     {
@@ -42,8 +51,12 @@ export const getTimer = async (req, res) => {
       },
     },
     {
+      // 符合此週的 timer 才會顯示
       $match: {
-        weekStartDate: { $gt: startDate, $lt: endDate },
+        createdBy: mongoose.Types.ObjectId(user.id),
+        timeRecord: {
+          $elemMatch: queryObject,
+        },
       },
     },
     {
@@ -70,7 +83,23 @@ export const createTimer = async (req, res) => {
 };
 
 export const updateTimer = async (req, res) => {
-  const { id } = req.body;
-  const timer = await Timer.findOneAndUpdate({});
-  res.status(StatusCodes.CREATED).json(timer);
+  const { id } = req.params;
+  const { timeRecordId, recordId, duration } = req.body;
+  try {
+    const timer = await Timer.findOne({ _id: id });
+    const timeRecord = timer.timeRecord.find(
+      (record) => record._id.toString() === timeRecordId
+    );
+    const timeRecordIndex = timer.timeRecord.findIndex(
+      (record) => record._id.toString() === timeRecordId
+    );
+    const recordIndex = timeRecord.record.findIndex(
+      (date) => date._id.toString() === recordId
+    );
+    timer.timeRecord[timeRecordIndex].record[recordIndex].duration = duration;
+    await timer.save();
+    res.status(StatusCodes.OK).json(timer);
+  } catch (error) {
+    throw new BadRequestError(error.message);
+  }
 };

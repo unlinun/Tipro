@@ -1,9 +1,9 @@
 import express from "express";
-import { getTimer, createTimer } from "../controller/timer.js";
+import { getTimer, createTimer, updateTimer } from "../controller/timer.js";
 
 const router = express.Router();
 
 router.route("/").get(getTimer).post(createTimer);
-// router.route("/id").get(getTimer);
+router.route("/:id").patch(updateTimer);
 
 export default router;

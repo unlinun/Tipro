@@ -35,23 +35,17 @@ const TimerSchema = new mongoose.Schema({
               type: Date,
               default: "",
             },
-            startTime: {
-              type: Date,
-              default: "",
-            },
-            endTime: {
-              type: Date,
-              default: "",
-            },
             duration: { type: Number, default: 0 }, // seconds
-            previousDuration: { type: Number, default: 0 },
-            recordedDuration: { type: Number, default: 0 },
-            stopwatchActive: { type: Boolean, default: false },
           },
         ],
       },
     ],
     default: generateTimerDefault(),
+  },
+  createdBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
   },
 });
 
@@ -71,12 +65,7 @@ function generateTimerDefault() {
     weekDates.push({
       dayOfWeek: weekDate[day.getDay()],
       dateOfWeek: new Date(day),
-      startTime: null,
-      endTime: null,
       duration: 0,
-      previousDuration: 0,
-      recordedDuration: 0,
-      stopwatchActive: false,
     });
   }
   return {

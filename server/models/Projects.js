@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import Task from "./Task.js";
+import Timer from "./Timer.js";
 
 const ContactInfoSchema = new mongoose.Schema({
   company: String,
@@ -92,6 +93,8 @@ ProjectsSchema.pre(
   { document: true, query: false },
   async function (next) {
     await Task.deleteMany({ projectId: this._id });
+    await Timer.deleteMany({ projectId: this._id });
+
     next();
   }
 );
