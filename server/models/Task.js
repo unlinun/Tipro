@@ -44,14 +44,36 @@ const TaskSchema = new mongoose.Schema({
 // pre-save hook是Mongoose中的一個middleware，它在執行保存操作之前執行
 
 // 在創建 task 後，直接創建一個 timer
+// 創建預設的 timeRecord , timeRecord 會根據 task 的 startDate來做創建
+// 使用 pre-save hook
 TaskSchema.pre("save", async function (next) {
   const task = this;
+  const thisWeekStart = getWeekStartDate(new Date());
+  const weekStartDate = getWeekStartDate(this.startDate);
+  const weekEndDate =
+    getWeekEndDate(thisWeekStart) > getWeekEndDate(weekStartDate)
+      ? getWeekEndDate(thisWeekStart)
+      : getWeekEndDate(weekStartDate);
+  // 一天是 86400000 毫秒
+  const numberOfDays = Math.ceil(
+    (weekEndDate.getTime() - weekStartDate.getTime()) / 86400000
+  );
+
+  const timeRecord = [];
+  for (let i = 1; i <= numberOfDays; i++) {
+    const date = new Date(weekStartDate.setDate(weekStartDate.getDate() + 1));
+    timeRecord.push({
+      dateOfWeek: date,
+      duration: 0,
+    });
+  }
   try {
     // create timer document
     const timer = new Timer({
       taskId: this._id,
       projectId: task.projectId,
       phaseId: task.phaseId,
+      timeRecord,
       createdBy: this.createdBy,
     });
     // save timer document
@@ -109,26 +131,10 @@ function getWeekStartDate(date) {
   return firstDay;
 }
 
-function generateTimer() {
-  // get week start date and end date
-  const today = new Date();
-  const weekDate = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-  const todayOfWeek = today.getDay();
-  const dayOfToday =
-    today.getDate() - todayOfWeek + (todayOfWeek === 0 ? -6 : 1);
-  const weekDates = [...Array(7)].map((_, i) => ({
-    day: weekDate[new Date(today.setDate(dayOfToday + i)).getDay()],
-    date: new Date(today.setDate(dayOfToday + i)).toISOString(),
-  }));
-
-  const startDate = getWeekStartDate(today);
-  return [
-    {
-      weekStartDate: startDate,
-      record: weekDates.map((date) => ({
-        dayOfWeek: date.day,
-        dateOfWeek: date.date,
-      })),
-    },
-  ];
+// helper function to get week end date
+function getWeekEndDate(weekStartDate) {
+  let weekEndDate = new Date(weekStartDate);
+  weekEndDate.setDate(weekEndDate.getDate() + 6);
+  weekEndDate.setUTCHours(0, 0, 0, 0);
+  return weekEndDate;
 }

@@ -8,11 +8,14 @@ import Timer from "../models/Timer.js";
 export const getTimer = async (req, res) => {
   const { day } = req.query;
   const user = req.user;
-  const startDate = new Date(day);
+  const weekStartDate = new Date(day);
+  const weekEndDate = new Date(weekStartDate);
+  weekEndDate.setDate(weekEndDate.getDate() + 6);
   let queryObject = {};
   if (day) {
-    queryObject.weekStartDate = {
-      $eq: new Date(startDate),
+    queryObject.dateOfWeek = {
+      $gt: new Date(weekStartDate),
+      $lt: new Date(weekEndDate),
     };
   }
   const timer = await Timer.aggregate([
@@ -22,11 +25,6 @@ export const getTimer = async (req, res) => {
         localField: "taskId",
         foreignField: "_id",
         as: "task",
-        // pipeline: [
-        //   {
-        //     $project: { title: 1, finished: 1, startDate: 1 },
-        //   },
-        // ],
       },
     },
     {
@@ -84,19 +82,14 @@ export const createTimer = async (req, res) => {
 
 export const updateTimer = async (req, res) => {
   const { id } = req.params;
-  const { timeRecordId, recordId, duration } = req.body;
+  const { recordId, duration } = req.body;
   try {
     const timer = await Timer.findOne({ _id: id });
-    const timeRecord = timer.timeRecord.find(
-      (record) => record._id.toString() === timeRecordId
+    // console.log(timer);
+    const recordIndex = timer.timeRecord.findIndex(
+      (record) => record._id.toString() === recordId
     );
-    const timeRecordIndex = timer.timeRecord.findIndex(
-      (record) => record._id.toString() === timeRecordId
-    );
-    const recordIndex = timeRecord.record.findIndex(
-      (date) => date._id.toString() === recordId
-    );
-    timer.timeRecord[timeRecordIndex].record[recordIndex].duration = duration;
+    timer.timeRecord[recordIndex].duration = duration;
     await timer.save();
     res.status(StatusCodes.OK).json(timer);
   } catch (error) {
