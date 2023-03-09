@@ -40,6 +40,7 @@ const Setting = () => {
     if (username === "" || position === "" || birthday === "" || email === "")
       return;
 
+    console.log(avatarUrl);
     if (isEdit === true) {
       const formData = new FormData();
       formData.append("avatar", avatarFile);
@@ -106,11 +107,22 @@ const Setting = () => {
         <div className="card--flex flex--cen">
           <div className="card__text">position:</div>
           {isEdit ? (
-            <input
-              type="text"
-              defaultValue={user.position}
-              onChange={(e) => setPosition(e.target.value)}
-            />
+            <div className="select">
+              <select
+                defaultValue={user.position}
+                className="select__input"
+                onChange={(e) => setPosition(e.target.value)}
+              >
+                <option value="ceo">ceo</option>
+                <option value="general manager">general manager</option>
+
+                <option value="manager">manager</option>
+                <option value="project manager">project manager</option>
+
+                <option value="designer">designer</option>
+                <option value="accountant">accountant</option>
+              </select>
+            </div>
           ) : (
             <div className="card__text">{user.position}</div>
           )}

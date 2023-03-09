@@ -43,7 +43,7 @@ const Staffs = () => {
                   </td>
                   <td className="table__cell">{staff.position}</td>
                   <td className="table__cell">
-                    {dateFormat(staff.birthday, "isoDate")}
+                    {dateFormat(staff.birthday, "mm/dd")}
                   </td>
                   <td className="table__cell table__cell--low">
                     {staff.email}

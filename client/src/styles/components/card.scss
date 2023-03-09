@@ -11,6 +11,9 @@
     display: flex;
     align-items: center;
     gap: rem(20);
+    @include breakpoint-down(medium) {
+      gap: rem(8);
+    }
     &--between {
       justify-content: space-between;
     }

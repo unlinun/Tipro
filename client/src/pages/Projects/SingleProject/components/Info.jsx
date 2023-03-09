@@ -174,7 +174,7 @@ const Info = ({ project }) => {
         </div>
         <div className="content__text">
           <h6>status</h6>
-          <div className="select">
+          <div className={`select select--status--${(project?.status).trim()}`}>
             <select
               name="status"
               className="select__input"
@@ -195,7 +195,7 @@ const Info = ({ project }) => {
         </div>
         <div className="content__text">
           <h6>priority</h6>
-          <div className={`select select--${project?.priority}`}>
+          <div className={`select select--priority--${project?.priority}`}>
             <select
               name="priority"
               className="select__input"

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useQuery } from "react-query";
 import { useSelector } from "react-redux";
 import dateFormat from "dateformat";
 import { getAllTasks } from "../../../../api/task";
@@ -9,7 +8,6 @@ const Task = ({ project }) => {
   const token = useSelector((state) => state.auth.token);
   const staffs = useSelector((state) => state.auth.staffs);
   const [projectTask, setProjectTask] = useState([]);
-  const { data: tasks } = useQuery("tasks", () => getAllTasks(token));
 
   const handleSort = (title) => {
     let newData;
@@ -26,10 +24,14 @@ const Task = ({ project }) => {
   };
 
   useEffect(() => {
-    const task = tasks?.tasks.filter((task) => task.projectId === project._id);
-    setProjectTask(task);
+    const getTask = async () => {
+      const data = await getAllTasks(token);
+      const task = data?.tasks.filter((task) => task.projectId === project._id);
+      setProjectTask(task);
+    };
+    getTask();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [tasks]);
+  }, [project]);
 
   return (
     <div className="project__card card project__task">

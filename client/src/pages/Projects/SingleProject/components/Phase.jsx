@@ -56,10 +56,10 @@ const Phase = ({ project }) => {
     <div className="project__card card project__phase phase">
       <div className="content__text">
         <h6>current phase</h6>
-        <div className="select">
+        <div className="select select--phase">
           <select
             name="phase"
-            className="select__input"
+            className="select__input select__input--phase"
             defaultValue={project.currentPhase}
             onChange={(e) => {
               updateProjectItem({
@@ -87,7 +87,7 @@ const Phase = ({ project }) => {
             return (
               <div className="box" key={i}>
                 <span
-                  className="delete delete--phase"
+                  className="delete delete--gray"
                   onClick={() => {
                     updateProjectItem({
                       _id: project._id,

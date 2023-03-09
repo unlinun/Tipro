@@ -128,8 +128,8 @@ const ProjectForm = () => {
     const res = await createProject(createData, token);
     if (res.status === 201) {
       dispatch(setCreating());
-      navigator(0);
       navigator("/projects");
+      navigator(0);
     } else {
       setError("Oops, Unable to create project");
     }

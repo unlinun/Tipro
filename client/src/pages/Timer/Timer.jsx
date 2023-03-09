@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useQuery, useQueryClient } from "react-query";
 import { useSelector } from "react-redux";
-import { getTimer } from "../../api/timer";
-import TimerTable from "./components/TimerTable";
+import { getDateTimer, getAllTimer } from "../../api/timer";
+import TimeSheet from "./components/TimeSheet";
 import dateFormat from "dateformat";
+import TimeProject from "./components/TimeProject";
 const Timer = () => {
   const token = useSelector((state) => state.auth.token);
   const [currentDate, setCurrentDate] = useState(new Date().toISOString());
+  const [allTimers, setAllTimers] = useState([]);
   let weekDate = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   const today = new Date(currentDate);
   const dayOfWeek = today.getDay();
@@ -27,10 +29,10 @@ const Timer = () => {
     };
   });
 
-  // 使用 useQuery 取得 timer data
+  // 使用 useQuery 取得 date timer data
   const queryClient = useQueryClient();
-  const { data: timers } = useQuery("timer", () =>
-    getTimer(weekStartDate.toISOString(), token)
+  const { data: timers } = useQuery("dateTimer", () =>
+    getDateTimer(weekStartDate.toISOString(), token)
   );
 
   // get current week's timeRecord!!!
@@ -54,7 +56,9 @@ const Timer = () => {
 
   useEffect(() => {
     const fetchTimer = async () => {
-      const data = await getTimer(weekStartDate.toISOString(), token);
+      const data = await getDateTimer(weekStartDate.toISOString(), token);
+      const allData = await getAllTimer(token);
+      setAllTimers(allData);
       queryClient.setQueryData("timer", data);
     };
     fetchTimer();
@@ -76,7 +80,10 @@ const Timer = () => {
             />
           </div>
           <div className="card__text card__text--sm">
-            {`${weekStartDate.toDateString()} - ${weekEndDate.toDateString()}`}
+            {`${dateFormat(weekStartDate, "mm/dd")} - ${dateFormat(
+              weekEndDate,
+              "mm/dd"
+            )}`}
           </div>
         </div>
         <table className="timer__table table">
@@ -91,7 +98,7 @@ const Timer = () => {
                   <th className="table__title" key={i}>
                     <div className="flex flex__col">
                       <p>{date.day}</p>
-                      <p>{date.date.slice(5, 10)} th</p>
+                      <p>{dateFormat(date.date, "mm/dd")}</p>
                     </div>
                   </th>
                 );
@@ -100,11 +107,11 @@ const Timer = () => {
           </thead>
           <tbody className="table__body">
             {timer?.map((time, i) => (
-              <tr className="table__row">
+              <tr className="table__row" key={time._id}>
                 <td className="table__cell">{i + 1}</td>
                 <td className="table__cell">{time?.project.title}</td>
                 <td className="table__cell">{time?.task.title}</td>
-                <TimerTable time={time} />
+                <TimeSheet time={time} />
               </tr>
             ))}
           </tbody>
@@ -117,32 +124,16 @@ const Timer = () => {
         <table className="timer__table">
           <thead className="table__head">
             <tr className="table__row table__row--time table__row--head">
+              <th className="table__title"></th>
               <th className="table__title">project</th>
               <th className="table__title">start Date</th>
               <th className="table__title">phase</th>
-              <th className="table__title">total task</th>
+              <th className="table__title">total tasks</th>
               <th className="table__title">duration</th>
             </tr>
           </thead>
           <tbody className="table__body">
-            {/* {currentTimeRecord && currentTimeRecord?.length > 0 ? (
-              currentTimeRecord?.map((timer, index) => {
-                return (
-                  <TimerTableRow key={timer._id} timer={timer} index={index} />
-                );
-              })
-            ) : (
-              <tr style={{ textAlign: "center", justifySelf: "center" }}>
-                <td
-                  style={{
-                    textAlign: "center",
-                    margin: "16px",
-                  }}
-                >
-                  no task to generate time sheet
-                </td>
-              </tr>
-            )} */}
+            <TimeProject timers={allTimers} />
           </tbody>
         </table>
       </div>

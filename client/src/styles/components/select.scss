@@ -1,0 +1,90 @@
+@use "../utils/" as *;
+
+// select
+.select {
+  border: none;
+  padding: rem(2) rem(8);
+  font-size: rem(14);
+  display: grid;
+  align-items: center;
+  grid-template-areas: "select";
+  border-radius: rem(20);
+  line-height: 1.1;
+  cursor: pointer;
+  &--phase {
+    background-color: var(--light-gray);
+  }
+  &--status {
+    background-color: var(--event-lightblue);
+    &--initiating {
+      background-color: var(--event-lightblue);
+    }
+    &--in.progress {
+      background-color: var(--event-orange);
+    }
+    &--canceled {
+      background-color: var(--event-pink);
+    }
+    &--finished {
+      background-color: var(--event-purple);
+    }
+  }
+  &--priority {
+    background-color: var(--light-gray);
+    &--low {
+      background-color: var(--event-green);
+      .select__input {
+        color: var(--dark-black);
+      }
+    }
+    &--medium {
+      background-color: var(--event-yellow);
+      .select__input {
+        color: var(--dark-black);
+      }
+    }
+    &--high {
+      background-color: var(--event-red);
+      .select__input {
+        color: var(--light-white);
+      }
+    }
+  }
+  &__input {
+    color: var(--dark-black);
+    font-weight: 500;
+    &--phase {
+      color: var(--light-white-text);
+    }
+  }
+
+  &::after {
+    content: "";
+    width: rem(8);
+    height: rem(4);
+    background-color: var(--light-white);
+    clip-path: polygon(100% 0%, 0 0%, 50% 100%);
+    grid-area: select;
+    justify-self: end;
+  }
+}
+
+select {
+  // A reset of styles, including removing the default dropdown arrow
+  appearance: none;
+  // Additional resets for further consistency
+  background-color: transparent;
+  border: none;
+  padding: 0 rem(16) 0 0;
+  margin: 0;
+  text-transform: capitalize;
+  line-height: inherit;
+  outline: none;
+  grid-area: select;
+  align-items: center;
+
+  cursor: pointer;
+  &::-ms-expand {
+    display: none;
+  }
+}

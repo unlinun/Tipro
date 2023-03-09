@@ -7,6 +7,7 @@ import NotFound from "../../Not found/NotFound";
 import Contacts from "./components/Contacts";
 import Info from "./components/Info";
 import Phase from "./components/Phase";
+import Staff from "./components/Staff";
 import Task from "./components/Task";
 
 const SingleProject = () => {
@@ -27,37 +28,7 @@ const SingleProject = () => {
     <div className="project">
       <Info project={project} />
       <Phase project={project} />
-      <div className="project__card card project__staff">
-        <div className="project__edit project__edit--add">+</div>
-        <div className="staff__manager">
-          <h6>manager</h6>
-          <div className="manager__info">
-            <img
-              src={`http://localhost:6001/${project?.manager[0].avatar}`}
-              alt="manager"
-            />
-            <p>{project?.manager[0].username}</p>
-          </div>
-        </div>
-        <div className="staff__staff">
-          <h6>staff</h6>
-          <div className="staff__info">
-            {project?.staff.map((staff) => {
-              return (
-                <div className="manager__info" key={staff._id}>
-                  <img
-                    className="staff__image"
-                    src={`http://localhost:6001/${staff?.avatar}`}
-                    alt={staff.username}
-                    title={staff.username}
-                  />
-                  <p>{staff.username}</p>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </div>
+      <Staff project={project} />
       <Contacts project={project} />
       <Task project={project} />
       <div className="project__card card project__timer">

@@ -109,7 +109,7 @@ const ProjectTableRow = ({ project }) => {
         <div className="table__select select select--phase">
           <select
             name="phase"
-            className="select__input"
+            className="select__input select__input--phase"
             defaultValue={project?.currentPhase}
             onChange={(e) => {
               updateProjectItem({
@@ -154,10 +154,12 @@ const ProjectTableRow = ({ project }) => {
       </td>
       <td className="table__cell">{startDate}</td>
       <td className="table__cell">
-        <div className="table__select select select--status">
+        <div
+          className={`table__select select select--status select--status--${(project?.status).trim()}`}
+        >
           <select
             name="status"
-            className="select__input"
+            className={`select__input`}
             value={project?.status}
             onChange={(e) => {
               updateProjectItem({

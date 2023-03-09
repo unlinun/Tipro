@@ -86,6 +86,7 @@ const Register = () => {
           <input
             type="date"
             name="birthday"
+            max="2012-12-31"
             className="form__input"
             {...register("birthday")}
           />

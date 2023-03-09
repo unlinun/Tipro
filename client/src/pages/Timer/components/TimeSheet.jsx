@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { updateTimer } from "../../../api/timer";
 import { EditIcon, TickCircleIcon } from "../../../assets/icons";
 
-const TimerTable = ({ time }) => {
+const TimeSheet = ({ time }) => {
   const token = useSelector((state) => state.auth.token);
   const [isEdit, setIsEdit] = useState(false);
   const queryClient = useQueryClient();
@@ -15,7 +15,7 @@ const TimerTable = ({ time }) => {
     },
     {
       onSettled: () => {
-        queryClient.invalidateQueries("timer");
+        queryClient.invalidateQueries("dateTimer");
       },
     }
   );
@@ -63,7 +63,7 @@ const TimerTable = ({ time }) => {
                   <input
                     type="text"
                     defaultValue={
-                      Math.floor(record.duration / 3600) > 10
+                      Math.floor(record.duration / 3600) >= 10
                         ? Math.floor(record.duration / 3600)
                         : `0${Math.floor(record.duration / 3600)}`
                     }
@@ -82,7 +82,7 @@ const TimerTable = ({ time }) => {
                   <input
                     type="text"
                     defaultValue={
-                      Math.floor((record.duration % 3600) / 60) > 10
+                      Math.floor((record.duration % 3600) / 60) >= 10
                         ? Math.floor((record.duration % 3600) / 60)
                         : `0${Math.floor((record.duration % 3600) / 60)}`
                     }
@@ -105,7 +105,7 @@ const TimerTable = ({ time }) => {
               <div className="flex gap--8">
                 <div className="tags__tag ">
                   <span className="tags__tag--bold">
-                    {Math.floor(record.duration / 3600) > 10
+                    {Math.floor(record.duration / 3600) >= 10
                       ? Math.floor(record.duration / 3600)
                       : `0${Math.floor(record.duration / 3600)}`}
                   </span>
@@ -113,7 +113,7 @@ const TimerTable = ({ time }) => {
                 </div>
                 <div className="tags__tag ">
                   <span className="tags__tag--bold">
-                    {Math.floor((record.duration % 3600) / 60) > 10
+                    {Math.floor((record.duration % 3600) / 60) >= 10
                       ? Math.floor((record.duration % 3600) / 60)
                       : `0${Math.floor((record.duration % 3600) / 60)}`}
                   </span>
@@ -144,4 +144,4 @@ const TimerTable = ({ time }) => {
   );
 };
 
-export default TimerTable;
+export default TimeSheet;

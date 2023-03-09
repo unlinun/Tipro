@@ -17,6 +17,12 @@
   }
   &__card {
     width: rem(500);
+    @include breakpoint-down(medium) {
+      width: rem(400);
+    }
+    @include breakpoint-down(small) {
+      width: rem(280);
+    }
   }
   .card__title {
     border-left: none;
@@ -31,5 +37,11 @@
     border-radius: rem(10);
     background-color: var(--light-white-bgc);
     color: var(--light-white-text);
+    @include breakpoint-down(small) {
+      width: rem(100);
+    }
+  }
+  .select {
+    background-color: var(--light-lightgray);
   }
 }
