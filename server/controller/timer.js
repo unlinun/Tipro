@@ -35,7 +35,7 @@ export const getTimer = async (req, res) => {
         as: "project",
         pipeline: [
           {
-            $project: { title: 1 },
+            $project: { title: 1, startDate: 1 },
           },
         ],
       },
@@ -61,10 +61,6 @@ export const getTimer = async (req, res) => {
       $addFields: {
         task: { $arrayElemAt: ["$task", 0] },
         project: { $arrayElemAt: ["$project", 0] },
-      },
-    },
-    {
-      $set: {
         phase: { $arrayElemAt: ["$phase.phase", 0] },
       },
     },

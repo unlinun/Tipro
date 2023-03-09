@@ -40,9 +40,11 @@ export const login = async (req, res) => {
     }
     const token = user.createToken();
     // 將密碼從 user 物件中移除
-    user.password = undefined;
+    // Remove the password field from the user object
+    const userWithoutPassword = { ...user._doc };
+    delete userWithoutPassword.password;
     res.status(StatusCodes.OK).json({
-      user,
+      user: userWithoutPassword,
       token,
     });
   } catch (error) {

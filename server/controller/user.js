@@ -31,7 +31,7 @@ export const updateUser = async (req, res) => {
   const user = await User.findOneAndUpdate(
     { _id: id },
     {
-      avatar: `assets/${req.file.filename}`,
+      avatar: req.file ? `assets/${req.file.filename}` : req.body.avatar,
       username,
       position,
       birthday,
