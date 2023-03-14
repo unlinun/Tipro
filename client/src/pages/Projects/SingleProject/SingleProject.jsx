@@ -9,6 +9,7 @@ import Info from "./components/Info";
 import Phase from "./components/Phase";
 import Staff from "./components/Staff";
 import Task from "./components/Task";
+import Timer from "./components/Timer";
 
 const SingleProject = () => {
   const { id } = useParams();
@@ -16,6 +17,7 @@ const SingleProject = () => {
   const { isLoading, data: project } = useQuery("singleProject", () =>
     getSingleProject(id, token)
   );
+
   if (isLoading) {
     return <p> is loading</p>;
   }
@@ -31,25 +33,7 @@ const SingleProject = () => {
       <Staff project={project} />
       <Contacts project={project} />
       <Task project={project} />
-      <div className="project__card card project__timer">
-        <div className="project__title">All phase working time</div>
-        <div className="timer__item">
-          <h6>detail design</h6>
-          <p>13:00</p>
-        </div>
-        <div className="timer__item">
-          <h6>detail design</h6>
-          <p>13:00</p>
-        </div>
-        <div className="timer__item">
-          <h6>detail design</h6>
-          <p>13:00</p>
-        </div>
-        <div className="timer__total">
-          <h6>total</h6>
-          <p>120:33:02</p>
-        </div>
-      </div>
+      <Timer project={project} />
     </div>
   );
 };

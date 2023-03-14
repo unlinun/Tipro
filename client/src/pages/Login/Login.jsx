@@ -52,7 +52,7 @@ const Login = () => {
         navigator("/");
       }
     } catch (error) {
-      setErrorMsg(error);
+      setErrorMsg(error.message);
     }
   };
 

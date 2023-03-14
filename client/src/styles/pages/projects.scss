@@ -20,10 +20,10 @@
     background-color: var(--light-white-bgc);
     border-radius: 0 rem(20) rem(20) rem(20);
     .table__row {
-      grid-template-columns: 1fr rem(100) 0.5fr 1fr rem(50) rem(100) 0.5fr 1fr 1fr;
+      grid-template-columns: 1fr rem(80) 0.6fr 1fr rem(50) rem(100) 0.5fr 1fr 1fr;
       column-gap: rem(28);
       @include breakpoint-down(medium) {
-        grid-template-columns: 1fr rem(20) 0.5fr 1fr rem(40) rem(100) 0.5fr 1fr 1fr;
+        grid-template-columns: 1fr rem(20) 0.6fr 1fr rem(40) rem(100) 0.5fr 1fr 1fr;
       }
     }
   }

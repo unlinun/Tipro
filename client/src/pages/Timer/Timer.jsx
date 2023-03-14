@@ -31,7 +31,7 @@ const Timer = () => {
 
   // 使用 useQuery 取得 date timer data
   const queryClient = useQueryClient();
-  const { data: timers } = useQuery("dateTimer", () =>
+  const { data: timers, refetch } = useQuery("dateTimer", () =>
     getDateTimer(weekStartDate.toISOString(), token)
   );
 
@@ -111,7 +111,7 @@ const Timer = () => {
                 <td className="table__cell">{i + 1}</td>
                 <td className="table__cell">{time?.project.title}</td>
                 <td className="table__cell">{time?.task.title}</td>
-                <TimeSheet time={time} />
+                <TimeSheet time={time} refetch={refetch} />
               </tr>
             ))}
           </tbody>
@@ -121,7 +121,7 @@ const Timer = () => {
         <div className="card--flex card--flex--between mg__b--20">
           <div className="card__title">Timer overview</div>
         </div>
-        <table className="timer__table">
+        <table className="timer__table timer__table--time">
           <thead className="table__head">
             <tr className="table__row table__row--time table__row--head">
               <th className="table__title"></th>
@@ -133,7 +133,7 @@ const Timer = () => {
             </tr>
           </thead>
           <tbody className="table__body">
-            <TimeProject timers={allTimers} />
+            <TimeProject timer={timer} timers={allTimers} />
           </tbody>
         </table>
       </div>

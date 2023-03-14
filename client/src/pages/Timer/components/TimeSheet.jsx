@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { updateTimer } from "../../../api/timer";
 import { EditIcon, TickCircleIcon } from "../../../assets/icons";
 
-const TimeSheet = ({ time }) => {
+const TimeSheet = ({ time, refetch }) => {
   const token = useSelector((state) => state.auth.token);
   const [isEdit, setIsEdit] = useState(false);
   const queryClient = useQueryClient();
@@ -51,6 +51,7 @@ const TimeSheet = ({ time }) => {
       recordId: id,
       duration: duration,
     });
+    refetch();
   };
 
   return (

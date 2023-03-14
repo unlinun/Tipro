@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { getAllProjects } from "../../../api/projects";
 import SingleTimer from "./SingleTimer";
 
-const TimeProject = ({ timers }) => {
+const TimeProject = ({ timer, timers }) => {
   const token = useSelector((state) => state.auth.token);
   const [projects, setProjects] = useState([]);
 
@@ -15,7 +15,7 @@ const TimeProject = ({ timers }) => {
     };
     getProjects();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [timers]);
+  }, [timer, timers]);
 
   return (
     <>
