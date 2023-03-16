@@ -2,8 +2,8 @@ import { StatusCodes } from "http-status-codes";
 import NotFoundError from "../errors/notFound.js";
 import BadRequestError from "../errors/badRequest.js";
 import mongoose from "mongoose";
-
 import Projects from "../models/Projects.js";
+
 // 取得所有跟自己有關的項目
 export const getAllProjects = async (req, res) => {
   const user = req.user;
@@ -63,6 +63,7 @@ export const getAllProjects = async (req, res) => {
 // 取得單一項目
 export const getSingleProject = async (req, res) => {
   const id = mongoose.Types.ObjectId(req.params.id);
+
   const user = req.user;
   try {
     // 使用 mogodb $match 與 $lookup 來取得資料
@@ -143,7 +144,10 @@ export const updateProject = async (req, res) => {
   const { id } = req.params;
   try {
     const project = await Projects.findOneAndUpdate(
-      { _id: id, $or: [{ manager: user.id }, { createdBy: user.id }] },
+      {
+        _id: id,
+        $or: [{ manager: user.id }, { createdBy: user.id }, { staff: user.id }],
+      },
       req.body,
       {
         new: true,

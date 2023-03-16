@@ -35,6 +35,7 @@ export const login = async (req, res) => {
     }
 
     const isPasswordMatch = await user.comparePassword(password);
+
     if (!isPasswordMatch) {
       throw new UnauthenticatedError("Invalid Credential");
     }

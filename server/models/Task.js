@@ -11,6 +11,10 @@ const TaskSchema = new mongoose.Schema({
     type: Date,
     required: [true, "Please provide start date"],
   },
+  endDate: {
+    type: Date,
+    default: "",
+  },
   tags: {
     type: Array,
     default: [],
@@ -36,7 +40,7 @@ const TaskSchema = new mongoose.Schema({
   },
   createdAt: {
     type: Date,
-    default: Date.now(),
+    default: new Date(),
   },
 });
 
@@ -44,44 +48,42 @@ const TaskSchema = new mongoose.Schema({
 // pre-save hook是Mongoose中的一個middleware，它在執行保存操作之前執行
 
 // 在創建 task 後，直接創建一個 timer
-// 創建預設的 timeRecord , timeRecord 會根據 task 的 startDate來做創建
+// 創建預設的 timeRecord (empty array)
 // 使用 pre-save hook
 TaskSchema.pre("save", async function (next) {
   const task = this;
-  const thisWeekStart = getWeekStartDate(new Date());
-  const weekStartDate = getWeekStartDate(this.startDate);
-  const weekEndDate =
-    getWeekEndDate(thisWeekStart) > getWeekEndDate(weekStartDate)
-      ? getWeekEndDate(thisWeekStart)
-      : getWeekEndDate(weekStartDate);
-  // 一天是 86400000 毫秒
-  const numberOfDays = Math.ceil(
-    (weekEndDate.getTime() - weekStartDate.getTime()) / 86400000
-  );
-
-  const timeRecord = [];
-  for (let i = 1; i <= numberOfDays; i++) {
-    const date = new Date(weekStartDate.setDate(weekStartDate.getDate() + 1));
-    timeRecord.push({
-      dateOfWeek: date,
-      duration: 0,
-    });
-  }
   try {
     // create timer document
     const timer = new Timer({
       taskId: this._id,
       projectId: task.projectId,
       phaseId: task.phaseId,
-      timeRecord,
+      startDate: task.startDate,
+      endDate: null,
+      timeRecord: [],
       createdBy: this.createdBy,
     });
     // save timer document
     await timer.save();
-  } catch (err) {
-    throw new Error(err.message);
+  } catch (error) {
+    throw new Error(error.message);
   }
 
+  next();
+});
+// 當更新 Task 的 startDate, 也要同步更新 Timer 的起始記錄時間
+TaskSchema.pre("findOneAndUpdate", async function (next) {
+  // 取得正在更新的 task._id
+  try {
+    const task = await Task.findOne(this.getQuery());
+    const endDate = task.endDate;
+    const timer = await Timer.findOne({ taskId: task._id });
+    timer.endDate = endDate;
+    timer.phaseId = task.phaseId;
+    await timer.save();
+  } catch (error) {
+    throw new Error(error.message);
+  }
   next();
 });
 
@@ -102,7 +104,7 @@ export default Task;
 //  紀錄一些想法
 /* TASK 裡面會有 timer,
 如何在創建 task 時一併創建 timer?
-每一個task裡面會有多個timer（因為每天工作 8小時算，過了一天，就會產生一個新的 timer 直到 task 完成）
+每一個timer 裡面會有多個 timeRecord
 每一個task會有所有timer相加的時間
 每一個timer會有一個對應的日期，
 每一個timer會有一個duration(已經加總過後的)，
@@ -120,21 +122,3 @@ startDate 如果開始了，都沒有完成，要如何延續到下一天？
 前端先行阻擋，如果 createdAt 一樣的話就不會新增一個新的時間段，而是更新時間，
 因為一個 task 中的 timer 不會有兩個一樣的創建時間
 */
-
-// helper function to get week start date
-function getWeekStartDate(date) {
-  const dayOfWeek = date.getDay();
-  const day = date.getDate() - dayOfWeek + (dayOfWeek === 0 ? -6 : 1);
-  const firstDay = new Date(date.setDate(day));
-  firstDay.setUTCHours(0, 0, 0, 0);
-  // 回傳的是午夜
-  return firstDay;
-}
-
-// helper function to get week end date
-function getWeekEndDate(weekStartDate) {
-  let weekEndDate = new Date(weekStartDate);
-  weekEndDate.setDate(weekEndDate.getDate() + 6);
-  weekEndDate.setUTCHours(0, 0, 0, 0);
-  return weekEndDate;
-}

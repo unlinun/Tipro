@@ -16,6 +16,8 @@ import userRoute from "./routes/user.js";
 import projectsRoute from "./routes/projects.js";
 import taskRoute from "./routes/tasks.js";
 import timerRoute from "./routes/timer.js";
+import memoRoute from "./routes/memo.js";
+import dashboardRoute from "./routes/dashboard.js";
 
 // security
 import helmet from "helmet";
@@ -82,6 +84,8 @@ app.use("/user", authorizationToken, userRoute);
 app.use("/projects", authorizationToken, projectsRoute);
 app.use("/tasks", authorizationToken, taskRoute);
 app.use("/timer", authorizationToken, timerRoute);
+app.use("/memo", authorizationToken, memoRoute);
+app.use("/dashboard", authorizationToken, dashboardRoute);
 
 // Error handler
 app.use(errorHandlerMiddleware);
