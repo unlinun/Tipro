@@ -20,13 +20,13 @@
       background-color: var(--event-lightblue);
     }
     &--in.progress {
-      background-color: var(--event-orange);
+      background-color: var(--event-purple);
     }
     &--canceled {
       background-color: var(--event-pink);
     }
     &--finished {
-      background-color: var(--event-purple);
+      background-color: var(--event-coffee);
     }
   }
   &--priority {

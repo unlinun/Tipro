@@ -41,18 +41,21 @@ const Contact = ({ project, index, contact, setIsCreate }) => {
       contactInfo: editContacts,
     });
   };
+
+  const handleDeleteContact = () => {
+    const isDelete = window.confirm("sure to delete contact");
+    if (isDelete) {
+      updateProjectItem({
+        _id: project._id,
+        contactInfo: project.contactInfo.filter((item, i) => index !== i),
+      });
+    }
+  };
+
   return (
     <tr className="table__row">
       <td className="table__cell table__cell--flex">
-        <div
-          className="delete"
-          onClick={() => {
-            updateProjectItem({
-              _id: project._id,
-              contactInfo: project.contactInfo.filter((item, i) => index !== i),
-            });
-          }}
-        >
+        <div className="delete" onClick={() => handleDeleteContact()}>
           -
         </div>
         <div

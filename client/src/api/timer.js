@@ -34,7 +34,23 @@ export const getProjectTimer = async (id, token) => {
   return data;
 };
 
-export const updateTimer = async (timer, token) => {
+export const updateTimer = async (startDate, token) => {
+  // 取得要查找的日期
+  const res = await axios.patch(
+    `${API_URL}/timer`,
+    { startDate },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  const data = res.data;
+  return data;
+};
+
+export const updateTimerDuration = async (timer, token) => {
   // 取得要查找的日期
   const res = await axios.patch(`${API_URL}/timer/${timer._id}`, timer, {
     headers: {

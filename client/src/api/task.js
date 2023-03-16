@@ -37,6 +37,7 @@ export const getAllTasksFromProject = async (id, token) => {
 };
 
 export const createTask = async (task, token) => {
+  console.log(task);
   const res = await axios.post(`${API_URL}/tasks`, task, {
     headers: {
       Authorization: `Bearer ${token}`,

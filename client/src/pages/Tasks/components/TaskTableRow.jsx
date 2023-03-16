@@ -176,6 +176,7 @@ const TaskTableRow = ({ task, index }) => {
             updateTaskItem({
               _id: task?._id,
               finished: !task?.finished,
+              endDate: !task.finished ? new Date() : "",
             })
           }
         ></div>

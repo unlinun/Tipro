@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { useSelector } from "react-redux";
-import { updateTimer } from "../../../api/timer";
+import { updateTimerDuration } from "../../../api/timer";
 import { EditIcon, TickCircleIcon } from "../../../assets/icons";
 
 const TimeSheet = ({ time, refetch }) => {
@@ -11,7 +11,7 @@ const TimeSheet = ({ time, refetch }) => {
 
   const { mutate: updateRecordItem } = useMutation(
     (updateRecordItem) => {
-      return updateTimer(updateRecordItem, token);
+      return updateTimerDuration(updateRecordItem, token);
     },
     {
       onSettled: () => {

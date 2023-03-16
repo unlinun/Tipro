@@ -6,7 +6,14 @@
   justify-content: space-around;
   gap: rem(12);
   border-radius: rem(20);
+  border: none;
   cursor: pointer;
+  &--dashboard {
+    height: rem(20);
+    padding: rem(8) rem(12);
+    background-color: var(--primary-green);
+    color: var(--light-white);
+  }
   &--nav {
     font-weight: 400;
     height: rem(30);

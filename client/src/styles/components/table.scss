@@ -46,6 +46,9 @@
       align-items: center;
       justify-content: center;
     }
+    &--finished {
+      text-decoration: line-through;
+    }
     input {
       width: 100%;
       // padding: rem(2) rem(4);
@@ -172,6 +175,9 @@
     }
     &--working {
       background-color: var(--event-orange);
+    }
+    &--gray {
+      background-color: var(--light-lightgray);
     }
   }
 }

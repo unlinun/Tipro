@@ -15,7 +15,13 @@
     width: rem(120);
   }
   &__table {
-    min-width: rem(1200);
+    width: 100%;
+    @include breakpoint-down(large) {
+      min-width: rem(1200);
+    }
+    @include breakpoint-down(medium) {
+      min-width: rem(800);
+    }
     input {
       width: rem(24);
       background-color: var(--light-lightgray);
@@ -33,16 +39,15 @@
     &--time {
       grid-template-columns: rem(20) 1.2fr 1fr 1fr 1fr 1fr;
       gap: rem(20);
+
+      .table__cell,
+      .table__title {
+        width: auto;
+        justify-self: center;
+      }
     }
   }
 
-  .table__cell,
-  .table__title {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
   .select--phase {
     min-width: rem(100);
   }

@@ -20,15 +20,15 @@ const Timer = ({ project }) => {
 
   return (
     <div className="project__card card project__timer">
-      <div className="project__title">All phase working time</div>
+      <div className="project__title">All staffs - phase working time</div>
       {project.phase.map((item) => {
         return (
           <div className="timer__item" key={item._id}>
             <h6>{item.title}</h6>
             <p>
-              {Math.ceil(
+              {Math.floor(
                 timer?.reduce((acc, curr) => {
-                  if (curr.phaseId === "640985dec7b6ec8eb868652c") {
+                  if (curr.phaseId === item._id) {
                     acc += curr.timeRecord.reduce((acc, curr) => {
                       return (acc += curr.duration);
                     }, 0);
@@ -37,6 +37,19 @@ const Timer = ({ project }) => {
                 }, 0) / 3600
               )}
               hr
+              {Math.floor(
+                (timer?.reduce((acc, curr) => {
+                  if (curr.phaseId === item._id) {
+                    acc += curr.timeRecord.reduce((acc, curr) => {
+                      return (acc += curr.duration);
+                    }, 0);
+                  }
+                  return acc;
+                }, 0) %
+                  3600) /
+                  60
+              )}
+              min
             </p>
           </div>
         );

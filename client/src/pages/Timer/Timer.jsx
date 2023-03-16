@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useQuery, useQueryClient } from "react-query";
 import { useSelector } from "react-redux";
-import { getDateTimer, getAllTimer } from "../../api/timer";
+import { getDateTimer, getAllTimer, updateTimer } from "../../api/timer";
+
 import TimeSheet from "./components/TimeSheet";
 import dateFormat from "dateformat";
 import TimeProject from "./components/TimeProject";
@@ -53,13 +54,17 @@ const Timer = () => {
   const handleDateChange = async (e) => {
     setCurrentDate(e.target.value);
   };
+  const handleRenew = async () => {
+    await updateTimer(currentDate, token);
+    refetch();
+  };
 
   useEffect(() => {
     const fetchTimer = async () => {
       const data = await getDateTimer(weekStartDate.toISOString(), token);
       const allData = await getAllTimer(token);
       setAllTimers(allData);
-      queryClient.setQueryData("timer", data);
+      queryClient.setQueryData("dateTimer", data);
     };
     fetchTimer();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -78,6 +83,9 @@ const Timer = () => {
               defaultValue={dateFormat(new Date(), "yyyy-mm-dd")}
               onChange={(e) => handleDateChange(e)}
             />
+            <button className="btn btn--nav" onClick={() => handleRenew()}>
+              renew
+            </button>
           </div>
           <div className="card__text card__text--sm">
             {`${dateFormat(weekStartDate, "mm/dd")} - ${dateFormat(
@@ -106,14 +114,32 @@ const Timer = () => {
             </tr>
           </thead>
           <tbody className="table__body">
-            {timer?.map((time, i) => (
-              <tr className="table__row" key={time._id}>
-                <td className="table__cell">{i + 1}</td>
-                <td className="table__cell">{time?.project.title}</td>
-                <td className="table__cell">{time?.task.title}</td>
-                <TimeSheet time={time} refetch={refetch} />
+            {timer?.length > 0 ? (
+              timer?.map((time, i) => (
+                <tr className="table__row" key={time._id}>
+                  <td className="table__cell">{i + 1}</td>
+                  <td
+                    className="table__cell"
+                    style={{ justifyContent: "flex-start" }}
+                  >
+                    {time?.project.title}
+                  </td>
+                  <td className="table__cell">{time?.task.title}</td>
+                  <TimeSheet time={time} refetch={refetch} />
+                </tr>
+              ))
+            ) : (
+              <tr style={{ textAlign: "center", justifySelf: "center" }}>
+                <td
+                  style={{
+                    textAlign: "center",
+                    margin: "16px",
+                  }}
+                >
+                  time sheet is empty
+                </td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
       </div>
