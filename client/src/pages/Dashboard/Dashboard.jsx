@@ -7,6 +7,7 @@ import { createMemo, updateMemo } from "../../api/memo";
 import { setStaffs } from "../../state/authSlice";
 import { updateTask } from "../../api/task";
 import { Link } from "react-router-dom";
+import { RightArrowIcon } from "../../assets/icons";
 
 const Dashboard = () => {
   const token = useSelector((state) => state.auth.token);
@@ -34,7 +35,7 @@ const Dashboard = () => {
   return (
     <div className="dashboard">
       <div className="card dashboard__project">
-        <div className="flex flex--bt">
+        <div className="flex flex--bt  mg__b--20">
           <div className="card__title">{`project (in progress)`}</div>
           <Link to="/projects" className="btn btn--dashboard">
             more
@@ -51,6 +52,7 @@ const Dashboard = () => {
               <th className="table__title">phase</th>
               <th className="table__title">start date</th>
               <th className="table__title">status</th>
+              <th className="table__title"></th>
             </tr>
           </thead>
           <tbody className="table__body">
@@ -77,14 +79,42 @@ const Dashboard = () => {
                   <td className="table__cell cell__tag cell__tag--gray">
                     {project?.status}
                   </td>
+                  <td className="table__cell">
+                    <Link to={`/projects/${project?._id}`}>
+                      <RightArrowIcon />
+                    </Link>
+                  </td>
                 </tr>
               );
             })}
           </tbody>
         </table>
       </div>
+      <div className="card dashboard__memo">
+        <div className="card__title  mg__b--20">{`memo`}</div>
+        {data?.memo !== null ? (
+          <textarea
+            cols="30"
+            rows="10"
+            defaultValue={data?.memo?.content}
+            onChange={(e) => {
+              updateMemo(
+                { _id: data?.memo?._id, content: e.target.value },
+                token
+              );
+            }}
+          ></textarea>
+        ) : (
+          <button onClick={() => handleCreateMemo()}>create memo</button>
+        )}
+      </div>
       <div className="card dashboard__task">
-        <div className="card__title">{`tasks (today)`}</div>
+        <div className="flex flex--bt mg__b--20">
+          <div className="card__title">{`tasks (today)`}</div>
+          <Link to="/tasks" className="btn btn--dashboard">
+            more
+          </Link>
+        </div>
         <table className="table">
           <thead className="table__head">
             <tr className="table__row">
@@ -137,24 +167,6 @@ const Dashboard = () => {
             })}
           </tbody>
         </table>
-      </div>
-      <div className="card dashboard__memo">
-        <div className="card__title">{`memo`}</div>
-        {data?.memo !== null ? (
-          <textarea
-            cols="30"
-            rows="10"
-            defaultValue={data?.memo?.content}
-            onChange={(e) => {
-              updateMemo(
-                { _id: data?.memo?._id, content: e.target.value },
-                token
-              );
-            }}
-          ></textarea>
-        ) : (
-          <button onClick={() => handleCreateMemo()}>create memo</button>
-        )}
       </div>
     </div>
   );

@@ -18,7 +18,7 @@ const Sidebar = () => {
   return (
     <aside className="sidebar">
       <div className="sidebar__wrapper">
-        <div className="sidebar__user user">
+        <Link to="/setting" className="sidebar__user user">
           <img
             src={`http://localhost:6001/${user?.avatar}`}
             alt="user"
@@ -28,7 +28,7 @@ const Sidebar = () => {
             <h5>{user?.username}</h5>
             <p>{user?.position}</p>
           </div>
-        </div>
+        </Link>
         <div className="sidebar__menu menu">
           <NavLink to="/">
             <CategoryIcon />

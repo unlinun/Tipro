@@ -74,7 +74,7 @@ const Register = () => {
             type="text"
             name="companyID"
             className="form__input"
-            placeholder="company id"
+            placeholder="test ID is Tipro"
             {...register("companyID")}
           />
           <p className="form__alert form__alert--error">

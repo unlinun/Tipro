@@ -1,7 +1,6 @@
 @use "../utils/" as *;
 
 .card {
-  max-height: 100vh;
   background-color: var(--light-white-bgc);
   border-radius: rem(20);
   padding: rem(20);

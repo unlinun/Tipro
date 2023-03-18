@@ -121,6 +121,9 @@
 // margin __b(bottom)
 .mg {
   &__b {
+    &--12 {
+      margin-bottom: rem(12);
+    }
     &--20 {
       margin-bottom: rem(20);
     }

@@ -1,0 +1,16 @@
+@use "../utils/" as *;
+
+.memos {
+  &__card {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: rem(32);
+  }
+  .card {
+    height: rem(160);
+    box-shadow: 0 0 0.5px rgba(255, 255, 255, 0.2);
+  }
+  .card__title {
+    margin-bottom: rem(20);
+  }
+}

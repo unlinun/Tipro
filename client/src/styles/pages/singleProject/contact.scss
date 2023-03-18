@@ -2,9 +2,7 @@
 
 .project__contact {
   position: relative;
-  grid-column: 3/4;
-  grid-row: 2/3;
-  max-height: rem(240);
+  // max-height: rem(240);
   overflow: scroll;
   .table {
     width: 100%;
