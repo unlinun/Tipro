@@ -29,7 +29,7 @@ const UserSchema = new mongoose.Schema({
   },
   companyID: {
     type: String,
-    default: "TEST123",
+    default: "Tipro",
   },
   avatar: {
     type: String,

@@ -6,7 +6,9 @@ import Memo from "../models/Memo.js";
 export const getAllMemo = async (req, res) => {
   const user = req.user;
   try {
-    const memos = await Memo.find({ createdBy: user.id });
+    const memos = await Memo.find({ createdBy: user.id }).sort({
+      createdAt: -1,
+    });
     res.status(StatusCodes.OK).json(memos);
   } catch (error) {
     throw new BadRequestError(error.message);
