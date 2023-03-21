@@ -13,4 +13,13 @@
   .card__title {
     margin-bottom: rem(20);
   }
+  svg {
+    cursor: pointer;
+    path {
+      stroke: var(--light-white-text);
+    }
+    &:hover {
+      opacity: 0.5;
+    }
+  }
 }

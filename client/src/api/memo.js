@@ -31,3 +31,13 @@ export const updateMemo = async (memo, token) => {
   });
   return res.data;
 };
+
+export const deleteMemo = async (memo, token) => {
+  const res = await axios.delete(`${API_URL}/memo/${memo._id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+  });
+  return res.data;
+};

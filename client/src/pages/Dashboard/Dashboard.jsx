@@ -105,7 +105,14 @@ const Dashboard = () => {
             }}
           ></textarea>
         ) : (
-          <button onClick={() => handleCreateMemo()}>create memo</button>
+          <div className="card flex flex--cen">
+            <button
+              className="btn btn--dashboard"
+              onClick={() => handleCreateMemo()}
+            >
+              create memo
+            </button>
+          </div>
         )}
       </div>
       <div className="card dashboard__task">
