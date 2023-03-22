@@ -1,4 +1,6 @@
 import mongoose from "mongoose";
+import Task from "./Task.js";
+import Timer from "./Timer.js";
 
 const ContactInfoSchema = new mongoose.Schema({
   company: String,
@@ -61,26 +63,41 @@ const ProjectsSchema = new mongoose.Schema({
       type: ContactInfoSchema,
     },
   ],
-  phase: {
-    type: mongoose.Types.ObjectId,
-    ref: "Phase",
-    required: true,
-  },
+  phase: [
+    {
+      title: {
+        type: String,
+        required: true,
+      },
+    },
+  ],
   currentPhase: {
-    type: mongoose.Types.ObjectId,
-    ref: "Phase",
+    type: String,
     required: true,
   },
   createdBy: {
     type: mongoose.Types.ObjectId,
     ref: "User",
     required: true,
+    // index 的使用？以後要查找可以方便搜尋 2023/2/20 待解決
   },
   createdAt: {
     type: Date,
     default: Date.now(),
   },
 });
+
+// add pre hook to delete related task
+ProjectsSchema.pre(
+  "deleteOne",
+  { document: true, query: false },
+  async function (next) {
+    await Task.deleteMany({ projectId: this._id });
+    await Timer.deleteMany({ projectId: this._id });
+
+    next();
+  }
+);
 
 const Projects = mongoose.model("Projects", ProjectsSchema);
 export default Projects;

@@ -1,0 +1,53 @@
+@use "../../utils/" as *;
+
+.staff {
+  display: flex;
+  flex-direction: column;
+  &__info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: rem(32);
+  }
+  &__image {
+    object-fit: cover;
+  }
+  &__add {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    background-color: aliceblue;
+  }
+  .box--add {
+    width: rem(50);
+    height: rem(50);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .edit__form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+    width: rem(80);
+    padding: rem(0);
+    border-radius: 50%;
+    background-color: transparent;
+    position: unset;
+    transform: translate(0);
+    .close {
+      position: inherit;
+    }
+    .select {
+      background-color: var(--light-gray);
+    }
+    .select__input {
+      align-items: center;
+      justify-content: center;
+    }
+    .box {
+      padding: 0;
+    }
+  }
+}

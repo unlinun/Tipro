@@ -1,13 +1,54 @@
 @use "../utils/" as *;
 
 .timer {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: 1fr 0.5fr;
   gap: rem(32);
+
+  @include breakpoint-down(large) {
+    overflow: scroll;
+  }
+  &__card {
+    overflow: scroll;
+  }
+  input {
+    width: rem(120);
+  }
   &__table {
     width: 100%;
+    @include breakpoint-down(large) {
+      min-width: rem(1200);
+    }
+    @include breakpoint-down(medium) {
+      min-width: rem(800);
+    }
+    input {
+      width: rem(24);
+      background-color: var(--light-lightgray);
+      color: var(--light-white-text);
+    }
+    &--time {
+      width: 100%;
+    }
   }
   .table__row {
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: rem(20) 1.2fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr rem(50);
+    gap: rem(20);
+    padding-bottom: rem(12);
+    border-bottom: 1px solid var(--light-lightgray);
+    &--time {
+      grid-template-columns: rem(20) 1.2fr 1fr 1fr 1fr 1fr;
+      gap: rem(20);
+
+      .table__cell,
+      .table__title {
+        width: auto;
+        justify-self: center;
+      }
+    }
+  }
+
+  .select--phase {
+    min-width: rem(100);
   }
 }

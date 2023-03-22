@@ -58,7 +58,7 @@ const Contacts = ({ project }) => {
         +
       </div>
       {isCreate ? (
-        <form className="contact__form">
+        <form className="edit__form">
           <div className="close" onClick={() => setIsCreate(false)}>
             x
           </div>
@@ -112,6 +112,7 @@ const Contacts = ({ project }) => {
                 index={index}
                 project={project}
                 key={contact._id}
+                setIsCreate={setIsCreate}
               />
             );
           })}

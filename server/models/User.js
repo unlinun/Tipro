@@ -29,15 +29,15 @@ const UserSchema = new mongoose.Schema({
   },
   companyID: {
     type: String,
-    default: "TEST123",
+    default: "Tipro",
   },
   avatar: {
     type: String,
-    default: "",
+    default: "assets/avatar.svg",
   },
   position: {
     type: String,
-    default: "Staff",
+    default: "staff",
   },
   adminProjects: {
     type: Boolean,

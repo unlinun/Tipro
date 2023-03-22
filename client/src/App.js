@@ -10,15 +10,13 @@ import Timer from "./pages/Timer/Timer";
 import Projects from "./pages/Projects/Projects";
 import Tasks from "./pages/Tasks/Tasks";
 import Staffs from "./pages/Staffs/Staffs";
-import Reports from "./pages/Reports/Reports";
+import Memos from "./pages/Memos/Memos";
 import Setting from "./pages/Setting/Setting";
 import NotFound from "./pages/Not found/NotFound";
-import ProtectedRoute from "./components/ProtectedRoute";
-import { useSelector } from "react-redux";
 import SingleProject from "./pages/Projects/SingleProject/SingleProject";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const App = () => {
-  const token = useSelector((state) => state.auth.token);
   return (
     <Router>
       <Routes>
@@ -30,18 +28,18 @@ const App = () => {
         <Route
           path="/"
           element={
-            <ProtectedRoute token={token}>
+            <ProtectedRoute>
               <ShareSidebarNav />
             </ProtectedRoute>
           }
         >
           <Route index element={<Dashboard />} />
-          <Route path="/timer" element={<Timer />} />
           <Route path="/projects" element={<Projects />} />
           <Route path="/projects/:id" element={<SingleProject />} />
           <Route path="/tasks" element={<Tasks />} />
+          <Route path="/timer" element={<Timer />} />
+          <Route path="/memos" element={<Memos />} />
           <Route path="/staffs" element={<Staffs />} />
-          <Route path="/reports" element={<Reports />} />
           <Route path="/setting" element={<Setting />} />
         </Route>
         <Route path="*" element={<NotFound />} />

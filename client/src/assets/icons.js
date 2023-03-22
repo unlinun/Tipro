@@ -486,3 +486,39 @@ export const LeftArrowIcon = () => {
     </svg>
   );
 };
+
+export const MemoIcon = () => {
+  return (
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M20.5 11.3V7.04C20.5 3.01 19.56 2 15.78 2H8.22C4.44 2 3.5 3.01 3.5 7.04V18.3C3.5 20.96 4.96 21.59 6.73 19.69L6.74 19.68C7.56 18.81 8.81 18.88 9.52 19.83L10.53 21.18M8 7H16M9 11H15"
+        stroke="black"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M18.211 14.77L14.671 18.31C14.531 18.45 14.401 18.71 14.371 18.9L14.181 20.25C14.111 20.74 14.451 21.08 14.941 21.01L16.291 20.82C16.481 20.79 16.751 20.66 16.881 20.52L20.421 16.98C21.031 16.37 21.321 15.66 20.421 14.76C19.531 13.87 18.821 14.16 18.211 14.77Z"
+        stroke="black"
+        strokeWidth="1.5"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M17.7 15.28C18 16.36 18.84 17.2 19.92 17.5"
+        stroke="black"
+        strokeWidth="1.5"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+};

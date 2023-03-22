@@ -13,6 +13,10 @@ const Info = ({ project }) => {
   // 當使用者選擇某一個國家時，會根據所選國家來跳出該國家的城市
   const [currentCountry, setCurrentCountry] = useState("");
   const [cities, setCities] = useState([]);
+  const [projectTitle, setProjectTitle] = useState(project.title);
+  const [projectDescription, setProjectDescription] = useState(
+    project.description
+  );
 
   const { data: countries } = useQuery("country", getCountry);
   //  當 country 改變時，也改變 cities 的數值
@@ -36,12 +40,35 @@ const Info = ({ project }) => {
     }
   );
 
+  const handleInfoUpdate = () => {
+    setIsEdit(!isEdit);
+    if (projectTitle === "" || projectDescription === "") return;
+    if (isEdit === true) {
+      updateProjectItem({
+        _id: project._id,
+        title: projectTitle,
+        description: projectDescription,
+      });
+    }
+  };
+
   return (
     <div className="project__card card project__info">
-      <div className="project__edit" onClick={() => setIsEdit(!isEdit)}>
+      <div className="project__edit" onClick={(e) => handleInfoUpdate(e)}>
         {isEdit ? "X" : "Edit"}
       </div>
-      <div className="project__title">{project?.title}</div>
+      {isEdit ? (
+        <input
+          type="text"
+          name="title"
+          className="project__title"
+          defaultValue={project?.title}
+          onChange={(e) => setProjectTitle(e.target.value)}
+        />
+      ) : (
+        <div className="project__title">{project?.title}</div>
+      )}
+
       <div className="info">
         <div className="info__description">
           <h6>Project description</h6>
@@ -51,12 +78,7 @@ const Info = ({ project }) => {
               cols="30"
               rows="10"
               defaultValue={project?.description}
-              onChange={(e) =>
-                updateProjectItem({
-                  _id: project._id,
-                  description: e.target.value,
-                })
-              }
+              onChange={(e) => setProjectDescription(e.target.value)}
             ></textarea>
           ) : (
             <p>{project?.description}</p>
@@ -93,7 +115,7 @@ const Info = ({ project }) => {
                     setCurrentCountry(e.target.value);
                   }}
                 >
-                  {countries.map((country, i) => {
+                  {countries?.map((country, i) => {
                     return (
                       <option value={country.country} key={i}>
                         {country.country}
@@ -152,7 +174,7 @@ const Info = ({ project }) => {
         </div>
         <div className="content__text">
           <h6>status</h6>
-          <div className="select">
+          <div className={`select select--status--${(project?.status).trim()}`}>
             <select
               name="status"
               className="select__input"
@@ -173,7 +195,7 @@ const Info = ({ project }) => {
         </div>
         <div className="content__text">
           <h6>priority</h6>
-          <div className={`select select--${project?.priority}`}>
+          <div className={`select select--priority--${project?.priority}`}>
             <select
               name="priority"
               className="select__input"

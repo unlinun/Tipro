@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { createProject, getCountry } from "../api/projects";
-import { createPhase } from "../api/phase";
 import { setCreating } from "../state/authSlice";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
@@ -27,7 +26,10 @@ const ProjectForm = () => {
       country: yup.string().required("Please provide country"),
       city: yup.string().required("Please provide city"),
     }),
-    startDate: yup.date().required("Please provide start date"),
+    startDate: yup
+      .date()
+      .typeError("Expected a value of type date")
+      .required("Please provide start date"),
     status: yup.string().required("Please provide status"),
     priority: yup.string().required("Please provide priority"),
     businessOwner: yup.string().required("PLease provide business owner"),
@@ -115,12 +117,10 @@ const ProjectForm = () => {
   // 與後段串接，創建一個 project
   const createProjectInfo = async (data, e) => {
     e.preventDefault();
-    // 先創建 phase 再創建 project
-    const phaseData = await createPhase({ allPhase: phase }, token);
     const createData = {
       ...data,
-      phase: phaseData._id,
-      currentPhase: phaseData.allPhase[0]._id,
+      phase: phase,
+      currentPhase: phase[0].title,
       tags,
       staff,
       contactInfo,
@@ -129,6 +129,7 @@ const ProjectForm = () => {
     if (res.status === 201) {
       dispatch(setCreating());
       navigator("/projects");
+      navigator(0);
     } else {
       setError("Oops, Unable to create project");
     }
@@ -219,7 +220,7 @@ const ProjectForm = () => {
           </p>
         </div>
         <div className="form__item">
-          <div className="form__label">business owner</div>
+          <div className="form__label">business owner*</div>
           <input
             type="text"
             name="businessOwner"
@@ -265,7 +266,7 @@ const ProjectForm = () => {
       </div>
       <div className="form__section">
         <div className="form__item">
-          <div className="form__label">phase</div>
+          <div className="form__label">phase*</div>
           {phase.map((phase, i) => {
             return (
               <div className="form__inputs" key={i}>
@@ -315,7 +316,7 @@ const ProjectForm = () => {
               name="manager"
               {...register("manager")}
             >
-              {staffs.map((staff, i) => {
+              {staffs?.map((staff, i) => {
                 return (
                   <option value={staff._id} key={staff._id}>
                     {staff.username}
@@ -330,7 +331,7 @@ const ProjectForm = () => {
           <div className="form__label">staffs</div>
           <Select
             className="select__multi"
-            options={staffs.map((staff) => {
+            options={staffs?.map((staff) => {
               return { value: staff._id, label: staff.username };
             })}
             isMulti
@@ -340,7 +341,7 @@ const ProjectForm = () => {
           <p className="form__alert form__alert--error"></p>
         </div>
         <div className="form__item">
-          <div className="form__label">contact</div>
+          <div className="form__label">contact*</div>
           {contactInfo?.map((contact, i) => {
             return (
               <div className="form__inputs" key={i}>

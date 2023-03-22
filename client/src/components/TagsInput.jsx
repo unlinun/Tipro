@@ -9,6 +9,7 @@ const TagsInput = ({ tags, setTags }) => {
     // If the value is empty, return (不可以是空字串)
     if (!value.trim()) return;
     // Add the value to the tags array
+    if (tags.length >= 3) return;
     setTags([...tags, value]);
     // Clear the input
     e.target.value = "";
@@ -47,7 +48,7 @@ const TagsInput = ({ tags, setTags }) => {
       <input
         type="text"
         className="tags__input"
-        placeholder="Add your tags"
+        placeholder="Add your tags, max : 3 tags"
         onKeyDown={handleKeyDown}
       />
     </div>

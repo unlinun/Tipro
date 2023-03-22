@@ -3,7 +3,7 @@ import { useMutation, useQueryClient } from "react-query";
 import { useSelector } from "react-redux";
 import { updateProject } from "../../../../api/projects";
 
-const Contact = ({ project, index, contact }) => {
+const Contact = ({ project, index, contact, setIsCreate }) => {
   const token = useSelector((state) => state.auth.token);
   const queryClient = useQueryClient();
   const [isEdit, setIsEdit] = useState(false);
@@ -28,9 +28,12 @@ const Contact = ({ project, index, contact }) => {
   const handleEditContact = () => {
     if (isEdit === false) {
       setIsEdit(true);
+      setIsCreate(false);
       return;
     }
     setIsEdit(false);
+    setIsCreate(false);
+
     const editContacts = [...project.contactInfo];
     editContacts[index] = contactInfo;
     updateProjectItem({
@@ -38,18 +41,21 @@ const Contact = ({ project, index, contact }) => {
       contactInfo: editContacts,
     });
   };
+
+  const handleDeleteContact = () => {
+    const isDelete = window.confirm("sure to delete contact");
+    if (isDelete) {
+      updateProjectItem({
+        _id: project._id,
+        contactInfo: project.contactInfo.filter((item, i) => index !== i),
+      });
+    }
+  };
+
   return (
     <tr className="table__row">
       <td className="table__cell table__cell--flex">
-        <div
-          className="delete"
-          onClick={() => {
-            updateProjectItem({
-              _id: project._id,
-              contactInfo: project.contactInfo.filter((item, i) => index !== i),
-            });
-          }}
-        >
+        <div className="delete" onClick={() => handleDeleteContact()}>
           -
         </div>
         <div

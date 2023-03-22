@@ -1,8 +1,8 @@
 import axios from "axios";
 const API_URL = "http://localhost:6001";
 
-export const createPhase = async (phase, token) => {
-  const res = await axios.post(`${API_URL}/phase`, phase, {
+export const getDashboard = async (token) => {
+  const res = await axios.get(`${API_URL}/dashboard`, {
     headers: {
       Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",

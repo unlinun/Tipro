@@ -42,15 +42,12 @@ const Phase = ({ project }) => {
       setIsAddPhase(!isAddPhase);
       updateProjectItem({
         _id: project._id,
-        phase: {
-          currentPhase: project.phase.currentPhase,
-          allPhase: [
-            ...project.phase.allPhase,
-            {
-              title: phase,
-            },
-          ],
-        },
+        phase: [
+          ...project.phase,
+          {
+            title: phase,
+          },
+        ],
       });
     }
   };
@@ -59,22 +56,20 @@ const Phase = ({ project }) => {
     <div className="project__card card project__phase phase">
       <div className="content__text">
         <h6>current phase</h6>
-        <div className="select">
+        <div className="select select--phase">
           <select
             name="phase"
-            className="select__input"
+            className="select__input select__input--phase"
+            defaultValue={project.currentPhase}
             onChange={(e) => {
               updateProjectItem({
                 _id: project._id,
-                phase: {
-                  currentPhase: e.target.value,
-                  allPhase: project.phase.allPhase,
-                },
+                currentPhase: e.target.value,
               });
             }}
           >
-            <option disabled>{project?.phase?.currentPhase}</option>
-            {project?.phase?.allPhase?.map((phase) => {
+            <option disabled>{project?.currentPhase}</option>
+            {project?.phase.map((phase) => {
               return (
                 <option value={phase.title} key={phase._id}>
                   {phase.title}
@@ -88,20 +83,15 @@ const Phase = ({ project }) => {
       <div className="content__text content__text--column">
         <h6>all phase</h6>
         <div className="content__box">
-          {project?.phase?.allPhase.map((phase, i) => {
+          {project?.phase.map((phase, i) => {
             return (
               <div className="box" key={i}>
                 <span
-                  className="delete delete--phase"
+                  className="delete delete--gray"
                   onClick={() => {
                     updateProjectItem({
                       _id: project._id,
-                      phase: {
-                        currentPhase: project.phase.currentPhase,
-                        allPhase: project.phase.allPhase.filter(
-                          (tag, index) => index !== i
-                        ),
-                      },
+                      phase: project.phase.filter((tag, index) => index !== i),
                     });
                   }}
                 >

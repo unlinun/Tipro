@@ -37,19 +37,27 @@
       font-size: rem(12);
       font-weight: 400;
     }
+    &--low {
+      text-transform: lowercase;
+    }
     &--center {
       width: 100%;
       display: flex;
       align-items: center;
       justify-content: center;
     }
+    &--finished {
+      text-decoration: line-through;
+    }
     input {
       width: 100%;
-      padding: rem(2) rem(8);
+      // padding: rem(2) rem(4);
       border: 1px solid var(--light-lightgray);
       border-radius: rem(10);
       font-size: rem(16);
       color: var(--dark-black);
+      text-align: center;
+      outline: none;
     }
   }
   &__image {
@@ -59,7 +67,7 @@
     width: rem(32);
     height: rem(32);
     object-fit: cover;
-    background-color: var(--event-darkgreen);
+    background-color: var(--primary-gray);
     border-radius: 50%;
     &--staff {
       font-size: rem(12);
@@ -156,15 +164,21 @@
   }
   &__tag {
     padding: rem(0) rem(8);
+    line-height: rem(20);
+    height: rem(20);
     background-color: var(--event-purple);
     border-radius: rem(10);
     color: var(--dark-black);
     font-size: rem(14);
     &--checked {
-      background-color: var(--event-darkgreen);
+      background-color: var(--primary-green);
     }
     &--working {
       background-color: var(--event-orange);
+    }
+    &--gray {
+      color: var(--light-white-text);
+      background-color: var(--light-lightgray);
     }
   }
 }

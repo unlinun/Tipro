@@ -9,8 +9,9 @@ const ProjectTable = ({ projectsFilter, setForm }) => {
   const token = useSelector((state) => state.auth.token);
   // 使用 useQuery 取得所有 projects
   const { isLoading, data } = useQuery("projects", () => getAllProjects(token));
+
   // 根據 projectsFilter 來取得對應的 project
-  const filterProjects = data?.projects.filter((project) => {
+  const filterProjects = data?.projects?.filter((project) => {
     if (projectsFilter !== "all") {
       return project.status === projectsFilter;
     }
@@ -40,7 +41,7 @@ const ProjectTable = ({ projectsFilter, setForm }) => {
               <td
                 style={{
                   textAlign: "center",
-                  margin: "12px",
+                  padding: "16px",
                 }}
               >
                 Loading...
@@ -56,9 +57,9 @@ const ProjectTable = ({ projectsFilter, setForm }) => {
               <td
                 style={{
                   textAlign: "center",
-                  margin: "12px",
+                  padding: "16px",
                 }}
-              >{`No ${projectsFilter} projects`}</td>
+              >{`${projectsFilter} projects is empty`}</td>
             </tr>
           )}
         </tbody>

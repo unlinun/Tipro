@@ -18,10 +18,12 @@ const ProjectTableRow = ({ project }) => {
   const startDate = dateFormat(project?.startDate, "isoDate");
   const token = useSelector((state) => state.auth.token);
   const status = useSelector((state) => state.project.status);
-  const dispatch = useDispatch();
-  const queryClient = useQueryClient();
   const [isEdit, setIsEdit] = useState(false);
 
+  const dispatch = useDispatch();
+  const queryClient = useQueryClient();
+
+  // 更新 project
   const { mutate: updateProjectItem } = useMutation(
     (updateProjectItem) => {
       return updateProject(updateProjectItem, token);
@@ -33,6 +35,7 @@ const ProjectTableRow = ({ project }) => {
     }
   );
 
+  // 刪除 project
   const { mutate: deleteProjectItem } = useMutation(
     (deleteProjectItem) => {
       const isDelete = window.confirm("Delete this project?");
@@ -106,19 +109,17 @@ const ProjectTableRow = ({ project }) => {
         <div className="table__select select select--phase">
           <select
             name="phase"
-            className="select__input"
+            className="select__input select__input--phase"
+            defaultValue={project?.currentPhase}
             onChange={(e) => {
               updateProjectItem({
                 _id: project?._id,
-                phase: {
-                  currentPhase: e.target.value,
-                  allPhase: project?.phase.allPhase,
-                },
+                currentPhase: e.target.value,
               });
             }}
           >
-            <option disabled>{project?.phase?.currentPhase}</option>
-            {project?.phase?.allPhase?.map((phase) => {
+            <option disabled>{project?.currentPhase}</option>
+            {project?.phase?.map((phase) => {
               return (
                 <option value={phase?.title} key={phase?._id}>
                   {phase?.title}
@@ -129,22 +130,36 @@ const ProjectTableRow = ({ project }) => {
         </div>
       </td>
       <td className="table__cell">
-        <img className="table__image" src="" alt="" />
+        <img
+          className="table__image"
+          src={`http://localhost:6001/${project.manager[0].avatar}`}
+          alt="manager"
+          title={project?.manager[0].username}
+        />
       </td>
       <td className="table__cell">
         <div className="table__staff">
-          <div className="table__image table__image--staff">{``}</div>
-          <img className="table__image table__image--staff" src="" alt="" />
-          <img className="table__image table__image--staff" src="" alt="" />
-          <img className="table__image table__image--staff" src="" alt="" />
+          {project?.staff.map((s) => {
+            return (
+              <img
+                className="table__image table__image--staff"
+                src={`http://localhost:6001/${s.avatar}`}
+                alt={s.username}
+                key={s._id}
+                title={s.username}
+              />
+            );
+          })}
         </div>
       </td>
       <td className="table__cell">{startDate}</td>
       <td className="table__cell">
-        <div className="table__select select select--status">
+        <div
+          className={`table__select select select--status select--status--${(project?.status).trim()}`}
+        >
           <select
             name="status"
-            className="select__input"
+            className={`select__input`}
             value={project?.status}
             onChange={(e) => {
               updateProjectItem({

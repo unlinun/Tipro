@@ -35,6 +35,7 @@ export const createProject = async (project, token) => {
 };
 
 export const updateProject = async (project, token) => {
+  if (project.title === "" || project.description === "") return;
   const res = await axios.patch(`${API_URL}/projects/${project._id}`, project, {
     headers: {
       Authorization: `Bearer ${token}`,

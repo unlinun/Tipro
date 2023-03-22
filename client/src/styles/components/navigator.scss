@@ -7,13 +7,16 @@
   border-radius: rem(20);
   @include breakpoint-down(large) {
     width: calc(100% - rem(20));
-    justify-content: space-around;
+    justify-content: space-between;
     justify-self: center;
   }
   &__overlay {
     border-radius: rem(50) rem(0) rem(0) rem(50);
     @include breakpoint-down(large) {
       border-radius: rem(50);
+    }
+    @include breakpoint-down(medium) {
+      border-radius: rem(20);
     }
   }
   &__search {
@@ -34,14 +37,20 @@
         display: none;
       }
     }
+    @include breakpoint-down(small) {
+      gap: rem(4);
+    }
   }
 
   &__user {
     width: rem(30);
     height: rem(30);
     object-fit: cover;
-    background-color: var(--primary-bgc);
+    background-color: var(--primary-gray);
     border-radius: 50%;
+    @include breakpoint-down(small) {
+      display: none;
+    }
   }
   &__mode {
     svg {

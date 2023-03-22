@@ -2,13 +2,12 @@
 
 .tasks {
   display: grid;
-  grid-template-rows: 1fr;
+  grid-template-rows: 1fr 0.5fr;
   gap: rem(32);
   @include breakpoint-down(large) {
     overflow: scroll;
   }
   &__card {
-    max-height: 95%;
     overflow: scroll;
   }
   &__table {
@@ -22,10 +21,10 @@
     }
   }
   .table__row {
-    grid-template-columns: rem(20) 1.5fr 1fr 1fr 0.5fr 1fr 0.5fr 0.2fr 0.5fr;
+    grid-template-columns: rem(20) 1.5fr 1fr 1fr 0.6fr 1fr 0.5fr 0.2fr 0.5fr;
     gap: rem(40);
     @include breakpoint-down(medium) {
-      grid-template-columns: rem(120) 0.5fr 0.5fr 0.5fr 0.5fr 1fr 0.5fr rem(20) 0.5fr;
+      grid-template-columns: rem(20) 1fr 0.5fr 1fr 0.5fr 1fr 0.5fr 0.2fr 0.5fr;
       gap: rem(20);
     }
   }

@@ -1,0 +1,52 @@
+@use "../utils/" as *;
+
+.staffs {
+  display: grid;
+  justify-items: center;
+  grid-template-rows: 1fr;
+  @include breakpoint-down(large) {
+    overflow: scroll;
+  }
+  &__card {
+    width: 60%;
+    @include breakpoint-down(large) {
+      width: 80%;
+      overflow: scroll;
+    }
+  }
+  &__table {
+    width: 100%;
+    @include breakpoint-down(medium) {
+      min-width: rem(800);
+    }
+    @include breakpoint-down(medium) {
+      min-width: rem(600);
+    }
+  }
+  .table__select {
+    background-color: var(--light-gray);
+    .select__input {
+      color: var(--light-white-text);
+    }
+  }
+  .table__row {
+    grid-template-columns: rem(20) rem(100) rem(50) rem(100) 0.5fr 1fr;
+    gap: rem(40);
+    @include breakpoint-down(medium) {
+      grid-template-columns: rem(20) 0.5fr 0.5fr 0.5fr 0.5fr 1fr;
+      gap: rem(20);
+    }
+  }
+  .table__title {
+    @include breakpoint-down(medium) {
+      font-size: rem(12);
+    }
+  }
+  .table__cell,
+  .table__title {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
