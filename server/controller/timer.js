@@ -97,7 +97,6 @@ export const updateTimer = async (req, res) => {
   const { startDate } = req.body;
   // 找到 user 創建的 timer
   const weekStartDate = getWeekStartDate(new Date(startDate));
-  console.log(weekStartDate);
   const weekEndDate = getWeekEndDate(weekStartDate);
   try {
     // 找出本週開始的 timer (跟 task 有關聯，如果 task 的 startDate 是在本週的日程中，就會創建本週開始的 timer)
@@ -106,7 +105,6 @@ export const updateTimer = async (req, res) => {
       startDate: { $lte: weekEndDate },
       endDate: null,
     });
-    console.log(timer);
     const timeRecord = [{ dateOfWeek: weekStartDate, duration: 0 }];
     // 創建本週的新 timeRecord
     const newWeekStartDate = new Date(weekStartDate);
