@@ -11,6 +11,7 @@ import {
   MemoIcon,
 } from "../assets/icons";
 import { setLogout } from "../state/authSlice";
+const API_URL = process.env.REACT_APP_BASE_URL;
 
 const Sidebar = () => {
   const user = useSelector((state) => state.auth.user);
@@ -20,7 +21,7 @@ const Sidebar = () => {
       <div className="sidebar__wrapper">
         <Link to="/setting" className="sidebar__user user">
           <img
-            src={`http://localhost:6001/${user?.avatar}`}
+            src={`${API_URL}/${user?.avatar}`}
             alt="user"
             className="user__img"
           />

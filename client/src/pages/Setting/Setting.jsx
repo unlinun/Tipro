@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import dateFormat from "dateformat";
 import { updateUser } from "../../api/user";
 import { setUser } from "../../state/authSlice";
+const API_URL = process.env.REACT_APP_BASE_URL;
 
 const Setting = () => {
   const token = useSelector((state) => state.auth.token);
@@ -11,9 +12,7 @@ const Setting = () => {
   const [isEdit, setIsEdit] = useState(false);
   const [error, setError] = useState("");
   const [avatarFile, setAvatarFile] = useState(user.avatar);
-  const [avatarUrl, setAvatarUrl] = useState(
-    `http://localhost:6001/${user.avatar}`
-  );
+  const [avatarUrl, setAvatarUrl] = useState(`${API_URL}/${user.avatar}`);
   const [username, setUsername] = useState(user.username);
   const [position, setPosition] = useState(user.position);
   const [birthday, setBirthday] = useState(user.birthday);
@@ -86,7 +85,7 @@ const Setting = () => {
             ) : (
               <img
                 className="setting__image"
-                src={`http://localhost:6001/${user.avatar}`}
+                src={`${API_URL}/${user.avatar}`}
                 alt={user.username}
               />
             )}

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { useSelector } from "react-redux";
 import { updateProject } from "../../../../api/projects";
+const API_URL = process.env.REACT_APP_BASE_URL;
 
 const Staff = ({ project }) => {
   const [isEdit, setIsEdit] = useState(false);
@@ -45,10 +46,7 @@ const Staff = ({ project }) => {
       <div className="staff__manager">
         <h6>manager</h6>
         <div className="manager__info">
-          <img
-            src={`http://localhost:6001/${project?.manager[0].avatar}`}
-            alt="manager"
-          />
+          <img src={`${API_URL}/${project?.manager[0].avatar}`} alt="manager" />
           <p>{project?.manager[0].username}</p>
         </div>
       </div>
@@ -76,7 +74,7 @@ const Staff = ({ project }) => {
 
                 <img
                   className="staff__image"
-                  src={`http://localhost:6001/${staff?.avatar}`}
+                  src={`${API_URL}/${staff?.avatar}`}
                   alt={staff.username}
                   title={staff.username}
                 />

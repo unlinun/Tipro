@@ -11,6 +11,7 @@ import { setMode, setCreating, setForm } from "../state/authSlice";
 import ProjectForm from "./ProjectForm";
 import TaskFrom from "./TaskFrom";
 import { getAllProjects } from "../api/projects";
+const API_URL = process.env.REACT_APP_BASE_URL;
 
 export const Navigator = () => {
   // 找到現在的 url pathname
@@ -184,7 +185,7 @@ export const Navigator = () => {
         </div>
         <img
           className="navigator__user"
-          src={`http://localhost:6001/${user?.avatar}`}
+          src={`${API_URL}/${user?.avatar}`}
           alt="user"
         />
         <div className="navigator__mode flex gap--8">

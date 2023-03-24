@@ -13,6 +13,7 @@ import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { useSelector, useDispatch } from "react-redux";
 import { setCreating, setForm } from "../../state/authSlice";
+const API_URL = process.env.REACT_APP_BASE_URL;
 
 const ProjectTableRow = ({ project }) => {
   const startDate = dateFormat(project?.startDate, "isoDate");
@@ -132,7 +133,7 @@ const ProjectTableRow = ({ project }) => {
       <td className="table__cell">
         <img
           className="table__image"
-          src={`http://localhost:6001/${project.manager[0].avatar}`}
+          src={`${API_URL}/${project.manager[0].avatar}`}
           alt="manager"
           title={project?.manager[0].username}
         />
@@ -143,7 +144,7 @@ const ProjectTableRow = ({ project }) => {
             return (
               <img
                 className="table__image table__image--staff"
-                src={`http://localhost:6001/${s.avatar}`}
+                src={`${API_URL}/${s.avatar}`}
                 alt={s.username}
                 key={s._id}
                 title={s.username}
