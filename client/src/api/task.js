@@ -1,5 +1,6 @@
 import axios from "axios";
-const API_URL = "http://localhost:6001";
+
+const API_URL = process.env.API_URL;
 
 export const getAllTasks = async (token) => {
   const res = await axios.get(`${API_URL}/tasks`, {

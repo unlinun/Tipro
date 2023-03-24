@@ -1,5 +1,6 @@
 import axios from "axios";
-const API_URL = "http://localhost:6001";
+
+const API_URL = process.env.REACT_APP_BASE_URL;
 
 export const getAllTimer = async (token) => {
   // 取得要查找的日期

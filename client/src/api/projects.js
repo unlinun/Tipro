@@ -1,5 +1,6 @@
 import axios from "axios";
-const API_URL = "http://localhost:6001";
+
+const API_URL = process.env.REACT_APP_BASE_URL;
 
 export const getAllProjects = async (token) => {
   const res = await axios.get(`${API_URL}/projects`, {
