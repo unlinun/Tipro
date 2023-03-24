@@ -83,7 +83,7 @@ const Timer = () => {
               defaultValue={dateFormat(new Date(), "yyyy-mm-dd")}
               onChange={(e) => handleDateChange(e)}
             />
-            <button className="btn btn--nav" onClick={() => handleRenew()}>
+            <button className="btn btn--time" onClick={() => handleRenew()}>
               renew
             </button>
           </div>
