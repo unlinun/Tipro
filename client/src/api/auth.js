@@ -4,7 +4,7 @@ const API_URL = process.env.REACT_APP_BASE_URL;
 
 export const registerAuth = async (data) => {
   axios
-    .post("http://localhost:6001/auth/register", {
+    .post(`${API_URL}/auth/register`, {
       username: data.username,
       birthday: data.birthday,
       email: data.email,
