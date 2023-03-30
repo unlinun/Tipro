@@ -12,7 +12,7 @@ const Staff = ({ project }) => {
   const projectStaffId = project.staff.map((staff) => staff._id);
   const [newStaff, setNewStaff] = useState(projectStaffId);
 
-  const notStaffs = staffs.filter(
+  const notStaffs = staffs?.filter(
     (staff) => !projectStaffId.some((id) => id === staff._id)
   );
 

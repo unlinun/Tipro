@@ -23,8 +23,8 @@ export const registerAuth = async (data) => {
 };
 
 export const loginAuth = async (email, password) => {
-  return await axios
-    .post(
+  try {
+    const res = await axios.post(
       `${API_URL}/auth/login`,
       {
         email,
@@ -35,15 +35,11 @@ export const loginAuth = async (email, password) => {
           "Content-Type": "application/json",
         },
       }
-    )
-    .then((res) => {
-      if (res.status === 200) {
-        return res.data;
-      } else {
-        throw new Error("login fail");
-      }
-    })
-    .catch((error) => {
-      throw new Error(error.message);
-    });
+    );
+    if (res.status === 200) {
+      return res.data;
+    }
+  } catch (error) {
+    throw new Error("wrong email or password");
+  }
 };

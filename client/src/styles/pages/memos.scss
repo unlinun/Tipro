@@ -1,10 +1,22 @@
 @use "../utils/" as *;
 
 .memos {
+  @include breakpoint-down(large) {
+    overflow: scroll;
+  }
   &__card {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: rem(32);
+    @include breakpoint-down(large) {
+      grid-template-columns: repeat(4, 1fr);
+    }
+    @include breakpoint-down(medium) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    @include breakpoint-down(small) {
+      grid-template-columns: repeat(2, 1fr);
+    }
   }
   .card {
     height: rem(160);

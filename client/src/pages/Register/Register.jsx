@@ -69,12 +69,12 @@ const Register = () => {
           </p>
         </div>
         <div className="form__item">
-          <label className="form__label">CompanyID</label>
+          <label className="form__label">{`CompanyID (optional)`}</label>
           <input
             type="text"
             name="companyID"
             className="form__input"
-            placeholder="test ID is Tipro"
+            placeholder="default value is Tipro"
             {...register("companyID")}
           />
           <p className="form__alert form__alert--error">

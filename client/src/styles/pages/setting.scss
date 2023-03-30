@@ -18,7 +18,7 @@
   &__card {
     width: rem(500);
     @include breakpoint-down(medium) {
-      width: rem(400);
+      width: rem(360);
     }
     @include breakpoint-down(small) {
       width: rem(280);

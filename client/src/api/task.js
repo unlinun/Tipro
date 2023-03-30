@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = process.env.API_URL;
+const API_URL = process.env.REACT_APP_BASE_URL;
 
 export const getAllTasks = async (token) => {
   const res = await axios.get(`${API_URL}/tasks`, {

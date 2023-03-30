@@ -13,7 +13,9 @@
     grid-template-rows: 1fr 0.5fr 0.5fr 0.5fr;
   }
   @include breakpoint-down(medium) {
+    width: 100%;
     grid-template-columns: 1fr;
+    grid-template-rows: auto;
   }
 
   &__info {
