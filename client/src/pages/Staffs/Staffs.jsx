@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import dateFormat from "dateformat";
 import { useQuery } from "react-query";
 import { getAllStaffs } from "../../api/user";
+const API_URL = process.env.REACT_APP_BASE_URL;
 
 const Staffs = () => {
   const user = useSelector((state) => state.auth.user);
@@ -35,7 +36,7 @@ const Staffs = () => {
                     <div className="table__staff">
                       <img
                         className="table__image table__image--staff"
-                        src={`http://localhost:6001/${staff.avatar}`}
+                        src={`${API_URL}/${staff.avatar}`}
                         alt={staff.username}
                         title={staff.username}
                       />

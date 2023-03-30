@@ -39,7 +39,6 @@ const Setting = () => {
     if (username === "" || position === "" || birthday === "" || email === "")
       return;
 
-    console.log(avatarUrl);
     if (isEdit === true) {
       const formData = new FormData();
       formData.append("avatar", avatarFile);
