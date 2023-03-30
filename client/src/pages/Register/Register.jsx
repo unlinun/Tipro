@@ -44,9 +44,10 @@ const Register = () => {
 
   const registerUser = async (data) => {
     try {
-      await registerAuth(data);
-      alert("sign up success");
-      navigate("/home/login");
+      const res = await registerAuth(data);
+      if (res) {
+        navigate("/home/login");
+      }
     } catch (error) {
       console.log(error.message);
     }
