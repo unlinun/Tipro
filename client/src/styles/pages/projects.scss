@@ -15,7 +15,7 @@
   }
   &__table {
     padding: rem(8);
-    width: rem(1300);
+    min-width: rem(1300);
     margin-bottom: rem(20);
     background-color: var(--light-white-bgc);
     border-radius: 0 rem(20) rem(20) rem(20);
