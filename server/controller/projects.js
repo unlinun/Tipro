@@ -142,6 +142,7 @@ export const createProject = async (req, res) => {
 export const updateProject = async (req, res) => {
   const user = req.user;
   const { id } = req.params;
+  console.log(req.body);
   try {
     const project = await Projects.findOneAndUpdate(
       {

@@ -94,17 +94,24 @@ ProjectsSchema.pre("findOneAndUpdate", async function (next) {
     const prevPhases = project.phase; // 獲取更新前的 phase 陣列
     const updatedPhases = this.getUpdate().phase; // 獲取更新後的 phase 陣列
     const deletedPhases = prevPhases.filter(
-      (prevPhase) => !updatedPhases.includes(prevPhase._id)
-    ); // 獲取被刪除的 phase 陣列
-    if (deletedPhases.length > 0) {
+      (prePhase) =>
+        updatedPhases.findIndex(
+          (phase) => phase._id.toString() === prePhase._id.toString()
+        ) === -1
+    );
+    if (deletedPhases) {
       // 如果有被刪除的 phase
       await Task.deleteMany({
+        phaseId: { $in: deletedPhases.map((phase) => phase._id) },
+      }); // 刪除 phaseId 匹配的所有 task
+      await Timer.deleteMany({
         phaseId: { $in: deletedPhases.map((phase) => phase._id) },
       }); // 刪除 phaseId 匹配的所有 task
     }
   } catch (error) {
     throw new Error(error.message);
   }
+
   next();
 });
 
