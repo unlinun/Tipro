@@ -17,8 +17,12 @@ const TimeSheet = ({ time, refetch }) => {
       onSettled: () => {
         queryClient.invalidateQueries("dateTimer");
       },
+      onSuccess: () => {
+        queryClient.invalidateQueries("dateTimer");
+      },
     }
   );
+
   if (!time) {
     return (
       <tr style={{ textAlign: "center", justifySelf: "center" }}>
@@ -35,22 +39,22 @@ const TimeSheet = ({ time, refetch }) => {
   }
 
   const handleUpdateDuration = (type, e, id, currentDuration) => {
-    let hour = currentDuration / 3600;
-    let min = (currentDuration % 3600) / 60;
-    let duration = 0;
+    let hour = Math.floor(currentDuration / 3600);
+    let min = Math.floor((currentDuration % 3600) / 60);
+    let duration = currentDuration;
     const value = Number(e.target.value.trim());
     if (!isNaN(value)) {
       if (type === "hour") {
-        duration += value * 3600 + min * 60;
+        duration = value * 3600 + min * 60;
       } else {
-        duration += value * 60 + hour * 60 * 60;
+        duration = hour * 3600 + value * 60;
       }
+      updateRecordItem({
+        _id: time._id,
+        recordId: id,
+        duration: duration,
+      });
     }
-    updateRecordItem({
-      _id: time._id,
-      recordId: id,
-      duration: duration,
-    });
     refetch();
   };
 

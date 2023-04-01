@@ -6,7 +6,6 @@ import SingleTimer from "./SingleTimer";
 const TimeProject = ({ timer, timers }) => {
   const token = useSelector((state) => state.auth.token);
   const [projects, setProjects] = useState([]);
-
   useEffect(() => {
     const getProjects = async () => {
       const data = await getAllProjects(token);

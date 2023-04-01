@@ -58,7 +58,7 @@ const Tasks = () => {
               </tr>
             ) : null}
             {workingTask?.length > 0 ? (
-              workingTask.map((task, i) => {
+              workingTask?.map((task, i) => {
                 return <TaskTableRow key={task?._id} task={task} index={i} />;
               })
             ) : (

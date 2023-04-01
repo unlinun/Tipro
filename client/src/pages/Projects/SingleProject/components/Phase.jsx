@@ -64,11 +64,11 @@ const Phase = ({ project }) => {
             onChange={(e) => {
               updateProjectItem({
                 _id: project._id,
+                phase,
                 currentPhase: e.target.value,
               });
             }}
           >
-            <option disabled>{project?.currentPhase}</option>
             {project?.phase.map((phase) => {
               return (
                 <option value={phase.title} key={phase._id}>

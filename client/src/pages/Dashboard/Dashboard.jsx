@@ -56,37 +56,48 @@ const Dashboard = () => {
             </tr>
           </thead>
           <tbody className="table__body">
-            {data?.projects?.map((project, i) => {
-              return (
-                <tr className="table__row" key={project._id}>
-                  <td className="table__cell">{i + 1}</td>
-                  <td className="table__cell">{project?.title}</td>
-                  <td className="table__cell">
-                    <div
-                      className={`status status--${project?.priority}`}
-                    ></div>
-                  </td>
-                  <td className="table__cell">{project?.businessOwner}</td>
-                  <td className="table__cell cell__tag">
-                    {project?.tags ? project?.tags[0] : ""}
-                  </td>
-                  <td className="table__cell cell__tag cell__tag--gray">
-                    {project?.currentPhase}
-                  </td>
-                  <td className="table__cell">
-                    {dateFormat(project?.startDate, "isoDate")}
-                  </td>
-                  <td className="table__cell cell__tag cell__tag--gray">
-                    {project?.status}
-                  </td>
-                  <td className="table__cell">
-                    <Link to={`/projects/${project?._id}`}>
-                      <RightArrowIcon />
-                    </Link>
-                  </td>
-                </tr>
-              );
-            })}
+            {data?.projects?.length > 0 ? (
+              data?.projects?.map((project, i) => {
+                return (
+                  <tr className="table__row" key={project._id}>
+                    <td className="table__cell">{i + 1}</td>
+                    <td className="table__cell">{project?.title}</td>
+                    <td className="table__cell">
+                      <div
+                        className={`status status--${project?.priority}`}
+                      ></div>
+                    </td>
+                    <td className="table__cell">{project?.businessOwner}</td>
+                    <td className="table__cell cell__tag">
+                      {project?.tags ? project?.tags[0] : ""}
+                    </td>
+                    <td className="table__cell cell__tag cell__tag--gray">
+                      {project?.currentPhase}
+                    </td>
+                    <td className="table__cell">
+                      {dateFormat(project?.startDate, "isoDate")}
+                    </td>
+                    <td className="table__cell cell__tag cell__tag--gray">
+                      {project?.status}
+                    </td>
+                    <td className="table__cell">
+                      <Link to={`/projects/${project?._id}`}>
+                        <RightArrowIcon />
+                      </Link>
+                    </td>
+                  </tr>
+                );
+              })
+            ) : (
+              <tr style={{ textAlign: "center", justifySelf: "center" }}>
+                <td
+                  style={{
+                    textAlign: "center",
+                    padding: "16px",
+                  }}
+                >{`projects is empty`}</td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>

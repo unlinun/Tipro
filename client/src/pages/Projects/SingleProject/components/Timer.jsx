@@ -12,7 +12,6 @@ const Timer = ({ project }) => {
     const getTimer = async () => {
       const data = await getProjectTimer(project._id, token);
       setTimer(data);
-      console.log(data);
     };
     getTimer();
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -69,7 +69,7 @@ const Task = ({ project }) => {
                 <td className="table__cell">
                   <div className="cell__text">
                     {
-                      task.phase.find((phase) => phase._id === task.phaseId)
+                      task?.phase?.find((phase) => phase._id === task.phaseId)
                         .title
                     }
                   </div>

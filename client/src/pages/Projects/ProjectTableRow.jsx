@@ -116,10 +116,10 @@ const ProjectTableRow = ({ project }) => {
               updateProjectItem({
                 _id: project?._id,
                 currentPhase: e.target.value,
+                phase: project?.phase,
               });
             }}
           >
-            <option disabled>{project?.currentPhase}</option>
             {project?.phase?.map((phase) => {
               return (
                 <option value={phase?.title} key={phase?._id}>

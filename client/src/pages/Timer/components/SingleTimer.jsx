@@ -25,7 +25,6 @@ const SingleTimer = ({ project, index, timers }) => {
     }
     return acc;
   }, 0);
-
   return (
     <tr className="table__row table__row--time" key={project._id}>
       <td className="table__cell">{index + 1}</td>
