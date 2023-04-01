@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import logo from "../../assets/logo.png";
+import video from "../../assets/Tipro.mp4";
 
 const Home = () => {
   return (
@@ -15,8 +15,11 @@ const Home = () => {
           <button className="btn btn--home">Try TiPro Now</button>
         </Link>
       </div>
-      <div className="main__image flex flex--cen">
-        <img src={logo} alt="logo" />
+      <div className="main__video flex flex--cen">
+        <video className="video" controls autoPlay muted>
+          <source src={video} type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
       </div>
     </main>
   );
