@@ -87,6 +87,27 @@ const ProjectsSchema = new mongoose.Schema({
   },
 });
 
+// add pre hook to delete related task when updateProject
+ProjectsSchema.pre("findOneAndUpdate", async function (next) {
+  try {
+    const project = await Projects.findOne(this.getQuery());
+    const prevPhases = project.phase; // 獲取更新前的 phase 陣列
+    const updatedPhases = this.getUpdate().phase; // 獲取更新後的 phase 陣列
+    const deletedPhases = prevPhases.filter(
+      (prevPhase) => !updatedPhases.includes(prevPhase._id)
+    ); // 獲取被刪除的 phase 陣列
+    if (deletedPhases.length > 0) {
+      // 如果有被刪除的 phase
+      await Task.deleteMany({
+        phaseId: { $in: deletedPhases.map((phase) => phase._id) },
+      }); // 刪除 phaseId 匹配的所有 task
+    }
+  } catch (error) {
+    throw new Error(error.message);
+  }
+  next();
+});
+
 // add pre hook to delete related task
 ProjectsSchema.pre(
   "deleteOne",
