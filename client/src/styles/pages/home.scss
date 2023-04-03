@@ -62,3 +62,11 @@
     }
   }
 }
+
+.footer {
+  margin-top: rem(200);
+  font-size: rem(12);
+  a {
+    color: var(--primary-green);
+  }
+}
