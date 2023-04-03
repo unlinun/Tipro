@@ -31,6 +31,7 @@
 ##### 主畫面
 進入主畫面時，會有一段自動播放的介紹影片，預設為靜音，可以自行操作聲音開關。
 在導覽列有登入以及註冊按鈕，可提供使用者依據需求點擊。
+
 ![home](https://user-images.githubusercontent.com/100119316/229410881-ac34de53-d5f1-4b4a-a9c2-dda7ccd2be9f.gif)
 
 
@@ -40,12 +41,30 @@
 如果使用者有相同的 CompanyId，則會被共同編列成為同一間公司的員工，希望未來可以有更符合公司需求的功能。
 
 在登入頁面，使用 JWT 來作為登入的驗證機制，並搭配 bcrypt 以確保使用者的帳號密碼是符合的。
+
 ![login_register](https://user-images.githubusercontent.com/100119316/229411194-40dba759-eaf8-453a-bb04-efcc3416d6bc.gif)
 
 
 ##### dashboard 頁面
+當使用者登入成功後，畫面會跳轉至 dashboard 頁面，在 dashboard 會呈現三個資訊，分別是正在進行中的專案、今日的任務、今日的memo
+上方導覽列有顯示當前時間，也可以修改夜間與日間模式，並且有搜尋功能可提供尋找相關的專案。
+側邊欄可以導覽至相關的頁面，並設有登出鈕。
+
+![dashboard](https://user-images.githubusercontent.com/100119316/229421876-a111d0ff-8ee6-4f96-8855-d298f9f72cf3.gif)
+
 
 ##### project 頁面
+- 全部 project 頁面
+當使用者進入 proejct 頁面時，會呈現所有的專案，上方標籤列根據專案進度做分類，讓使用者可以更直觀地看見專案。
+在 project 頁面中，可以透過上方導覽列來添加新的專案。表單設有驗證機制，讓使用者將專案資訊填入。
+
+![project](https://user-images.githubusercontent.com/100119316/229424019-28968b46-d548-47ed-b8d2-afbfd8d744ea.gif)
+
+- 單一 project 頁面
+使用者可以根據專案來進入單一專案頁面，這裡會顯示更詳盡的專案資訊，包含進程、員工、聯絡資訊、任務、花費時間，
+在本頁面也可以容易的增刪改查專案的資訊。
+
+![single project](https://user-images.githubusercontent.com/100119316/229424330-f950bc6b-39be-4698-bfcd-0700d5c6a3c7.gif)
 
 ##### tasks 頁面
 
