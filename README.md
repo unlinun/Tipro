@@ -50,31 +50,53 @@
 上方導覽列有顯示當前時間，也可以修改夜間與日間模式，並且有搜尋功能可提供尋找相關的專案。
 側邊欄可以導覽至相關的頁面，並設有登出鈕。
 
-![dashboard](https://user-images.githubusercontent.com/100119316/229421876-a111d0ff-8ee6-4f96-8855-d298f9f72cf3.gif)
+![dashboard](https://user-images.githubusercontent.com/100119316/229425412-3b9832b6-132f-42b6-9f7b-0cb6718fa4e6.gif)
+
 
 
 ##### project 頁面
-- 全部 project 頁面
+- 全部 project 頁面:
+
 當使用者進入 proejct 頁面時，會呈現所有的專案，上方標籤列根據專案進度做分類，讓使用者可以更直觀地看見專案。
 在 project 頁面中，可以透過上方導覽列來添加新的專案。表單設有驗證機制，讓使用者將專案資訊填入。
 
-![project](https://user-images.githubusercontent.com/100119316/229424019-28968b46-d548-47ed-b8d2-afbfd8d744ea.gif)
+![project](https://user-images.githubusercontent.com/100119316/229425441-26da4fb3-d36e-4825-93c0-494a9188d39b.gif)
 
-- 單一 project 頁面
+
+- 單一 project 頁面:
+
 使用者可以根據專案來進入單一專案頁面，這裡會顯示更詳盡的專案資訊，包含進程、員工、聯絡資訊、任務、花費時間，
 在本頁面也可以容易的增刪改查專案的資訊。
 
-![single project](https://user-images.githubusercontent.com/100119316/229424330-f950bc6b-39be-4698-bfcd-0700d5c6a3c7.gif)
+![single project](https://user-images.githubusercontent.com/100119316/229425461-1926d1f6-aaa6-4d1e-bb49-6b3c55351ce6.gif)
 
 ##### tasks 頁面
+使用者可以在除了 project 頁面以外的頁面，進行添加 task，你可以輸入 task 的起始時間，並且為其添加標籤。
+在本頁面你可以透過按鈕來更改任務的完成狀態，並且可以輕鬆的修改任務的資訊。
+
+![task](https://user-images.githubusercontent.com/100119316/229426114-3e966bb1-e574-4498-a7c0-b15db4cb3c29.gif)
 
 ##### time manager 頁面
+你可以在此頁面透過**renew**按鈕，來更新目前的 timesheet，並且可以透過修改按鈕來修正工作的時間。
+下方可以看見每一個專案各階段所花費的時間。
+
+![time manager](https://user-images.githubusercontent.com/100119316/229426551-5033c040-70c2-4bd9-b325-82da6da63cc9.gif)
 
 ##### memo 頁面
+在本頁面可以看見過去添加的 memo
+
+![memo](https://user-images.githubusercontent.com/100119316/229426951-185f72fb-a230-4742-9246-0247d68f7747.gif)
 
 ##### staffs 頁面
+你可以看見公司中的每一位員工
+
+![staffs](https://user-images.githubusercontent.com/100119316/229427878-0f381e4d-28d6-496b-a86a-b2ea10ea0bfa.gif)
+
 
 ##### setting
+你可以在個人資訊頁面進行設定大頭照、相關資訊的修改與編輯
+
+![setting](https://user-images.githubusercontent.com/100119316/229428058-0d4a7098-29de-444d-a2f2-a52a15f7a2fc.gif)
 
 ***
 
