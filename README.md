@@ -39,6 +39,10 @@
 在註冊時，有 CompanyId 需要填寫，此選項是選擇性的，如果有填寫，就會新增一個公司群，如果沒有填寫則會使用預設值 "Tipro"
 如果使用者有相同的 CompanyId，則會被共同編列成為同一間公司的員工，希望未來可以有更符合公司需求的功能。
 
+在登入頁面，使用 JWT 來作為登入的驗證機制，並搭配 bcrypt 以確保使用者的帳號密碼是符合的。
+![login_register](https://user-images.githubusercontent.com/100119316/229411194-40dba759-eaf8-453a-bb04-efcc3416d6bc.gif)
+
+
 ##### dashboard 頁面
 
 ##### project 頁面
