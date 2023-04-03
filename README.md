@@ -7,7 +7,7 @@
 - [專案主旨](#專案主旨)
 - [專案功能](#專案功能)
 - [專案介紹](#專案介紹)
-- [專案 RWD](#專案 RWD)
+- [專案 RWD](#專案RWD)
 - [專案使用相關套件](#專案使用相關套件)
 ***
 
@@ -100,7 +100,7 @@
 ![setting](https://user-images.githubusercontent.com/100119316/229428058-0d4a7098-29de-444d-a2f2-a52a15f7a2fc.gif)
 
 
-### 專案 RWD
+### 專案RWD
 本專案是一個使用者響應設計的專案，希望可以符合大眾市場中產品的各個尺寸，以提升使用者的使用感受
 
 ![RWD](https://user-images.githubusercontent.com/100119316/229429664-7b5f90d3-6b7b-4b1a-94ba-c95b5717a0d6.gif)
