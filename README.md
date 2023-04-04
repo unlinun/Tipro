@@ -1,6 +1,7 @@
 # Tipro
 
-我的前端練習最終作品 - **[Tipro](https://tipro-app.onrender.com)**
+我的前端練習最終作品從LOGO設計、UIUX到前後端
+- **[Tipro](https://tipro-app.onrender.com)**
 可點擊連結前往測試網站！
 
 ### 目錄
