@@ -3,7 +3,7 @@
 前端練習的 final project 
 從LOGO設計，到UIUX，再到前端與後端的程式撰寫。
 
-**[Tipro](https://tipro-app.onrender.com)**是一個全端網頁 APP
+**[Tipro](https://tipro-app.onrender.com)** 是一個全端網頁 APP
 可點擊連結前往測試網站！
 
 ### 目錄
