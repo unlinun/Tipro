@@ -93,6 +93,7 @@ ProjectsSchema.pre("findOneAndUpdate", async function (next) {
     const project = await Projects.findOne(this.getQuery());
     const prevPhases = project.phase; // 獲取更新前的 phase 陣列
     const updatedPhases = this.getUpdate().phase; // 獲取更新後的 phase 陣列
+    if (!updatedPhases) return;
     const deletedPhases = prevPhases.filter(
       (prePhase) =>
         updatedPhases.findIndex(
