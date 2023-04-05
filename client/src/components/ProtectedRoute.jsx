@@ -6,7 +6,7 @@ import React from "react";
 const ProtectedRoute = ({ children }) => {
   const token = useSelector((state) => state.auth.token);
   if (!token) {
-    return <Navigate to="/home" />;
+    return <Navigate to="/" />;
   }
   return children;
 };

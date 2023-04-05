@@ -3,7 +3,7 @@ import axios from "axios";
 const API_URL = process.env.REACT_APP_BASE_URL;
 
 export const registerAuth = async (data) => {
-  axios
+  return axios
     .post(`${API_URL}/auth/register`, {
       username: data.username,
       birthday: data.birthday,
@@ -12,7 +12,7 @@ export const registerAuth = async (data) => {
     })
     .then((res) => {
       if (res.status === 201) {
-        window.alert("Sign up success!");
+        return res;
       } else {
         throw new Error("register fail");
       }

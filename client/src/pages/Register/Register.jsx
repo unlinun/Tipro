@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
@@ -7,6 +7,7 @@ import { registerAuth } from "../../api/auth.js";
 
 const Register = () => {
   const navigate = useNavigate();
+  const [errorMsg, setErrorMsg] = useState("");
 
   const schema = yup.object().shape({
     username: yup
@@ -34,6 +35,13 @@ const Register = () => {
       .oneOf([yup.ref("password"), null], "Passwords must match"),
   });
 
+  // 顯示 error message, 並在 3 秒之後清空
+  useEffect(() => {
+    setTimeout(() => {
+      setErrorMsg("");
+    }, 5000);
+  }, [errorMsg]);
+
   const {
     register,
     handleSubmit,
@@ -44,10 +52,15 @@ const Register = () => {
 
   const registerUser = async (data) => {
     try {
-      await registerAuth(data);
-      navigate("/home/login");
+      const regData = await registerAuth(data);
+      if (regData.status === 201) {
+        window.alert("sign up success");
+        navigate("/home/login");
+      } else {
+        setErrorMsg("register fail");
+      }
     } catch (error) {
-      console.log(error.message);
+      setErrorMsg(error.message);
     }
   };
 

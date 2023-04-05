@@ -23,15 +23,15 @@ const Home = () => {
           </video>
         </div>
       </main>
-      <footer className="footer">
-        created by{" "}
+      <footer className="main__footer">
+        created by
         <a
           target="_blank"
           href="https://github.com/unlinun/Tipro"
           rel="noreferrer"
         >
           UNLIN
-        </a>{" "}
+        </a>
         2023
       </footer>
     </>
