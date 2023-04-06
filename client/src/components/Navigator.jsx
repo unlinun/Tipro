@@ -142,7 +142,7 @@ export const Navigator = () => {
         ""
       )}
       {/* 新增 task 還是 project */}
-      {currentURL.startsWith("/projects") ? (
+      {currentURL.startsWith("/user/projects") ? (
         <div
           className="navigator__btn btn btn--nav"
           onClick={() => handleCreate("project")}
