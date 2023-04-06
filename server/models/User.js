@@ -41,11 +41,11 @@ const UserSchema = new mongoose.Schema({
   },
   adminProjects: {
     type: Boolean,
-    default: true,
+    default: false,
   },
   adminReport: {
     type: Boolean,
-    default: true,
+    default: false,
   },
 });
 
@@ -53,6 +53,11 @@ const UserSchema = new mongoose.Schema({
 UserSchema.pre("save", async function () {
   const salt = await bcrypt.genSalt();
   this.password = await bcrypt.hash(this.password, salt);
+  const companyManage = await User.find({ companyID: this.companyID });
+  if (companyManage.length <= 0) {
+    this.adminProjects = true;
+    this.adminReport = true;
+  }
 });
 
 // 建立 token (此處使用 Schema 的 methods)
