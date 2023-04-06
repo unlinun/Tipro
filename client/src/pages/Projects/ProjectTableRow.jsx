@@ -213,7 +213,7 @@ const ProjectTableRow = ({ project }) => {
             <p>Task</p>
             <AddIcon />
           </div>
-          <Link to={`/projects/${project?._id}`}>
+          <Link to={`/user/projects/${project?._id}`}>
             <RightArrowIcon />
           </Link>
         </div>

@@ -35,7 +35,7 @@ const Task = ({ project }) => {
 
   return (
     <div className="project__card card project__task">
-      <Link to="/tasks" className="project__edit">
+      <Link to="/user/tasks" className="project__edit">
         more
       </Link>
       <div className="project__title">Tasks</div>

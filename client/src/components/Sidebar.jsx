@@ -19,7 +19,7 @@ const Sidebar = () => {
   return (
     <aside className="sidebar">
       <div className="sidebar__wrapper">
-        <Link to="/setting" className="sidebar__user user">
+        <Link to="setting" className="sidebar__user user">
           <img
             src={`${API_URL}/${user?.avatar}`}
             alt="user"
@@ -31,7 +31,7 @@ const Sidebar = () => {
           </div>
         </Link>
         <div className="sidebar__menu menu">
-          <NavLink to="/">
+          <NavLink to="dashboard">
             <CategoryIcon />
             <h6> dashboard</h6>
           </NavLink>
@@ -61,7 +61,7 @@ const Sidebar = () => {
           </NavLink>
         </div>
         <div className="sidebar__footer footer">
-          <Link to="/home/login" onClick={() => dispatch(setLogout())}>
+          <Link to="/login" onClick={() => dispatch(setLogout())}>
             logout
           </Link>
         </div>

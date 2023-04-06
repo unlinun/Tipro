@@ -20,27 +20,27 @@ const App = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/home" element={<ShareNavbar />}>
+        <Route path="/" element={<ShareNavbar />}>
           <Route index element={<Home />} />
-          <Route path="/home/login" element={<Login />} />
-          <Route path="/home/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
         </Route>
         <Route
-          path="/"
+          path="/user"
           element={
             <ProtectedRoute>
               <ShareSidebarNav />
             </ProtectedRoute>
           }
         >
-          <Route index element={<Dashboard />} />
-          <Route path="/projects" element={<Projects />} />
-          <Route path="/projects/:id" element={<SingleProject />} />
-          <Route path="/tasks" element={<Tasks />} />
-          <Route path="/timer" element={<Timer />} />
-          <Route path="/memos" element={<Memos />} />
-          <Route path="/staffs" element={<Staffs />} />
-          <Route path="/setting" element={<Setting />} />
+          <Route path="/user/dashboard" element={<Dashboard />} />
+          <Route path="/user/projects" element={<Projects />} />
+          <Route path="/user/projects/:id" element={<SingleProject />} />
+          <Route path="/user/tasks" element={<Tasks />} />
+          <Route path="/user/timer" element={<Timer />} />
+          <Route path="/user/memos" element={<Memos />} />
+          <Route path="/user/staffs" element={<Staffs />} />
+          <Route path="/user/setting" element={<Setting />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>

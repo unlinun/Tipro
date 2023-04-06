@@ -10,7 +10,7 @@ const NotFound = () => {
           <p style={{ fontSize: "60px", fontW: "600" }}>404</p>
           <h3>Oops! Page not found!</h3>
         </div>
-        <Link to="home">
+        <Link to="/">
           <button className="btn btn--404">Back to home</button>
         </Link>
       </div>

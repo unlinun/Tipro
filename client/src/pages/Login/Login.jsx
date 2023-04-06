@@ -49,7 +49,7 @@ const Login = () => {
             token: loginData.token,
           })
         );
-        navigator("/");
+        navigator("/user/dashboard");
       }
     } catch (error) {
       setErrorMsg(error.message);
@@ -99,7 +99,7 @@ const Login = () => {
             Continue Login
           </button>
           <p>
-            Try TiPro for free? <Link to="/home/register">Sign up here!</Link>
+            Try TiPro for free? <Link to="/register">Sign up here!</Link>
           </p>
         </div>
       </form>

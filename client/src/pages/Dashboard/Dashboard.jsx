@@ -37,7 +37,7 @@ const Dashboard = () => {
       <div className="card dashboard__project">
         <div className="flex flex--bt  mg__b--20">
           <div className="card__title">{`project (in progress)`}</div>
-          <Link to="/projects" className="btn btn--dashboard">
+          <Link to="/user/projects" className="btn btn--dashboard">
             more
           </Link>
         </div>
@@ -81,7 +81,7 @@ const Dashboard = () => {
                       {project?.status}
                     </td>
                     <td className="table__cell">
-                      <Link to={`/projects/${project?._id}`}>
+                      <Link to={`/user/projects/${project?._id}`}>
                         <RightArrowIcon />
                       </Link>
                     </td>
@@ -129,7 +129,7 @@ const Dashboard = () => {
       <div className="card dashboard__task">
         <div className="flex flex--bt mg__b--20">
           <div className="card__title">{`tasks (today)`}</div>
-          <Link to="/tasks" className="btn btn--dashboard">
+          <Link to="/user/tasks" className="btn btn--dashboard">
             more
           </Link>
         </div>

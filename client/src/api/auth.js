@@ -9,6 +9,7 @@ export const registerAuth = async (data) => {
       birthday: data.birthday,
       email: data.email,
       password: data.password,
+      companyID: data.companyID,
     })
     .then((res) => {
       if (res.status === 201) {

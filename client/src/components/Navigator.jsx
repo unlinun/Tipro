@@ -88,7 +88,7 @@ export const Navigator = () => {
               return (
                 <Link
                   className="search__items grid grid--cc pd--8"
-                  to={`/projects/${item._id}`}
+                  to={`/user/projects/${item._id}`}
                   key={item._id}
                   onClick={() => {
                     setSearchValue("");

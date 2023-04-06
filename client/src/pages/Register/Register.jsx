@@ -15,7 +15,7 @@ const Register = () => {
       .min(3, "Username cannot less than 3 words")
       .max(10, "Username cannot over 10 words")
       .required("Please provide username"),
-    companyID: yup.string().max(10, "CompanyID cannot over 10 words"),
+    companyID: yup.string().max(20, "CompanyID cannot over 20 words"),
     birthday: yup
       .date()
       .typeError("Expected a value of type date")
@@ -55,7 +55,7 @@ const Register = () => {
       const regData = await registerAuth(data);
       if (regData.status === 201) {
         window.alert("sign up success");
-        navigate("/home/login");
+        navigate("/login");
       } else {
         setErrorMsg("register fail");
       }
@@ -153,7 +153,7 @@ const Register = () => {
             value="Create my account"
           />
           <p>
-            Have an account? <Link to="/home/login">Login here</Link>
+            Have an account? <Link to="/login">Login here</Link>
           </p>
         </div>
       </form>

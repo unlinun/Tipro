@@ -66,7 +66,7 @@ const TaskFrom = () => {
     if (res.status === 201) {
       dispatch(setCreating());
       navigator(0);
-      navigator("/tasks");
+      navigator("/user/tasks");
     } else {
       setError("Oops, Unable to create task");
     }

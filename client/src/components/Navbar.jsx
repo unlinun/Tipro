@@ -8,10 +8,10 @@ const Navbar = () => {
 
   return (
     <nav className="nav flex flex--bt mg__b--20">
-      <Link to="/home">
+      <Link to="/">
         <img className="logo nav__logo" src={logo} alt="TiPro-logo" />
       </Link>
-      {currentURL === "/home" ? (
+      {currentURL === "/" ? (
         <div className="nav__menu flex gap--20">
           <Link to="login" className="link">
             login
