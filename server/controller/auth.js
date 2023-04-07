@@ -18,30 +18,29 @@ export const register = async (req, res) => {
     user.save();
     res.status(StatusCodes.CREATED).json({ user: { username: user.username } });
   } catch (error) {
-    throw new BadRequestError(error.message);
+    return next(new BadRequestError(error.message));
   }
 };
 
 //login 登入
-export const login = async (req, res) => {
+export const login = async (req, res, next) => {
   const { email, password } = req.body;
   if (email === "" || password === "") {
-    throw new BadRequestError("Please provide email and password");
+    return next(new BadRequestError("Please provide email and password"));
   }
   try {
     const user = await User.findOne({ email });
     if (!user) {
-      throw new UnauthenticatedError("Invalid Credential");
+      return next(new UnauthenticatedError("Invalid Credential"));
     }
 
     const isPasswordMatch = await user.comparePassword(password);
 
     if (!isPasswordMatch) {
-      throw new UnauthenticatedError("Invalid Credential");
+      return next(new UnauthenticatedError("Invalid Credential"));
     }
     const token = user.createToken();
-    // 將密碼從 user 物件中移除
-    // Remove the password field from the user object
+    // 将密码从 user 对象中移除
     const userWithoutPassword = { ...user._doc };
     delete userWithoutPassword.password;
     res.status(StatusCodes.OK).json({
@@ -49,6 +48,6 @@ export const login = async (req, res) => {
       token,
     });
   } catch (error) {
-    throw new BadRequestError(error.message);
+    return next(new BadRequestError(error.message));
   }
 };

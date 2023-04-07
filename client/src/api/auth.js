@@ -37,10 +37,14 @@ export const loginAuth = async (email, password) => {
         },
       }
     );
-    if (res.status === 200) {
-      return res.data;
-    }
+    return res;
   } catch (error) {
-    throw new Error("wrong email or password");
+    if (error.response) {
+      if (error.response?.data.error === "Invalid Credential")
+        // 網路請求成功，但是後端回應 HTTP 狀態碼為錯誤
+        throw new Error("wrong email or password");
+    } else {
+      throw new Error("Oops, network error");
+    }
   }
 };

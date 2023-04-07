@@ -12,7 +12,6 @@ import { useEffect } from "react";
 // Login component
 const Login = () => {
   const [errorMsg, setErrorMsg] = useState("");
-  const [successMsg, setSuccessMsg] = useState("");
 
   const navigator = useNavigate();
   // 使用 yup 來創建 form schema
@@ -29,7 +28,7 @@ const Login = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm({
     resolver: yupResolver(schema),
   });
@@ -39,11 +38,7 @@ const Login = () => {
   // 登入取得使用者資料
   const login = async (data, e) => {
     try {
-      setSuccessMsg("Loading...");
       const loginData = await loginAuth(data.email, data.password);
-      if (!loginData) {
-        setErrorMsg("wrong email or password");
-      }
       // 如果登入成功，即可取得 token，並將 token 儲存於 redux 當中以便後續使用
       if (loginData) {
         dispatch(
@@ -63,8 +58,8 @@ const Login = () => {
   useEffect(() => {
     setTimeout(() => {
       setErrorMsg("");
-    }, 6000);
-  }, [errorMsg, successMsg]);
+    }, 5000);
+  }, [errorMsg]);
 
   return (
     <div className="login">
@@ -97,10 +92,10 @@ const Login = () => {
           </p>
         </div>
         <p className="form__alert form__alert--error">{errorMsg}</p>
-        <p className="form__alert">{successMsg}</p>
 
         <div className="form__submit">
           <button className="btn btn--form" type="submit" form="form">
+            {isSubmitting && <span className="spinner"></span>}
             Continue Login
           </button>
           <p>

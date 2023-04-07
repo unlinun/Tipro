@@ -75,6 +75,8 @@
   &--form {
     width: rem(186);
     height: rem(32);
+    justify-content: center;
+
     background-color: var(--primary-green);
     border: none;
     border-radius: rem(10);
@@ -111,5 +113,23 @@
   }
   &:hover {
     opacity: 0.8;
+  }
+}
+
+.spinner {
+  width: rem(8);
+  height: rem(8);
+  border-radius: 50%;
+  background-color: var(--primary-bgc);
+  animation: bounce 1s infinite;
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
   }
 }
