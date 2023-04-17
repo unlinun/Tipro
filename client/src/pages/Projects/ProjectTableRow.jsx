@@ -133,7 +133,7 @@ const ProjectTableRow = ({ project }) => {
       <td className="table__cell">
         <img
           className="table__image"
-          src={`${API_URL}/${project.manager[0].avatar}`}
+          src={`${API_URL}/${project?.manager[0].avatar}`}
           alt="manager"
           title={project?.manager[0].username}
         />
