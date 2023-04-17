@@ -40,11 +40,12 @@ const Login = () => {
     try {
       const loginData = await loginAuth(data.email, data.password);
       // 如果登入成功，即可取得 token，並將 token 儲存於 redux 當中以便後續使用
+      console.log(loginData);
       if (loginData) {
         dispatch(
           setLogin({
-            user: loginData.user,
-            token: loginData.token,
+            user: loginData.data.user,
+            token: loginData.data.token,
           })
         );
         navigator("/user/dashboard");
