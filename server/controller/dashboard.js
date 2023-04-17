@@ -14,7 +14,7 @@ export const getDashboard = async (req, res) => {
   const endToday = new Date(new Date().setHours(23, 59, 59, 59));
   const userCompany = await User.findOne({ _id: user.id });
   const projects = await Projects.find({
-    createdBy: user.id,
+    $or: [{ manager: user.id }, { createdBy: user.id }, { staff: user.id }],
     status: "in progress",
   });
   const tasks = await Task.find({
